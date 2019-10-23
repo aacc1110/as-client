@@ -1,12 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
+import { Switch, Route } from 'react-router';
+
+import Home from './page/Home';
 
 interface AppProps {}
 
-const AppBlock = styled.div``;
-
 function App(props: AppProps) {
-  return <AppBlock />;
+  console.log(Home);
+  return (
+    <Switch>
+      <Route exact path="/" component={Home} />
+    </Switch>
+  );
 }
 
 export default App;
