@@ -15,12 +15,12 @@
     "noEmit": true,
     "jsx": "react"
   },
+  "include": ["src"],
   "exclude": [
     "node_modules",
     "dist",
     "build",
     "scripts",
     "config"
-  ],
-  "include": ["src"]
+  ]  
 }
