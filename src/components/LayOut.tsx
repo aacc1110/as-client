@@ -6,25 +6,27 @@ import Menu from './menu/Menu';
 import Body from './body/Body';
 import palette from '../styles/palette';
 
-interface LayOutProps {}
-
 const LayOutBlock = styled.div`
   .header {
-    position: -webkit-sticky;
-    position: sticky;
+    position: fixed;
     top: 0;
     width: 100%;
-    height: 120px;
+    height: 60px;
     background-color: ${palette.gray1};
   }
-  .view {
-    display: flex;
-    flex-direction: row;
-    .menu {
-      width: 120px;
-    }
+
+  .menu {
+    position: fixed;
+    top: 60px;
+    width: 120px;
+  }
+  .body {
+    padding-top: 60px;
+    padding-left: 125px;
   }
 `;
+
+interface LayOutProps {}
 
 function LayOut(props: LayOutProps) {
   return (
@@ -32,11 +34,13 @@ function LayOut(props: LayOutProps) {
       <div className="header">
         <Header />
       </div>
-      <div className="view">
+      <div className="content">
         <div className="menu">
           <Menu />
         </div>
-        <Body />
+        <div className="body">
+          <Body />
+        </div>
       </div>
     </LayOutBlock>
   );

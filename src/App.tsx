@@ -1,12 +1,11 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 
-import Home from './page/Home';
+import Home from './page/HomePage';
 
 interface AppProps {}
 
 function App(props: AppProps) {
-  console.log(Home);
   return (
     <Switch>
       <Route exact path="/" component={Home} />
