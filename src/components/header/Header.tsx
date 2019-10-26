@@ -24,7 +24,6 @@ const MenuIcon = styled.div`
     font-size: 1.785rem;
     color: ${palette.gray7};
     cursor: pointer;
-    }
   }
 `;
 const HeaderContent = styled.div`
