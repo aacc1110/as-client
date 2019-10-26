@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import Header from './header/Header';
@@ -7,28 +7,35 @@ import Body from './body/Body';
 import palette from '../styles/palette';
 
 const LayOutBlock = styled.div`
+  border: none;
+  margin: 0;
+  padding: 0;
   .header {
     position: fixed;
     top: 0;
     width: 100%;
-    height: 60px;
+    height: 3rem;
     background-color: ${palette.gray1};
   }
 
   .menu {
     position: fixed;
-    top: 60px;
-    width: 120px;
+    top: 3rem;
+    width: 3.5rem;
+    height: 100%;
+    background-color: ${palette.gray1};
   }
   .body {
-    padding-top: 60px;
-    padding-left: 125px;
+    padding-top: 3rem;
+    padding-left: 3.5rem;
   }
 `;
 
-interface LayOutProps {}
+interface LayOutProps {
+  children: ReactNode;
+}
 
-function LayOut(props: LayOutProps) {
+function LayOut({ children }: LayOutProps) {
   return (
     <LayOutBlock>
       <div className="header">
@@ -39,7 +46,7 @@ function LayOut(props: LayOutProps) {
           <Menu />
         </div>
         <div className="body">
-          <Body />
+          <Body>{children}</Body>
         </div>
       </div>
     </LayOutBlock>

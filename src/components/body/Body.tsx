@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
-interface BodyProps {}
+interface BodyProps {
+  children: ReactNode;
+}
 
 const BodyBlock = styled.div`
   display: flex;
-  margin: 0 auto;
+  margin-top: 1rem;
+  margin-left: 1rem;
 `;
 
-function Body(props: BodyProps) {
-  return (
-    <BodyBlock>
-      <div>sdfsdfdsa</div>
-    </BodyBlock>
-  );
+function Body({ children }: BodyProps) {
+  return <BodyBlock>{children}</BodyBlock>;
 }
 
 export default Body;
