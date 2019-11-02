@@ -11,21 +11,23 @@ const MenuBlock = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 1rem;
 `;
 const MenuItem = styled(NavLink)`
   display: flex;
   flex-direction: column;
   align-items: center;
   color: ${palette.gray8};
-  text-decoration: none;
+
   width: 100%;
-  height: 3rem;
-  font-size: 0.5rem;
-  margin-bottom: 2rem;
+  font-size: 0.625rem;
+  padding: 16px 0 14px 0;
+  text-decoration: none;
   transition: 0.125s all ease-in;
+  :hover {
+    background: ${palette.gray3};
+  }
   svg {
-    font-size: 1.785rem;
+    font-size: 1.375rem;
   }
   &.active {
     color: ${palette.blue6};
@@ -41,7 +43,7 @@ function Menu(props: MenuProps) {
         activeClassName="active"
         isActive={(match, location) => {
           if (!match) return false;
-          return ['/', '/trend'].includes(location.pathname);
+          return ['/', '/trend'].indexOf(location.pathname) !== -1;
         }}
       >
         <MdTrendingUp />

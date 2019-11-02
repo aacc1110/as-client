@@ -6,9 +6,7 @@ interface BodyProps {
 }
 
 const BodyBlock = styled.div`
-  display: flex;
-  margin-top: 1rem;
-  margin-left: 1rem;
+  padding: 16px;
 `;
 
 function Body({ children }: BodyProps) {

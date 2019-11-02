@@ -7,6 +7,8 @@ import Body from './body/Body';
 import palette from '../styles/palette';
 
 const LayOutBlock = styled.div`
+  width: 100%;
+  height: 100%;
   border: none;
   margin: 0;
   padding: 0;
@@ -28,6 +30,7 @@ const LayOutBlock = styled.div`
   .body {
     padding-top: 3rem;
     padding-left: 3.5rem;
+    background-color: ${palette.gray3};
   }
 `;
 

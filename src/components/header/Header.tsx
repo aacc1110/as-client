@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Logo } from '../../images/svg';
-import { NavLink } from 'react-router-dom';
-import Button from '../../styles/Button';
-import { MdDehaze } from 'react-icons/md';
+import { IconLogo } from '../../images/svg';
+import { Link } from 'react-router-dom';
+import { MdDehaze, MdAccountCircle, MdNoteAdd, MdSearch } from 'react-icons/md';
 import palette from '../../styles/palette';
 
 interface HeaderProps {}
@@ -11,31 +10,51 @@ interface HeaderProps {}
 const HeaderBlock = styled.div`
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-`;
-const MenuIcon = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 3.5rem;
-
+  display: inline-flex;
   svg {
-    font-size: 1.785rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.375rem;
     color: ${palette.gray7};
     cursor: pointer;
+    :hover {
+      color: ${palette.blue5};
+      opacity: 0.7;
+    }
   }
 `;
-const HeaderContent = styled.div`
-  width: calc(100% - 4rem);
-  padding-left: 1rem;
-  padding-right: 1rem;
-  display: flex;
-  justify-content: space-between;
+const MenuIcon = styled.div`
+  width: 3.5rem;
+  display: inline-flex;
+  justify-content: center;
   align-items: center;
-  .search {
-    width: 300px;
+`;
+const Logo = styled.div`
+  display: inline-flex;
+  flex-grow: 2;
+  align-items: center;
+`;
+
+const UserMenu = styled.div`
+  display: inline-flex;
+  flex-grow: 3;
+  justify-content: flex-end;
+  align-items: center;
+  transition: 0.125s all ease-in;
+  .userIcon {
+    svg {
+      padding: 0.312rem;
+      font-size: 2rem;
+    }
   }
+  .userMenuIcon {
+    svg {
+      padding: 0.312rem;
+      font-size: 1.5rem;
+    }
+    padding: 0 16px 0 0;
+  }
+  padding: 0 16px 0 0;
 `;
 
 function Header(props: HeaderProps) {
@@ -44,19 +63,28 @@ function Header(props: HeaderProps) {
       <MenuIcon>
         <MdDehaze />
       </MenuIcon>
-      <HeaderContent>
-        <NavLink to="/">
-          <Logo />
-        </NavLink>
-        <div>
-          <input type="search" name="search" className="search" />
+      <Logo>
+        <Link to="/">
+          <IconLogo />
+        </Link>
+      </Logo>
+      <UserMenu>
+        <div className="userMenuIcon">
+          <Link to="write">
+            <MdSearch />
+          </Link>
         </div>
-        <div>
-          <Button size="DEFAULT" color="blue" to="login">
-            로그인
-          </Button>
+        <div className="userMenuIcon">
+          <Link to="write">
+            <MdNoteAdd />
+          </Link>
         </div>
-      </HeaderContent>
+        <div className="userIcon">
+          <Link to="login">
+            <MdAccountCircle />
+          </Link>
+        </div>
+      </UserMenu>
     </HeaderBlock>
   );
 }
