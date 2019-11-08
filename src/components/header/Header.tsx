@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { IconLogo } from '../../images/svg';
 import { Link } from 'react-router-dom';
-import { MdDehaze, MdAccountCircle, MdNoteAdd, MdSearch } from 'react-icons/md';
+import { MdDehaze, MdAccountCircle, MdSearch, MdNoteAdd } from 'react-icons/md';
+
 import palette from '../../styles/palette';
+import useBoolean from '../../lib/hooks/useHidden';
 
 interface HeaderProps {}
 
@@ -58,10 +60,17 @@ const UserMenu = styled.div`
 `;
 
 function Header(props: HeaderProps) {
+  const { value, show } = useBoolean(false);
+  useEffect(() => {
+    if (value) {
+      console.log('sdfsdfs');
+    }
+  }, [value]);
+
   return (
     <HeaderBlock>
       <MenuIcon>
-        <MdDehaze />
+        <MdDehaze onClick={show} />
       </MenuIcon>
       <Logo>
         <Link to="/">

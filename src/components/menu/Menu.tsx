@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { NavLink } from 'react-router-dom';
-import { MdFiberNew, MdTrendingUp, MdSubscriptions } from 'react-icons/md';
+import { MdFiberNew, MdTrendingUp, MdSubscriptions, MdStar } from 'react-icons/md';
 import palette from '../../styles/palette';
-
-interface MenuProps {}
 
 const MenuBlock = styled.div`
   display: flex;
@@ -34,7 +32,7 @@ const MenuItem = styled(NavLink)`
     font-weight: bold;
   }
 `;
-
+interface MenuProps {}
 function Menu(props: MenuProps) {
   return (
     <MenuBlock>
@@ -56,6 +54,10 @@ function Menu(props: MenuProps) {
       <MenuItem to="/subscript" activeClassName="active">
         <MdSubscriptions />
         구독
+      </MenuItem>
+      <MenuItem to="/tag" activeClassName="active">
+        <MdStar />
+        인기테그
       </MenuItem>
     </MenuBlock>
   );

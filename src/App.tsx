@@ -1,16 +1,17 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 
-import HomePage from './page/HomePage';
-import LoginPage from './page/LoginPage';
-import PostWritePage from './page/PostWritePage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/auth/LoginPage';
+import Sample from './samples/Sample';
+import PostWritePage from './pages/post/PostWritePage';
 
 interface AppProps {}
 
 function App(props: AppProps) {
   return (
     <Switch>
-      <Route exact path={['/', '/trend', '/recent', '/subscript']}>
+      <Route exact path={['/', '/trend', '/recent', '/subscript', '/tag']}>
         <HomePage />
       </Route>
       <Route path="/login">
@@ -18,6 +19,9 @@ function App(props: AppProps) {
       </Route>
       <Route path="/write">
         <PostWritePage />
+      </Route>
+      <Route path="/samples">
+        <Sample />
       </Route>
     </Switch>
   );

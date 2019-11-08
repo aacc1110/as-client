@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import PostWrite from '../components/post/PostWrite';
+import LayOut from '../../components/LayOut';
+import PostWrite from '../../components/post/PostWrite';
 
-const PostWritePageBlock = styled.div``;
+const PostWritePageBlock = styled(LayOut)``;
 
 interface PostWritePageProps {}
 

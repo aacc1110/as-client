@@ -1,10 +1,12 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Header from './header/Header';
 import Menu from './menu/Menu';
 import Body from './body/Body';
 import palette from '../styles/palette';
+import ExpansionMenu from './menu/ExpansionMenu';
+import useBoolean from '../lib/hooks/useHidden';
 
 const LayOutBlock = styled.div`
   width: 100%;
@@ -27,6 +29,7 @@ const LayOutBlock = styled.div`
     height: 100%;
     background-color: ${palette.gray1};
   }
+
   .body {
     padding-top: 3rem;
     padding-left: 3.5rem;
@@ -39,18 +42,20 @@ interface LayOutProps {
 }
 
 function LayOut({ children }: LayOutProps) {
+  const { value, show } = useBoolean(false);
+  useEffect(() => {
+    if (value) {
+      console.log('ghjgjhgjkhgytt5875687');
+    }
+  }, [value]);
   return (
     <LayOutBlock>
       <div className="header">
         <Header />
       </div>
-      <div className="content">
-        <div className="menu">
-          <Menu />
-        </div>
-        <div className="body">
-          <Body>{children}</Body>
-        </div>
+      <div className="menu">{show ? <Menu /> : <ExpansionMenu />}</div>
+      <div className="body">
+        <Body>{children}</Body>
       </div>
     </LayOutBlock>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import PostRecent from '../components/post/PostRecent';
+import PostRecent from '../../components/post/PostRecent';
 
 const PostRecentPageBlock = styled.div``;
 
