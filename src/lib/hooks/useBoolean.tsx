@@ -5,7 +5,7 @@ const useBoolean = (initialState: boolean) => {
   const show = useCallback(() => {
     setValue(!value);
   }, [value]);
-  console.log('useBoolean:', value);
+  console.log('useBoolea:', value);
   return { value, show };
 };
 export default useBoolean;

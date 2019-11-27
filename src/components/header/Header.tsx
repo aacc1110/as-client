@@ -1,18 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { IconLogo } from '../../images/svg';
 import { Link } from 'react-router-dom';
-import { MdDehaze, MdAccountCircle, MdSearch, MdNoteAdd } from 'react-icons/md';
+import { MdDehaze, MdAccountCircle, MdSearch, MdNoteAdd, MdClear } from 'react-icons/md';
 
 import palette from '../../styles/palette';
-import useBoolean from '../../lib/hooks/useHidden';
+import useMenu from '../../lib/hooks/useMenu';
+import useBoolean from '../../lib/hooks/useBoolean';
 
 interface HeaderProps {}
 
 const HeaderBlock = styled.div`
-  width: 100%;
-  height: 100%;
+  position: fixed;
   display: inline-flex;
+  top: 0;
+  width: 100%;
+  height: 3rem;
+  background-color: ${palette.gray0};
+
   svg {
     display: flex;
     align-items: center;
@@ -33,13 +38,13 @@ const MenuIcon = styled.div`
 `;
 const Logo = styled.div`
   display: inline-flex;
-  flex-grow: 2;
+  flex-grow: 1;
   align-items: center;
 `;
 
 const UserMenu = styled.div`
   display: inline-flex;
-  flex-grow: 3;
+  flex-grow: 4;
   justify-content: flex-end;
   align-items: center;
   transition: 0.125s all ease-in;
@@ -59,18 +64,27 @@ const UserMenu = styled.div`
   padding: 0 16px 0 0;
 `;
 
+const SearchInput = styled.input`
+  display: block;
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+  height: 1rem;
+  border: 1px solid black;
+`;
+
 function Header(props: HeaderProps) {
+  const { onVisible, core } = useMenu();
   const { value, show } = useBoolean(false);
-  useEffect(() => {
-    if (value) {
-      console.log('sdfsdfs');
-    }
-  }, [value]);
+
+  if (core.user) {
+    console.log(core.user);
+  }
 
   return (
     <HeaderBlock>
       <MenuIcon>
-        <MdDehaze onClick={show} />
+        <MdDehaze onClick={onVisible} />
       </MenuIcon>
       <Logo>
         <Link to="/">
@@ -78,10 +92,9 @@ function Header(props: HeaderProps) {
         </Link>
       </Logo>
       <UserMenu>
+        {value && <SearchInput type="search" />}
         <div className="userMenuIcon">
-          <Link to="write">
-            <MdSearch />
-          </Link>
+          {value ? <MdClear onClick={show} /> : <MdSearch onClick={show} />}
         </div>
         <div className="userMenuIcon">
           <Link to="write">
@@ -90,7 +103,7 @@ function Header(props: HeaderProps) {
         </div>
         <div className="userIcon">
           <Link to="login">
-            <MdAccountCircle />
+            {core.user === null ? <MdAccountCircle /> : <div>{core.user.email}</div>}
           </Link>
         </div>
       </UserMenu>

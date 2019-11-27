@@ -4,18 +4,21 @@ import { NavLink } from 'react-router-dom';
 import { MdFiberNew, MdTrendingUp, MdSubscriptions, MdStar } from 'react-icons/md';
 import palette from '../../styles/palette';
 
-const MenuBlock = styled.div`
+const SideMenuBlock = styled.div`
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  top: 3rem;
+  width: 3.5rem;
+  height: 100%;
+  background-color: ${palette.gray0};
 `;
-const MenuItem = styled(NavLink)`
+const SideMenuItem = styled(NavLink)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${palette.gray8};
-
+  color: ${palette.gray7};
   width: 100%;
   font-size: 0.625rem;
   padding: 16px 0 14px 0;
@@ -26,17 +29,22 @@ const MenuItem = styled(NavLink)`
   }
   svg {
     font-size: 1.375rem;
+    :hover {
+      color: ${palette.blue5};
+      opacity: 0.7;
+    }
   }
   &.active {
     color: ${palette.blue6};
     font-weight: bold;
   }
 `;
-interface MenuProps {}
-function Menu(props: MenuProps) {
+interface SideMenuProps {}
+
+function SideMenu(props: SideMenuProps) {
   return (
-    <MenuBlock>
-      <MenuItem
+    <SideMenuBlock>
+      <SideMenuItem
         to="/trend"
         activeClassName="active"
         isActive={(match, location) => {
@@ -46,21 +54,21 @@ function Menu(props: MenuProps) {
       >
         <MdTrendingUp />
         인기
-      </MenuItem>
-      <MenuItem to="/recent" activeClassName="active">
+      </SideMenuItem>
+      <SideMenuItem to="/recent" activeClassName="active">
         <MdFiberNew />
         최신
-      </MenuItem>
-      <MenuItem to="/subscript" activeClassName="active">
+      </SideMenuItem>
+      <SideMenuItem to="/subscript" activeClassName="active">
         <MdSubscriptions />
         구독
-      </MenuItem>
-      <MenuItem to="/tag" activeClassName="active">
+      </SideMenuItem>
+      <SideMenuItem to="/tag" activeClassName="active">
         <MdStar />
         인기테그
-      </MenuItem>
-    </MenuBlock>
+      </SideMenuItem>
+    </SideMenuBlock>
   );
 }
 
-export default Menu;
+export default SideMenu;
