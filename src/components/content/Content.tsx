@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import SideMenu from './SideMenu';
-import useMenu from '../../lib/hooks/useMenu';
 import ExpansionMenu from './ExpansionMenu';
 import palette from '../../styles/palette';
+import useUser from '../../lib/hooks/useUser';
 
 const ContentBlock = styled.div`
   main {
@@ -20,14 +20,11 @@ interface ContentProps {
 }
 
 function Content({ children }: ContentProps) {
-  const { core } = useMenu();
-  // useEffect(() => {
-  //   console.log('core:', core);
-  //   core.valueOf();
-  // }, [core]);
+  const { visible } = useUser();
+
   return (
     <ContentBlock>
-      {core.visible ? <ExpansionMenu /> : <SideMenu />}
+      {visible ? <ExpansionMenu /> : <SideMenu />}
       <main>{children}</main>
     </ContentBlock>
   );

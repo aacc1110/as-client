@@ -258,6 +258,16 @@ function Login(props: LoginProps) {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    const test = {
+      id: '7fc3e2c5-cd2b-44b2-af99-a7ca4e1b2196',
+      email: 'tadrow@daum.net',
+      name: '테드로',
+      userProfile: {
+        about: '솔로 풀스택 개발자? 라고? 니가?',
+        id: '8d8c13ed-a9dd-45c0-9cc0-cc35e21af22d',
+        thumbnail: 'image'
+      }
+    };
 
     await login({
       variables: {
@@ -267,11 +277,11 @@ function Login(props: LoginProps) {
     })
       .then(response => {
         if (response.data) {
-          console.log(response.data.login.user.email);
-          // core.user = response.data.login.user;
-          localStorage.setItem('CurrentUser', JSON.stringify(response.data.login.user));
+          const user = response.data ? response.data.login.user : null;
+          // localStorage.setItem('CurrentUser', JSON.stringify(response.data.login.user));
+          localStorage.setItem('CurrentUser', JSON.stringify(user));
+          document.location.href = '/';
         }
-        document.location.href = '/';
       })
       .catch(e => {
         if (e) {

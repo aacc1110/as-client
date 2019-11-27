@@ -5,8 +5,9 @@ import { Link } from 'react-router-dom';
 import { MdDehaze, MdAccountCircle, MdSearch, MdNoteAdd, MdClear } from 'react-icons/md';
 
 import palette from '../../styles/palette';
-import useMenu from '../../lib/hooks/useMenu';
 import useBoolean from '../../lib/hooks/useBoolean';
+import useUser from '../../lib/hooks/useUser';
+import HeaderUserIcon from './HeaderUserIcon';
 
 interface HeaderProps {}
 
@@ -74,11 +75,12 @@ const SearchInput = styled.input`
 `;
 
 function Header(props: HeaderProps) {
-  const { onVisible, core } = useMenu();
+  const { onVisible, user } = useUser();
   const { value, show } = useBoolean(false);
 
-  if (core.user) {
-    console.log(core.user);
+  if (user) {
+    // console.log(typeof user.userprofile !== undefined ? user.userprofile[0].id : undefined);
+    console.log('user', user.email, user.userProfile.id);
   }
 
   return (
@@ -103,7 +105,7 @@ function Header(props: HeaderProps) {
         </div>
         <div className="userIcon">
           <Link to="login">
-            {core.user === null ? <MdAccountCircle /> : <div>{core.user.email}</div>}
+            <HeaderUserIcon user={user} />
           </Link>
         </div>
       </UserMenu>

@@ -16,9 +16,9 @@ import { setUser } from './modules/core';
 const store = createStore(rootReducer, composeWithDevTools());
 
 const loadUser = () => {
-  const CurrentUser = localStorage.getItem('CurrentUser');
-  if (!CurrentUser) return;
-  store.dispatch(setUser(JSON.parse(CurrentUser)));
+  const user = localStorage.getItem('CurrentUser');
+  if (!user) return;
+  store.dispatch(setUser(JSON.parse(user)));
 };
 
 loadUser();

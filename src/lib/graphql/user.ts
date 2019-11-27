@@ -12,9 +12,9 @@ export type CurrentUser = {
   id: string;
   email: string;
   name: string;
-  userprofile: {
-    about: string;
+  userProfile: {
     id: string;
+    about: string;
     thumbnail: string;
   };
 };

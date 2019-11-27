@@ -35,9 +35,9 @@ interface GetLoginResponse {
       id: string;
       email: string;
       name: string;
-      userprofile: {
-        about: string;
+      userProfile: {
         id: string;
+        about: string;
         thumbnail: string | null;
       };
     };
@@ -51,7 +51,7 @@ export default function useLogin() {
   const [sendEmail] = useMutation<{ email: string }>(SENDEMAIL, {
     fetchPolicy: 'no-cache'
   });
-  const [login, { data, error }] = useMutation<GetLoginResponse>(LOGIN, {
+  const [login, { data }] = useMutation<GetLoginResponse>(LOGIN, {
     fetchPolicy: 'no-cache'
   });
   // const onLogin = useCallback(
@@ -66,11 +66,12 @@ export default function useLogin() {
   //   [login]
   // );
   // if (data) {
-  //   document.location.href = '/';
+  //   localStorage.setItem('CurrentUser', JSON.stringify(loginUser));
+  //   document.location.href('/');
   // }
-  if (data) {
-    console.log(data.login.user.email);
-  }
-
-  return { login, data, error, checkUser, sendEmail };
+  return {
+    login,
+    checkUser,
+    sendEmail
+  };
 }
