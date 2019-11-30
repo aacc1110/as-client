@@ -11,7 +11,7 @@ import {
 } from '../../images/svg';
 import { loginAdvertise } from '../../images/img';
 import useBoolean from '../../lib/hooks/useBoolean';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useLogin from './hook/useLogin';
 
 const LoginBlock = styled.div`
@@ -183,7 +183,6 @@ interface LoginProps {}
 // };
 
 function Login(props: LoginProps) {
-  const history = useHistory();
   const { value, show } = useBoolean(false);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -258,16 +257,16 @@ function Login(props: LoginProps) {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const test = {
-      id: '7fc3e2c5-cd2b-44b2-af99-a7ca4e1b2196',
-      email: 'tadrow@daum.net',
-      name: '테드로',
-      userProfile: {
-        about: '솔로 풀스택 개발자? 라고? 니가?',
-        id: '8d8c13ed-a9dd-45c0-9cc0-cc35e21af22d',
-        thumbnail: 'image'
-      }
-    };
+    // const test = {
+    //   id: '7fc3e2c5-cd2b-44b2-af99-a7ca4e1b2196',
+    //   email: 'tadrow@daum.net',
+    //   name: '테드로',
+    //   userProfile: {
+    //     about: '솔로 풀스택 개발자?,
+    //     id: '8d8c13ed-a9dd-45c0-9cc0-cc35e21af22d',
+    //     thumbnail: 'image'
+    //   }
+    // };
 
     await login({
       variables: {
@@ -297,8 +296,8 @@ function Login(props: LoginProps) {
   확인하고 AS-SERVICE Web Services에 대한 액세스를 허용합니다. 이 사이트 이용 시 아래에
   링크된 당사의 이용 약관 및 개인정보보호 정책이 적용됩니다. AS-SERVICE Web Services 제품 및
   서비스 시용 시 귀하가 AS-SERVICE Web Services 또는 이러한 제품과 서비스를 판매하는 AWS
-  VAR(Value Added Reseller)과 별도의 계약을 체결하지 않은 한, 아래 링크된 AWS 고객 계약이
-  적용됩니다. AWS 고객 계약은 2017년 3월 31일에 업데이트되었습니다. 이러한 업데이트에 대한
+  VAR(Value Added Reseller)과 별도의 계약을 체결하지 않은 한, 아래 링크된 AS-SERVICE 고객 계약이
+  적용됩니다. AS-SERVICE 고객 계약은 2017년 3월 31일에 업데이트되었습니다. 이러한 업데이트에 대한
   자세한 내용은 최근 변경 사항을 참조하십시오.`;
   return (
     <LoginBlock>

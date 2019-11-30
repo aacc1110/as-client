@@ -51,7 +51,7 @@ export default function useLogin() {
   const [sendEmail] = useMutation<{ email: string }>(SENDEMAIL, {
     fetchPolicy: 'no-cache'
   });
-  const [login, { data }] = useMutation<GetLoginResponse>(LOGIN, {
+  const [login] = useMutation<GetLoginResponse>(LOGIN, {
     fetchPolicy: 'no-cache'
   });
   // const onLogin = useCallback(

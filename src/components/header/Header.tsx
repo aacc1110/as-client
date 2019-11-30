@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { IconLogo } from '../../images/svg';
 import { Link } from 'react-router-dom';
-import { MdDehaze, MdAccountCircle, MdSearch, MdNoteAdd, MdClear } from 'react-icons/md';
+import { MdDehaze, MdSearch, MdNoteAdd, MdClear } from 'react-icons/md';
 
 import palette from '../../styles/palette';
 import useBoolean from '../../lib/hooks/useBoolean';
@@ -49,6 +49,7 @@ const UserMenu = styled.div`
   justify-content: flex-end;
   align-items: center;
   transition: 0.125s all ease-in;
+  margin-right: 1.5rem;
   .userIcon {
     svg {
       padding: 0.312rem;
@@ -104,9 +105,7 @@ function Header(props: HeaderProps) {
           </Link>
         </div>
         <div className="userIcon">
-          <Link to="login">
-            <HeaderUserIcon user={user} />
-          </Link>
+          <HeaderUserIcon />
         </div>
       </UserMenu>
     </HeaderBlock>
