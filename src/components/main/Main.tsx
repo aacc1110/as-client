@@ -27,6 +27,16 @@ function Main(props: MainProps) {
       <h1>mainPage</h1>
       <h1>mainPage</h1>
       <h1>mainPage</h1>
+      <h1>mainPage</h1>
+      <h1>mainPage</h1>
+      <h1>mainPage</h1>
+      <h1>mainPage</h1>
+      <h1>mainPage</h1>
+      <h1>mainPage</h1>
+      <h1>mainPage</h1>
+      <h1>mainPage</h1>
+      <h1>mainPage</h1>
+      <h1>mainPage</h1>
       <h1>mainPage End</h1>
     </MainBlock>
   );

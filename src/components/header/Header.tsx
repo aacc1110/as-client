@@ -8,6 +8,7 @@ import palette from '../../styles/palette';
 import useBoolean from '../../lib/hooks/useBoolean';
 import useUser from '../../lib/hooks/useUser';
 import HeaderUserIcon from './HeaderUserIcon';
+import useLogin from '../auth/hook/useLogin';
 
 interface HeaderProps {}
 
@@ -68,6 +69,9 @@ function Header(props: HeaderProps) {
   const history = useHistory();
   const { onVisible, user } = useUser();
   const { value, show } = useBoolean(false);
+
+  const { checkLoggedIn } = useLogin();
+  console.log('sdfadfa', checkLoggedIn.data);
 
   if (user) {
     // console.log(typeof user.userprofile !== undefined ? user.userprofile[0].id : undefined);

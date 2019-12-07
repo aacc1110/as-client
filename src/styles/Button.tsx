@@ -6,6 +6,19 @@ import { buttonColorMap } from './palette';
 type ColorType = 'blue' | 'gray' | 'darkGray' | 'lightGray';
 type SizeType = 'SMALL' | 'DEFAULT' | 'LARGE' | 'BIG';
 
+type ButtonBlockProps = React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;
+
+interface ButtonProps extends ButtonBlockProps {
+  inline?: boolean;
+  to?: string;
+  color: ColorType;
+  size: SizeType;
+  border?: boolean;
+}
+
 const ButtonBlock = styled.button<ButtonProps>`
   ${props =>
     props.inline &&
@@ -52,35 +65,12 @@ const ButtonBlock = styled.button<ButtonProps>`
   &:focus {
     background: ${props => buttonColorMap[props.color].hoverBackground};
   }
-  ${props =>
-    props.border &&
-    css<ButtonProps>`
-      background: transparent;
-      border: 1px solid ${props => buttonColorMap[props.color].background};
-      color: ${props => buttonColorMap[props.color].background};
-      &:hover {
-        background: ${props => buttonColorMap[props.color].background};
-        color: white;
-      }
-    `}
-
   transition: 0.125s all ease-in;
   &:focus {
     box-shadow: 0px 2px 12px #00000030;
   }
 `;
-type ButtonBlockProps = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
->;
 
-interface ButtonProps extends ButtonBlockProps {
-  inline?: boolean;
-  to?: string;
-  color: ColorType;
-  size: SizeType;
-  border?: boolean;
-}
 
 function Button({ ref, to, color, size, ...rest }: ButtonProps) {
   if (to) {
