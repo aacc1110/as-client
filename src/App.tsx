@@ -6,6 +6,7 @@ import LoginPage from './pages/auth/LoginPage';
 import Sample from './samples/Sample';
 import PostWritePage from './pages/post/PostWritePage';
 import RegisterPage from './pages/auth/RegisterPage';
+import UserHomePage from './pages/user/UserHomePage';
 
 interface AppProps {}
 
@@ -20,6 +21,9 @@ function App(props: AppProps) {
       </Route>
       <Route path="/register">
         <RegisterPage />
+      </Route>
+      <Route path="/@:useremail">
+        <UserHomePage />
       </Route>
       <Route path="/write">
         <PostWritePage />

@@ -9,8 +9,8 @@ const ContentBlock = styled.div`
   main {
     display: flex;
     justify-content: center;
-    padding-top: 4rem;
-    padding-left: 4.5rem;
+    padding-top: 3rem;
+    padding-left: 3.5rem;
     background-color: ${palette.gray1};
   }
 `;

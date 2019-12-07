@@ -44,6 +44,12 @@ interface GetLoginResponse {
   };
 }
 
+const LOGOUT = gql`
+  mutation Logout {
+    logout
+  }
+`;
+
 export default function useLogin() {
   const [checkUser] = useMutation<{ email: string }>(CHECKUSER, {
     fetchPolicy: 'no-cache'
@@ -51,7 +57,10 @@ export default function useLogin() {
   const [sendEmail] = useMutation<{ email: string }>(SENDEMAIL, {
     fetchPolicy: 'no-cache'
   });
-  const [login] = useMutation<GetLoginResponse>(LOGIN, {
+  const [login, { data }] = useMutation<GetLoginResponse>(LOGIN, {
+    fetchPolicy: 'no-cache'
+  });
+  const [logout] = useMutation(LOGOUT, {
     fetchPolicy: 'no-cache'
   });
   // const onLogin = useCallback(
@@ -69,9 +78,11 @@ export default function useLogin() {
   //   localStorage.setItem('CurrentUser', JSON.stringify(loginUser));
   //   document.location.href('/');
   // }
+  console.log('login data', data);
   return {
-    login,
     checkUser,
-    sendEmail
+    sendEmail,
+    login,
+    logout
   };
 }

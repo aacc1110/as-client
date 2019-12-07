@@ -1,16 +1,5 @@
 import gql from 'graphql-tag';
 
-export const GET_EMAIL_CONFIRM = gql`
-  query UserEmailConfirm($code: String!) {
-    userEmailConfirm(code: $code) {
-      email
-      code
-      confirm
-      createdAt
-    }
-  }
-`;
-
 export interface UserEmailConfirmResponse {
   userEmailConfirm: {
     email: string;
@@ -32,6 +21,16 @@ export interface UserProfileInput {
   mobile: string;
 }
 
+export const USER_EMAIL_CONFIRM = gql`
+  query UserEmailConfirm($code: String!) {
+    userEmailConfirm(code: $code) {
+      email
+      code
+      confirm
+      createdAt
+    }
+  }
+`;
 export const CREATE_ME = gql`
   mutation CreatMe($user: UserInput!, $userProfile: UserProfileInput) {
     createMe(userInput: $user, userProfileInput: $userProfile)

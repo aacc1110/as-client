@@ -5,8 +5,8 @@ import { Link, useLocation, useHistory } from 'react-router-dom';
 import { IconLogo } from '../../images/svg';
 import { loginAdvertise } from '../../images/img';
 
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_EMAIL_CONFIRM, UserEmailConfirmResponse, CREATE_ME } from './hook/useRegister';
+import { useMutation, useQuery } from '@apollo/react-hooks';
+import { CREATE_ME, UserEmailConfirmResponse, USER_EMAIL_CONFIRM } from './hook/useRegister';
 import useInputs from '../../lib/hooks/useInputs';
 
 const RegisterBlock = styled.div`
@@ -118,14 +118,15 @@ function Register(props: RegisterProps) {
 
   const [createMe] = useMutation(CREATE_ME);
 
-  const { data, loading } = useQuery<UserEmailConfirmResponse>(GET_EMAIL_CONFIRM, {
+  const { data, error } = useQuery<UserEmailConfirmResponse>(USER_EMAIL_CONFIRM, {
     variables: {
       code
     },
     fetchPolicy: 'no-cache'
   });
 
-  if (!data || loading) return null;
+  if (!data || error) return <div>유효하지 않은 코드입니다.</div>;
+
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     await createMe({
@@ -143,7 +144,7 @@ function Register(props: RegisterProps) {
       console.log(e);
       return;
     });
-    history.push('/');
+    history.push('login');
   };
   return (
     <RegisterBlock>

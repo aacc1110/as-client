@@ -4,8 +4,7 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  password: string;
-  userprofile: UserProfile;
+  userProfile: UserProfile;
   posts: Post[];
 }
 export type CurrentUser = {

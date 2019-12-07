@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { IconLogo } from '../../images/svg';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { MdDehaze, MdSearch, MdNoteAdd, MdClear } from 'react-icons/md';
 
 import palette from '../../styles/palette';
@@ -18,14 +18,11 @@ const HeaderBlock = styled.div`
   width: 100%;
   height: 3rem;
   background-color: ${palette.gray0};
-
   svg {
-    display: flex;
-    align-items: center;
     font-size: 1.375rem;
     color: ${palette.gray7};
     cursor: pointer;
-    :hover {
+    &:hover {
       color: ${palette.blue5};
       opacity: 0.7;
     }
@@ -48,34 +45,27 @@ const UserMenu = styled.div`
   flex-grow: 4;
   justify-content: flex-end;
   align-items: center;
-  transition: 0.125s all ease-in;
-  margin-right: 1.5rem;
-  .userIcon {
-    svg {
-      padding: 0.312rem;
-      font-size: 2rem;
-    }
-  }
-  .userMenuIcon {
-    svg {
-      padding: 0.312rem;
-      font-size: 1.5rem;
-    }
-    padding: 0 16px 0 0;
-  }
-  padding: 0 16px 0 0;
 `;
-
+const UserMenuIcon = styled.div`
+  display: flex;
+  align-items: center;
+  svg {
+    padding: 0.312rem;
+    margin-right: 0.2rem;
+    font-size: 1.5rem;
+  }
+`;
 const SearchInput = styled.input`
   display: block;
   justify-content: center;
   align-items: center;
   width: 20rem;
-  height: 1rem;
+  height: 1.5rem;
   border: 1px solid black;
 `;
 
 function Header(props: HeaderProps) {
+  const history = useHistory();
   const { onVisible, user } = useUser();
   const { value, show } = useBoolean(false);
 
@@ -90,24 +80,18 @@ function Header(props: HeaderProps) {
         <MdDehaze onClick={onVisible} />
       </MenuIcon>
       <Logo>
-        <Link to="/">
-          <IconLogo />
-        </Link>
+        <IconLogo onClick={() => history.push('/')} />
       </Logo>
       <UserMenu>
-        {value && <SearchInput type="search" />}
-        <div className="userMenuIcon">
+        <UserMenuIcon>
+          {value && <SearchInput type="search" />}
           {value ? <MdClear onClick={show} /> : <MdSearch onClick={show} />}
-        </div>
-        <div className="userMenuIcon">
-          <Link to="write">
-            <MdNoteAdd />
-          </Link>
-        </div>
-        <div className="userIcon">
-          <HeaderUserIcon />
-        </div>
+        </UserMenuIcon>
+        <UserMenuIcon>
+          <MdNoteAdd onClick={() => history.push('write')} />
+        </UserMenuIcon>
       </UserMenu>
+      <HeaderUserIcon />
     </HeaderBlock>
   );
 }

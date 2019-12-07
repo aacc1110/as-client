@@ -192,7 +192,7 @@ function Login(props: LoginProps) {
     email: '',
     password: ''
   });
-  const { login, checkUser, sendEmail } = useLogin();
+  const { checkUser, sendEmail, login } = useLogin();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();

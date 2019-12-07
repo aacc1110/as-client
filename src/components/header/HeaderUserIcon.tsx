@@ -9,13 +9,13 @@ import { useHistory } from 'react-router';
 const HeaderUserIconBlock = styled.div`
   display: flex;
   align-items: center;
-
+  margin: 0 1.5rem 0 1rem;
   img {
     display: block;
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 2.2rem;
+    width: 2.2rem;
     box-shadow: 0px 0 8px rgba(0, 0, 0, 0.085);
-    border-radius: 1.25rem;
+    border-radius: 1.1rem;
     object-fit: cover;
     transition: 0.125s all ease-in;
     cursor: pointer;

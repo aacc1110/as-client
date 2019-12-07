@@ -24,15 +24,13 @@ const SideMenuItem = styled(NavLink)`
   padding: 16px 0 14px 0;
   text-decoration: none;
   transition: 0.125s all ease-in;
-  :hover {
+  &:hover {
     background: ${palette.gray3};
+    color: ${palette.blue5};
+    opacity: 0.8;
   }
   svg {
     font-size: 1.375rem;
-    :hover {
-      color: ${palette.blue5};
-      opacity: 0.7;
-    }
   }
   &.active {
     color: ${palette.blue6};
