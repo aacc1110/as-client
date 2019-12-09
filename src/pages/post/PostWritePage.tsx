@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import LayOut from '../../components/LayOut';
-import PostWrite from '../../components/post/PostWrite';
+import PostWrite from '../../components/posts/PostWrite';
 
 const PostWritePageBlock = styled(LayOut)``;
 

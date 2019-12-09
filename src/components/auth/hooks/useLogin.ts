@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 const CHECKUSER = gql`
   mutation CheckUser($email: String!) {
@@ -50,12 +50,6 @@ const LOGOUT = gql`
   }
 `;
 
-export const CHECK_LOGGED = gql`
-  query CheckLogged {
-    checkLogged
-  }
-`;
-
 export default function useLogin() {
   const [checkUser] = useMutation<{ email: string }>(CHECKUSER, {
     fetchPolicy: 'no-cache'
@@ -67,9 +61,6 @@ export default function useLogin() {
     fetchPolicy: 'no-cache'
   });
   const [logout] = useMutation<boolean>(LOGOUT, {
-    fetchPolicy: 'no-cache'
-  });
-  const checkLoggedIn = useQuery<boolean>(CHECK_LOGGED, {
     fetchPolicy: 'no-cache'
   });
   // const onLogin = useCallback(
@@ -92,7 +83,6 @@ export default function useLogin() {
     checkUser,
     sendEmail,
     login,
-    logout,
-    checkLoggedIn
+    logout
   };
 }

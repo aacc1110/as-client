@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PostTrend from '../../components/post/PostTrend';
+import PostTrend from '../../components/posts/PostsTrend';
 
 interface PostTrendPageProps {}
 

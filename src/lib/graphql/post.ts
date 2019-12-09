@@ -4,13 +4,14 @@ export interface Post {
   id: string;
   title: string;
   body: string;
-  url_path: string;
-  thumbnail: string;
-  views: number;
-  is_private: boolean;
-  released_at: string;
-  created_at: string;
-  updated_at: string;
+  isPublish: boolean;
+  meta: JSON;
+  viewsCount: number;
+  shortSummary: string;
+  urlPath: string;
+  releasedAt: string;
+  createdAt: string;
+  updatedAt: string;
   user: User;
   images: Image[];
   tags: Tag[];
@@ -18,7 +19,7 @@ export interface Post {
 }
 export interface Image {
   id: string;
-  image_url: string;
+  imageUrl: string;
   post: Post;
 }
 
@@ -31,5 +32,6 @@ export interface Tag {
 export interface Comment {
   id: string;
   comment: string;
+  level: number;
   post: Post;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import PostRecent from '../../components/post/PostRecent';
+import PostsRecent from '../../components/posts/PostsRecent';
 
 const PostRecentPageBlock = styled.div``;
 
@@ -9,7 +9,7 @@ interface PostRecentPageProps {}
 function PostRecentPage(props: PostRecentPageProps) {
   return (
     <PostRecentPageBlock>
-      <PostRecent />
+      <PostsRecent />
     </PostRecentPageBlock>
   );
 }

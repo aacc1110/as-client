@@ -12,7 +12,7 @@ import {
 import { loginAdvertise } from '../../images/img';
 import useBoolean from '../../lib/hooks/useBoolean';
 import { Link } from 'react-router-dom';
-import useLogin from './hook/useLogin';
+import useLogin from './hooks/useLogin';
 
 const LoginBlock = styled.div`
   display: flex;
@@ -278,6 +278,12 @@ function Login(props: LoginProps) {
         if (response.data) {
           const user = response.data ? response.data.login.user : null;
           // localStorage.setItem('CurrentUser', JSON.stringify(response.data.login.user));
+          // const xlg: string = document.cookie.replace(
+          //   /(?:(?:^|.*;\s*)xlg\s*=\s*([^;]*).*$)|^.*$/,
+          //   '$1'
+          // );
+          // document.cookie = `xlg=${xlg}; max-age=0`;
+
           localStorage.setItem('CurrentUser', JSON.stringify(user));
           document.location.href = '/';
         }

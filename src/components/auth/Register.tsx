@@ -6,7 +6,7 @@ import { IconLogo } from '../../images/svg';
 import { loginAdvertise } from '../../images/img';
 
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { CREATE_ME, UserEmailConfirmResponse, USER_EMAIL_CONFIRM } from './hook/useRegister';
+import { CREATE_ME, UserEmailConfirmResponse, USER_EMAIL_CONFIRM } from './hooks/useRegister';
 import useInputs from '../../lib/hooks/useInputs';
 
 const RegisterBlock = styled.div`

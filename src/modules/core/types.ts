@@ -8,5 +8,5 @@ export type CoreAction = ActionType<typeof actions>;
 // 상태를 위한 타입 선언
 export type CoreState = {
   visible: boolean;
-  user: CurrentUser | undefined;
+  user: CurrentUser | null;
 };

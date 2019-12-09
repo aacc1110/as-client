@@ -1,10 +1,13 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { userThumbnail, loginUserThumbnail } from '../../images/img';
 import useUser from '../../lib/hooks/useUser';
 import useBoolean from '../../lib/hooks/useBoolean';
 import HeaderUserMenu from './HeaderUserMenu';
 import { useHistory } from 'react-router';
+import useMeInfo from './hooks/useMeInfo';
+import core, { setUser } from '../../modules/core';
+import { useDispatch } from 'react-redux';
 
 const HeaderUserIconBlock = styled.div`
   display: flex;
@@ -31,9 +34,19 @@ const HeaderUserIconBlock = styled.div`
 interface HeaderUserIconProps {}
 
 function HeaderUserIcon(props: HeaderUserIconProps) {
-  const { user } = useUser();
   const { value, show } = useBoolean(false);
   const history = useHistory();
+  const { user, notUser } = useUser();
+  const xlg: string = document.cookie.replace(/(?:(?:^|.*;\s*)xlg\s*=\s*([^;]*).*$)|^.*$/, '$1');
+
+  console.log('xlg:', xlg);
+
+  useEffect(() => {
+    if (xlg && user) {
+      localStorage.removeItem('CurrentUser');
+      notUser();
+    }
+  }, [notUser, user, xlg]);
 
   const onClick = useCallback(() => {
     if (!user) {

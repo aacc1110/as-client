@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { IconLogo } from '../../images/svg';
 import { useHistory } from 'react-router-dom';
@@ -8,7 +8,7 @@ import palette from '../../styles/palette';
 import useBoolean from '../../lib/hooks/useBoolean';
 import useUser from '../../lib/hooks/useUser';
 import HeaderUserIcon from './HeaderUserIcon';
-import useLogin from '../auth/hook/useLogin';
+import useMeInfo from './hooks/useMeInfo';
 
 interface HeaderProps {}
 
@@ -67,16 +67,8 @@ const SearchInput = styled.input`
 
 function Header(props: HeaderProps) {
   const history = useHistory();
-  const { onVisible, user } = useUser();
+  const { onVisible } = useUser();
   const { value, show } = useBoolean(false);
-
-  const { checkLoggedIn } = useLogin();
-  console.log('sdfadfa', checkLoggedIn.data);
-
-  if (user) {
-    // console.log(typeof user.userprofile !== undefined ? user.userprofile[0].id : undefined);
-    console.log('user', user.email, user.userProfile.id);
-  }
 
   return (
     <HeaderBlock>

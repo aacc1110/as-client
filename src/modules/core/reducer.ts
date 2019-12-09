@@ -5,7 +5,7 @@ import { SET_USER, SHOW_MENU } from './actions';
 // 초깃값 설정
 const initialState: CoreState = {
   visible: false,
-  user: undefined
+  user: null
 };
 
 // 리듀서

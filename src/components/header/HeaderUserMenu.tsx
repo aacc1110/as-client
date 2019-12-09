@@ -4,8 +4,10 @@ import palette from '../../styles/palette';
 import useUser from '../../lib/hooks/useUser';
 import { MdHome, MdSettings, MdExitToApp, MdPermPhoneMsg } from 'react-icons/md';
 import { loginUserThumbnail } from '../../images/img';
-import { Link } from 'react-router-dom';
-import useLogin from '../auth/hook/useLogin';
+import { Link, useHistory } from 'react-router-dom';
+import useLogin from '../auth/hooks/useLogin';
+import useMeInfo from './hooks/useMeInfo';
+import { setUser } from '../../modules/core';
 
 const HeaderUserMenuBlock = styled.div`
   position: fixed;
@@ -71,7 +73,7 @@ interface HeaderUserMenuProps {}
 function HeaderUserMenu(props: HeaderUserMenuProps) {
   const { user } = useUser();
   const { logout } = useLogin();
-  console.log(logout);
+
   if (!user) return null;
 
   const onLogout = async () => {

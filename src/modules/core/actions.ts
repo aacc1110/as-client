@@ -7,4 +7,4 @@ export const SET_USER = 'core/SET_USER';
 
 // 액션 생성 함수
 export const showMenu = createAction(SHOW_MENU)<boolean>();
-export const setUser = createAction(SET_USER)<CurrentUser | undefined>();
+export const setUser = createAction(SET_USER)<CurrentUser | null>();

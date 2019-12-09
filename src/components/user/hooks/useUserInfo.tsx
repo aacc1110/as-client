@@ -20,8 +20,8 @@ const GET_USER = gql`
         title
         body
         meta
-        views_count
-        url_path
+        viewsCount
+        urlPath
       }
     }
   }
