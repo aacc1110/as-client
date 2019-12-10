@@ -5,9 +5,6 @@ import useUser from '../../lib/hooks/useUser';
 import useBoolean from '../../lib/hooks/useBoolean';
 import HeaderUserMenu from './HeaderUserMenu';
 import { useHistory } from 'react-router';
-import useMeInfo from './hooks/useMeInfo';
-import core, { setUser } from '../../modules/core';
-import { useDispatch } from 'react-redux';
 
 const HeaderUserIconBlock = styled.div`
   display: flex;
@@ -39,9 +36,8 @@ function HeaderUserIcon(props: HeaderUserIconProps) {
   const { user, notUser } = useUser();
   const xlg: string = document.cookie.replace(/(?:(?:^|.*;\s*)xlg\s*=\s*([^;]*).*$)|^.*$/, '$1');
 
-  console.log('xlg:', xlg);
-
   useEffect(() => {
+    console.log('xlg:', xlg);
     if (xlg && user) {
       localStorage.removeItem('CurrentUser');
       notUser();

@@ -2,12 +2,11 @@ import React from 'react';
 import styled from '@emotion/styled';
 import palette from '../../styles/palette';
 import useUser from '../../lib/hooks/useUser';
-import { MdHome, MdSettings, MdExitToApp, MdPermPhoneMsg } from 'react-icons/md';
+
 import { loginUserThumbnail } from '../../images/img';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useLogin from '../auth/hooks/useLogin';
-import useMeInfo from './hooks/useMeInfo';
-import { setUser } from '../../modules/core';
+import { MdHome, MdSettings, MdPermPhoneMsg, MdExitToApp } from 'react-icons/md';
 
 const HeaderUserMenuBlock = styled.div`
   position: fixed;
@@ -71,7 +70,7 @@ const UserMenuItem = styled(Link)`
 interface HeaderUserMenuProps {}
 
 function HeaderUserMenu(props: HeaderUserMenuProps) {
-  const { user } = useUser();
+  const { user, notUser } = useUser();
   const { logout } = useLogin();
 
   if (!user) return null;
@@ -79,13 +78,14 @@ function HeaderUserMenu(props: HeaderUserMenuProps) {
   const onLogout = async () => {
     console.log('logout');
     await logout()
-      .then(response => {
+      .then((response: any) => {
         if (!response.data) return false;
         console.log('logout data', response.data);
         localStorage.removeItem('CurrentUser');
+        notUser();
         document.location.href = '/';
       })
-      .catch(e => {
+      .catch((e: any) => {
         console.log(e);
       });
   };

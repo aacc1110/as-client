@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { IconLogo } from '../../images/svg';
 import { useHistory } from 'react-router-dom';
@@ -8,7 +8,6 @@ import palette from '../../styles/palette';
 import useBoolean from '../../lib/hooks/useBoolean';
 import useUser from '../../lib/hooks/useUser';
 import HeaderUserIcon from './HeaderUserIcon';
-import useMeInfo from './hooks/useMeInfo';
 
 interface HeaderProps {}
 
