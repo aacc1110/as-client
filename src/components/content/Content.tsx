@@ -6,11 +6,14 @@ import palette from '../../styles/palette';
 import useUser from '../../lib/hooks/useUser';
 
 const ContentBlock = styled.div`
+  /* .sideMenu {
+    position: fixed;
+  } */
   main {
-    display: flex;
-    justify-content: center;
-    padding-top: 3rem;
-    padding-left: 3.5rem;
+    /* display: flex;
+    justify-content: center; */
+    margin-top: 3rem;
+    margin-left: 3.5rem;
     background-color: ${palette.gray1};
   }
 `;

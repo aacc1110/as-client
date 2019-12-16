@@ -3,24 +3,25 @@ import styled from '@emotion/styled';
 import usePosts from './hooks/usePosts';
 import PostItem from './PostCard';
 
-const PostsRecetBlock = styled.div`
+const PostRecentsBlock = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 `;
 
-interface PostsRecetProps {}
+interface PostRecentsProps {}
 
-function PostsRecet(props: PostsRecetProps) {
+function PostRecents(props: PostRecentsProps) {
   const { data, loading } = usePosts();
   if (!data || loading) return null;
   console.log(data.posts);
   return (
-    <PostsRecetBlock>
+    <PostRecentsBlock>
       {data.posts.map(post => (
         <PostItem key={post.id} post={post} />
       ))}
-    </PostsRecetBlock>
+    </PostRecentsBlock>
   );
 }
 
-export default memo(PostsRecet);
+export default memo(PostRecents);

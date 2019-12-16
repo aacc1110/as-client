@@ -1,11 +1,13 @@
 import React from 'react';
 import { Route } from 'react-router';
-import PostTrendPage from './post/PostTrendPage';
+
 import LayOut from '../components/LayOut';
-import PostRecentPage from './post/PostRecentPage';
-import PostSubscriptPage from './post/PostSubscriptPage';
-import MainPage from './main/MainPage';
+
 import TagPage from './tags/TagPage';
+import PostTrendsPage from './post/PostTrendsPage';
+import PostRecentsPage from './post/PostRecentsPage';
+import PostSubscriptsPage from './post/PostSubscriptsPage';
+import PostMainPage from './post/PostMainPage';
 
 interface HomePageProps {}
 
@@ -13,16 +15,16 @@ function HomePage(props: HomePageProps) {
   return (
     <LayOut>
       <Route path={['/']} exact>
-        <MainPage />
+        <PostMainPage />
       </Route>
       <Route path="/trend" exact>
-        <PostTrendPage />
+        <PostTrendsPage />
       </Route>
       <Route path="/recent" exact>
-        <PostRecentPage />
+        <PostRecentsPage />
       </Route>
       <Route path="/subscript" exact>
-        <PostSubscriptPage />
+        <PostSubscriptsPage />
       </Route>
       <Route path="/tag" exact>
         <TagPage />
