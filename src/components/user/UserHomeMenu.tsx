@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { MdSearch } from 'react-icons/md';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const UserHomeMenuBlock = styled.div`
   display: inline-flex;
@@ -19,11 +19,12 @@ const UserHomeMenuBlock = styled.div`
     }
   }
 `;
-const UserHomeMenuItem = styled(NavLink)`
+const UserHomeMenuItem = styled(Link)`
   font-size: 0.875rem;
-  a {
-    text-decoration: none;
-  }
+
+  color: inherit;
+  text-decoration: none;
+
   & + & {
     padding-left: 2rem;
   }

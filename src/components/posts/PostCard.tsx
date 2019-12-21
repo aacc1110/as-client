@@ -43,6 +43,10 @@ const PostCardBlock = styled.div`
     .postInfo {
       display: flex;
       flex-direction: column;
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
 
       h5 {
         margin: 0 0 0.5rem 0;
@@ -75,7 +79,9 @@ function PostCard({ post }: PostCardProps) {
         </Link>
         <div className="postInfo">
           <div>
-            <h5>{post.title}</h5>
+            <Link to={`/@${post.user.email}/${post.urlPath}`}>
+              <h5>{post.title}</h5>
+            </Link>
           </div>
           <span>
             <Link to={`@${post.user.email}`}>{post.user.name}</Link>

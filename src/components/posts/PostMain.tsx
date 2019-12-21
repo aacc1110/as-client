@@ -7,17 +7,17 @@ const PostMainBlock = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1rem 0 1rem;
-  .title {
+  .title-wrapper {
     font-size: 1rem;
     width: 100%;
     padding: 1rem 0 1rem 0;
   }
-  article {
+  section {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -0.5rem 0 -0.5rem;
     /* justify-content: space-around; */
-    section {
+    article {
       flex-grow: 1;
       width: 16.25rem;
       margin: 0.5rem;
@@ -33,14 +33,14 @@ function PostMain(props: PostMainProps) {
   console.log(data.posts);
   return (
     <PostMainBlock>
-      <div className="title">맞춤 포스트</div>
-      <article>
+      <div className="title-wrapper">맞춤 포스트</div>
+      <section>
         {data.posts.map(post => (
-          <section>
-            <PostCard key={post.id} post={post} />
-          </section>
+          <article key={post.id}>
+            <PostCard post={post} />
+          </article>
         ))}
-      </article>
+      </section>
     </PostMainBlock>
   );
 }
