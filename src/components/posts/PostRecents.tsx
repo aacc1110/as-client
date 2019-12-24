@@ -12,16 +12,7 @@ const PostRecentsBlock = styled.div`
 interface PostRecentsProps {}
 
 function PostRecents(props: PostRecentsProps) {
-  const { data, loading } = usePosts();
-  if (!data || loading) return null;
-  console.log(data.posts);
-  return (
-    <PostRecentsBlock>
-      {data.posts.map(post => (
-        <PostItem key={post.id} post={post} />
-      ))}
-    </PostRecentsBlock>
-  );
+  return <PostRecentsBlock>PostRecents</PostRecentsBlock>;
 }
 
 export default memo(PostRecents);

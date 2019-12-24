@@ -8,14 +8,16 @@ import palette from '../../styles/palette';
 const PostCardBlock = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 0.5rem;
   .postImages {
-    height: 11.25rem;
+    height: auto;
     overflow: hidden;
     img {
       display: block;
       width: auto;
       height: 100%;
-      /* object-fit: cover; */
+
+      object-fit: cover;
     }
     border: 1px solid black;
   }
@@ -49,6 +51,10 @@ const PostCardBlock = styled.div`
       }
 
       h5 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
         margin: 0 0 0.5rem 0;
       }
       span {

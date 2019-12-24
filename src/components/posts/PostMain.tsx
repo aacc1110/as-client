@@ -1,7 +1,10 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import usePosts from './hooks/usePosts';
 import PostCard from './PostCard';
+import media from '../../lib/media';
+import useScrollPagenation from './hooks/useScrollPagenation';
+import { safe } from '../../lib/utils';
 
 const PostMainBlock = styled.div`
   display: flex;
@@ -12,15 +15,23 @@ const PostMainBlock = styled.div`
     width: 100%;
     padding: 1rem 0 1rem 0;
   }
-  section {
+  article {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -0.5rem 0 -0.5rem;
-    /* justify-content: space-around; */
-    article {
-      flex-grow: 1;
-      width: 16.25rem;
-      margin: 0.5rem;
+    /* margin: 0 -0.5rem 0 -0.5rem; */
+    justify-content: space-between;
+    section {
+      ${media.xxlarge} {
+        width: calc(100% / 4);
+      }
+      ${media.medium} {
+        width: calc(100% / 3);
+      }
+      ${media.small} {
+        width: calc(100% / 2);
+      }
+      margin: 0 -0.5rem 1.5rem -0.5rem;
+      /* margin-left: 0.5rem; */
     }
   }
 `;
@@ -28,19 +39,30 @@ const PostMainBlock = styled.div`
 interface PostMainProps {}
 
 function PostMain(props: PostMainProps) {
-  const { data, loading } = usePosts();
-  if (!data || loading) return null;
-  console.log(data.posts);
+  const { posts, onLoadMore } = usePosts();
+
+  const cursor: string | null = safe(() => posts![posts!.length - 1].id);
+
+  console.log(cursor);
+
+  useScrollPagenation({
+    cursor,
+    onLoadMore
+  });
+
+  if (!posts) return <div>포스트가 존재하지 않습니다.</div>;
+  console.log(posts);
+
   return (
     <PostMainBlock>
       <div className="title-wrapper">맞춤 포스트</div>
-      <section>
-        {data.posts.map(post => (
-          <article key={post.id}>
+      <article>
+        {posts.map(post => (
+          <section key={post.id}>
             <PostCard post={post} />
-          </article>
+          </section>
         ))}
-      </section>
+      </article>
     </PostMainBlock>
   );
 }

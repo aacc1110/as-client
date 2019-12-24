@@ -1,10 +1,11 @@
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { Post } from '../../../lib/graphql/post';
+import { useCallback } from 'react';
 
 const GET_POST_RECENT = gql`
-  query Post {
-    posts {
+  query Post($cursor: ID) {
+    posts(cursor: $cursor) {
       id
       title
       body
@@ -31,23 +32,46 @@ const GET_POST_RECENT = gql`
         id
         email
         name
+        userProfile {
+          id
+          thumbnail
+          imageUrl
+        }
       }
     }
   }
 `;
 
 export default function usePosts() {
-  const { data, loading, error } = useQuery<{ posts: Post[] }>(GET_POST_RECENT, {
-    pollInterval: 1000 * 60 * 10
+  const getPostRecent = useQuery<{ posts: Post[] }>(GET_POST_RECENT, {
+    pollInterval: 1000 * 60 * 5
   });
+
+  // const { data, loading } = getPostRecent;
+  const onLoadMore = useCallback(
+    (cursor: string) => {
+      getPostRecent.fetchMore({
+        variables: {
+          cursor
+        },
+        updateQuery: (prev, { fetchMoreResult }) => {
+          if (!fetchMoreResult) return prev;
+          return {
+            posts: [...prev.posts, ...fetchMoreResult.posts]
+          };
+        }
+      });
+    },
+    [getPostRecent]
+  );
+
   return {
-    data,
+    posts: getPostRecent.data && getPostRecent.data.posts,
+    onLoadMore
     // recentPosts: data && data.post,
     // postTags: data && data.post.tags,
     // postImages: data && data.post.images,
     // postComments: data && data.post.comments,
     // postUser: data && data.post.user,
-    loading,
-    error
   };
 }
