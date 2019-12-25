@@ -1,10 +1,10 @@
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
 import { Post } from '../../../lib/graphql/post';
 import { useCallback } from 'react';
+import { safe } from '../../../lib/utils';
+import { useQuery, gql } from '@apollo/client';
 
-const GET_POST_RECENT = gql`
-  query Post($cursor: ID) {
+export const GET_POST_RECENT = gql`
+  query PostList($cursor: ID) {
     posts(cursor: $cursor) {
       id
       title
@@ -14,6 +14,46 @@ const GET_POST_RECENT = gql`
       viewsCount
       shortSummary
       urlPath
+      releasedAt
+      createdAt
+      images {
+        id
+        imageUrl
+      }
+      tags {
+        id
+        tag
+      }
+      comments {
+        id
+        comment
+        level
+      }
+      user {
+        id
+        email
+        name
+        userProfile {
+          id
+          thumbnail
+          imageUrl
+        }
+      }
+    }
+  }
+`;
+export const POST_DET = gql`
+  query Post($id: ID) {
+    post(id: $id) {
+      id
+      title
+      body
+      isPublish
+      meta
+      viewsCount
+      shortSummary
+      urlPath
+      releasedAt
       createdAt
       images {
         id
@@ -45,6 +85,7 @@ const GET_POST_RECENT = gql`
 export default function usePosts() {
   const getPostRecent = useQuery<{ posts: Post[] }>(GET_POST_RECENT, {
     pollInterval: 1000 * 60 * 5
+    // notifyOnNetworkStatusChange: true
   });
 
   // const { data, loading } = getPostRecent;
@@ -65,8 +106,13 @@ export default function usePosts() {
     [getPostRecent]
   );
 
+  const { data } = getPostRecent;
+  const posts = safe(() => data!.posts);
+  const cursor = safe(() => (posts ? posts[posts.length - 1].id : null));
+
   return {
-    posts: getPostRecent.data && getPostRecent.data.posts,
+    posts,
+    cursor,
     onLoadMore
     // recentPosts: data && data.post,
     // postTags: data && data.post.tags,

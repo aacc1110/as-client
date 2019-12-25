@@ -4,6 +4,7 @@ import { Post } from '../../lib/graphql/post';
 import { Link } from 'react-router-dom';
 import { userThumbnail, postSampleImage } from '../../images/img';
 import palette from '../../styles/palette';
+import { formatDate } from '../../lib/utils';
 
 const PostCardBlock = styled.div`
   display: flex;
@@ -95,7 +96,7 @@ function PostCard({ post }: PostCardProps) {
           <div>
             <span>조회수 1.5만</span>
             <span> • </span>
-            <span>1일전</span>
+            <span>{formatDate(post.releasedAt)}</span>
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
 import { User } from '../../../lib/graphql/user';
+import { useQuery, gql } from '@apollo/client';
 
 const GET_USER = gql`
   query User($email: String!) {
@@ -32,7 +31,7 @@ export default function useUserInfo(pathname: string | undefined) {
     variables: {
       email: pathname
     },
-    fetchPolicy: 'cache-and-network'
+    fetchPolicy: 'cache-first'
   });
 
   return {

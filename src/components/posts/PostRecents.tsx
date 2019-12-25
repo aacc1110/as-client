@@ -1,7 +1,5 @@
 import React, { memo } from 'react';
 import styled from '@emotion/styled';
-import usePosts from './hooks/usePosts';
-import PostItem from './PostCard';
 
 const PostRecentsBlock = styled.div`
   display: flex;

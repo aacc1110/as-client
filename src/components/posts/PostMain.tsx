@@ -1,10 +1,9 @@
-import React, { memo, useCallback, useRef, useEffect } from 'react';
+import React, { memo } from 'react';
 import styled from '@emotion/styled';
 import usePosts from './hooks/usePosts';
 import PostCard from './PostCard';
 import media from '../../lib/media';
-import useScrollPagenation from './hooks/useScrollPagenation';
-import { safe } from '../../lib/utils';
+import useScrollPagenation from '../../lib/useScrollPagenation';
 
 const PostMainBlock = styled.div`
   display: flex;
@@ -39,9 +38,7 @@ const PostMainBlock = styled.div`
 interface PostMainProps {}
 
 function PostMain(props: PostMainProps) {
-  const { posts, onLoadMore } = usePosts();
-
-  const cursor: string | null = safe(() => posts![posts!.length - 1].id);
+  const { posts, cursor, onLoadMore } = usePosts();
 
   console.log(cursor);
 
