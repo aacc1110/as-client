@@ -42,45 +42,6 @@ export const GET_POST_RECENT = gql`
     }
   }
 `;
-export const POST_DET = gql`
-  query Post($id: ID) {
-    post(id: $id) {
-      id
-      title
-      body
-      isPublish
-      meta
-      viewsCount
-      shortSummary
-      urlPath
-      releasedAt
-      createdAt
-      images {
-        id
-        imageUrl
-      }
-      tags {
-        id
-        tag
-      }
-      comments {
-        id
-        comment
-        level
-      }
-      user {
-        id
-        email
-        name
-        userProfile {
-          id
-          thumbnail
-          imageUrl
-        }
-      }
-    }
-  }
-`;
 
 export default function usePosts() {
   const getPostRecent = useQuery<{ posts: Post[] }>(GET_POST_RECENT, {
@@ -106,12 +67,13 @@ export default function usePosts() {
     [getPostRecent]
   );
 
-  const { data } = getPostRecent;
+  const { data, refetch } = getPostRecent;
   const posts = safe(() => data!.posts);
   const cursor = safe(() => (posts ? posts[posts.length - 1].id : null));
 
   return {
     posts,
+    refetch,
     cursor,
     onLoadMore
     // recentPosts: data && data.post,
