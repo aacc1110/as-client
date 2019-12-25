@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { userThumbnail, postSampleImage } from '../../images/img';
 import palette from '../../styles/palette';
 import { formatDate } from '../../lib/utils';
+import PostLink from './PostLink';
 
 const PostCardBlock = styled.div`
   display: flex;
@@ -78,7 +79,13 @@ function PostCard({ post }: PostCardProps) {
   return (
     <PostCardBlock>
       <div className="postImages">
-        <img src={postSampleImage} alt="thumbnail" />
+        <PostLink
+          postId={post.id}
+          userEmail={post.user.email}
+          urlPath={post.urlPath}
+        >
+          <img src={postSampleImage} alt="thumbnail" />
+        </PostLink>
       </div>
       <div className="userInfo">
         <Link to={`@${post.user.email}`}>
@@ -86,9 +93,16 @@ function PostCard({ post }: PostCardProps) {
         </Link>
         <div className="postInfo">
           <div>
-            <Link to={`/@${post.user.email}/${post.urlPath}`}>
+            {/* <Link to={`/@${post.user.email}/${post.urlPath}`}>
               <h5>{post.title}</h5>
-            </Link>
+            </Link> */}
+            <PostLink
+              postId={post.id}
+              userEmail={post.user.email}
+              urlPath={post.urlPath}
+            >
+              <h5>{post.title}</h5>
+            </PostLink>
           </div>
           <span>
             <Link to={`@${post.user.email}`}>{post.user.name}</Link>

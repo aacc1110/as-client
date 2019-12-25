@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { postSampleImage } from '../../images/img';
+import usePost from './hooks/usePost';
 
 const PostViewBlock = styled.div`
   img {
@@ -10,12 +11,19 @@ const PostViewBlock = styled.div`
   }
 `;
 
-interface PostViewProps {}
+interface PostViewProps {
+  userEmail?: string;
+  postId?: string | null;
+}
 
-function PostView(props: PostViewProps) {
+function PostView({ postId, userEmail }: PostViewProps) {
+  console.log('userEmail', postId);
+  // const { post } = usePost(postId);
+  // if (!post) return null;
   return (
     <PostViewBlock>
       <img src={postSampleImage} alt="thumbnail" />
+      {/* {post.id} */}
     </PostViewBlock>
   );
 }

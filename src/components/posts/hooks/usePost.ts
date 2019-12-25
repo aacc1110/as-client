@@ -1,9 +1,10 @@
 import { useQuery, gql } from '@apollo/client';
 import { Post } from '../../../lib/graphql/post';
+import { safe } from '../../../lib/utils';
 
 export const GET_POST = gql`
-  query Post($userEmail: String, $urlPath: String) {
-    post(userEmail: $userEmail, urlPath: $urlPath) {
+  query Post($id: ID) {
+    post(id: $id) {
       id
       title
       body
@@ -41,14 +42,14 @@ export const GET_POST = gql`
   }
 `;
 
-export default function usePost(userEmail: string, urlPath: string) {
+export default function usePost(id: string | null) {
   const getPost = useQuery<{ post: Post }>(GET_POST, {
-    variables: { userEmail, urlPath },
+    variables: { id },
     fetchPolicy: 'cache-first'
   });
 
   const { data } = getPost;
-  const post = data!.post;
+  const post = safe(() => data!.post);
   return {
     post
   };
