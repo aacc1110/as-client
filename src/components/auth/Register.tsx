@@ -6,7 +6,11 @@ import { IconLogo } from '../../images/svg';
 import { loginAdvertise } from '../../images/img';
 
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { CREATE_ME, UserEmailConfirmResponse, USER_EMAIL_CONFIRM } from './hooks/useRegister';
+import {
+  CREATE_ME,
+  UserEmailConfirmResponse,
+  USER_EMAIL_CONFIRM
+} from './hooks/useRegister';
 import useInputs from '../../lib/hooks/useInputs';
 
 const RegisterBlock = styled.div`
@@ -118,12 +122,15 @@ function Register(props: RegisterProps) {
 
   const [createMe] = useMutation(CREATE_ME);
 
-  const { data, error } = useQuery<UserEmailConfirmResponse>(USER_EMAIL_CONFIRM, {
-    variables: {
-      code
-    },
-    fetchPolicy: 'no-cache'
-  });
+  const { data, error } = useQuery<UserEmailConfirmResponse>(
+    USER_EMAIL_CONFIRM,
+    {
+      variables: {
+        code
+      },
+      fetchPolicy: 'no-cache'
+    }
+  );
 
   if (!data || error) return <div>유효하지 않은 코드입니다.</div>;
 

@@ -105,7 +105,7 @@ function HeaderUserMenu(props: HeaderUserMenuProps) {
         </div>
         <span>{user.email}</span>
       </UserInfo>
-      <UserMenuItem to={`@${user.email}`}>
+      <UserMenuItem to={`/@${user.email}`}>
         <MdHome />
         MY HOME
       </UserMenuItem>

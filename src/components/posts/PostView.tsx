@@ -12,6 +12,8 @@ import {
   MdReply,
   MdMoreHoriz
 } from 'react-icons/md';
+import useUser from '../../lib/hooks/useUser';
+import PostComments from './PostComments';
 
 const PostViewBlock = styled.div`
   display: flex;
@@ -29,7 +31,7 @@ const PostViewBlock = styled.div`
   .imgBox {
     position: relative;
     img {
-      width: 900px;
+      max-width: 900px;
       height: 100px;
       /* height: auto; */
       border: 1px solid black;
@@ -104,17 +106,57 @@ const PostViewBlock = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 12px;
-
+  }
+  .user > .userContents {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    /* flex-basis: 0.000000001px; */
     img {
       display: block;
-      height: 3rem;
-      width: 3rem;
+      height: 4rem;
+      width: 4rem;
       box-shadow: 0px 0 8px rgba(0, 0, 0, 0.085);
-      border-radius: 1.5rem;
+      border-radius: 2rem;
       object-fit: cover;
       transition: 0.125s all ease-in;
-      cursor: none;
+      margin-right: 1rem;
     }
+  }
+  .userContents > .info {
+    font-size: 1rem;
+    color: ${palette.gray9};
+    line-height: 1;
+    span {
+      font-size: 0.875rem;
+      color: ${palette.gray7};
+    }
+  }
+  .userInfo > .content {
+    margin-left: 64px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+    span {
+      height: 3.125rem;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      margin: 0 0 0.5rem 0;
+    }
+    p {
+      a {
+        text-decoration: none;
+      }
+      color: ${palette.gray7};
+    }
+  }
+  #see {
+    display: contents;
+  }
+  #hide {
+    display: none;
   }
   .list {
     display: block;
@@ -126,11 +168,33 @@ const PostViewBlock = styled.div`
 interface PostViewProps {
   userEmail?: string;
   urlPath?: string;
-  postId?: string;
 }
 
-function PostView({ postId, userEmail, urlPath }: PostViewProps) {
+function PostView({ userEmail, urlPath }: PostViewProps) {
   const { post } = usePost(userEmail, urlPath);
+  const { user } = useUser();
+
+  const onClick = (mode: string) => {
+    const hide: HTMLElement | null = document.getElementById('hide');
+    const see: HTMLElement | null = document.getElementById('see');
+    const content = document.getElementsByClassName('content')[0]
+      .firstChild as HTMLElement;
+
+    if (mode === 'see') {
+      content.style.overflow = 'visible';
+      content.style.display = 'contents';
+      see!.style.display = 'none';
+      hide!.style.display = 'contents';
+      return;
+    } else if (mode === 'hide') {
+      content.style.overflow = 'hidden';
+      content.style.display = '-webkit-box';
+      see!.style.display = 'contents';
+      hide!.style.display = 'none';
+      return;
+    }
+  };
+
   if (!post) return null;
   return (
     <PostViewBlock>
@@ -140,13 +204,15 @@ function PostView({ postId, userEmail, urlPath }: PostViewProps) {
             <img src={postSampleImage} alt="thumbnail" />
           </div>
           <div className="info-contents">
-            <div className="tag">
-              {post.tags.map(tag => (
-                <span key={tag.id}>
-                  <Link to={`/tags/${tag.tag}`}>#{tag.tag}</Link>
-                </span>
-              ))}
-            </div>
+            {post.tags && (
+              <div className="tag">
+                {post.tags.map(tag => (
+                  <span key={tag.id}>
+                    <Link to={`/tags/${tag.tag}`}>#{tag.tag}</Link>
+                  </span>
+                ))}
+              </div>
+            )}
             <div className="title">{post.title}</div>
             <div className="info">
               <div className="infoText">
@@ -170,40 +236,42 @@ function PostView({ postId, userEmail, urlPath }: PostViewProps) {
         </div>
         <div className="userInfo">
           <div className="user">
-            <div className="userThumbnail">
-              <img src={loginUserThumbnail} alt="thumbnail" />
+            <div className="userContents">
+              <Link to={`/@${post.user.email}`}>
+                <img src={loginUserThumbnail} alt="thumbnail" />
+              </Link>
+              <div className="info">
+                <div>
+                  <b>{post.user.name}</b>
+                </div>
+                <div>
+                  <span>구독자 : {post.viewsCount}</span>
+                </div>
+              </div>
             </div>
-            <div className="subscript">구독</div>
+            {user && user.id === post.user.id ? null : (
+              <div className="subscript">
+                <Link to="/">구독</Link>
+              </div>
+            )}
           </div>
-          <div className="user"> content</div>
-          <div className="user"> 더보기</div>
+          <div className="content" id="content">
+            <span>{post.body}</span>
+            <p>
+              <a href="#none" id="see" onClick={() => onClick('see')}>
+                더보기
+              </a>
+              <a href="#none" id="hide" onClick={() => onClick('hide')}>
+                간략히
+              </a>
+            </p>
+          </div>
         </div>
-        댓글
+        <PostComments comments={post.comments} postId={post.id} />
       </div>
-
       <div className="list">
         <div>사이드 리스트</div>
       </div>
-      {/* <img src={postSampleImage} alt="thumbnail" />
-      <div className="postInfo">
-        <div className="tag">
-          {post.tags.map(tag => (
-            <span key={tag.id}>
-              <Link to="/">#{tag.tag}</Link>
-            </span>
-          ))}
-        </div>
-        <div className="title">
-          <span>{post.title}</span>
-        </div>
-        <div className="postSideInfo">
-          <span>조회수 {post.viewsCount}회</span>
-          <span> • </span>
-          <span>{formatDate(post.releasedAt)}</span>
-          <div>사이드메뉴</div>
-        </div>
-        <div>{post.user.name}</div>
-      </div> */}
     </PostViewBlock>
   );
 }

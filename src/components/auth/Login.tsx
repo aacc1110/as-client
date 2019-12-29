@@ -406,7 +406,7 @@ function Login(props: LoginProps) {
         <div className="info">{infoText}</div>
         <div className="infoFooter">
           © 2019, AS-SERVICE Web Services, Inc.또는 자회사. All rights reserved.
-          <Link to="/">이용 약관</Link> | <Link to="/">개인정보 보호정책</Link> |
+          <Link to="/">이용 약관</Link> | <Link to="/">개인정보 보호정책</Link>|
           <Link to="/">AS-SERVICE 고객 계약서</Link>
         </div>
       </div>
