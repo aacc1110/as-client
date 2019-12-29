@@ -7,13 +7,14 @@ import Sample from './samples/Sample';
 import PostWritePage from './pages/post/PostWritePage';
 import RegisterPage from './pages/auth/RegisterPage';
 import UserHomePage from './pages/user/UserHomePage';
+import TagPage from './pages/tags/TagPage';
 
 interface AppProps {}
 
 function App(props: AppProps) {
   return (
     <Switch>
-      <Route exact path={['/', '/trend', '/recent', '/subscript', '/tag']}>
+      <Route exact path={['/', '/trends', '/recents', '/subscripts']}>
         <HomePage />
       </Route>
       <Route path="/login">
@@ -24,6 +25,9 @@ function App(props: AppProps) {
       </Route>
       <Route path="/@:useremail">
         <UserHomePage />
+      </Route>
+      <Route path="/tags">
+        <TagPage />
       </Route>
       <Route path="/write">
         <PostWritePage />
