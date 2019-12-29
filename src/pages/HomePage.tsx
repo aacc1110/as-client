@@ -3,7 +3,6 @@ import { Route } from 'react-router';
 
 import LayOut from '../components/LayOut';
 
-import TagPage from './tags/TagPage';
 import PostTrendsPage from './post/PostTrendsPage';
 import PostRecentsPage from './post/PostRecentsPage';
 import PostSubscriptsPage from './post/PostSubscriptsPage';
@@ -17,18 +16,18 @@ function HomePage(props: HomePageProps) {
       <Route path={['/']} exact>
         <PostMainPage />
       </Route>
-      <Route path="/trend" exact>
+      <Route path="/trends" exact>
         <PostTrendsPage />
       </Route>
-      <Route path="/recent" exact>
+      <Route path="/recents" exact>
         <PostRecentsPage />
       </Route>
-      <Route path="/subscript" exact>
+      <Route path="/subscripts" exact>
         <PostSubscriptsPage />
       </Route>
-      <Route path="/tag" exact>
+      {/* <Route path="/tags" exact>
         <TagPage />
-      </Route>
+      </Route> */}
     </LayOut>
   );
 }

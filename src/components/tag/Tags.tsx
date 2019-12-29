@@ -6,7 +6,7 @@ const TagsBlock = styled.div``;
 interface TagsProps {}
 
 function Tags(props: TagsProps) {
-  return <TagsBlock>tags</TagsBlock>;
+  return <TagsBlock>Tags</TagsBlock>;
 }
 
 export default Tags;

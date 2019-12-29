@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { NavLink } from 'react-router-dom';
-import { MdFiberNew, MdTrendingUp, MdSubscriptions, MdStar } from 'react-icons/md';
+import {
+  MdFiberNew,
+  MdTrendingUp,
+  MdSubscriptions,
+  MdStar
+} from 'react-icons/md';
 import palette from '../../styles/palette';
 
 const SideMenuBlock = styled.div`
@@ -43,27 +48,27 @@ function SideMenu(props: SideMenuProps) {
   return (
     <SideMenuBlock>
       <SideMenuItem
-        to="/trend"
+        to="/trends"
         activeClassName="active"
         isActive={(match, location) => {
           if (!match) return false;
-          return ['/', '/trend'].indexOf(location.pathname) !== -1;
+          return ['/', '/trends'].indexOf(location.pathname) !== -1;
         }}
       >
         <MdTrendingUp />
         인기
       </SideMenuItem>
-      <SideMenuItem to="/recent" activeClassName="active">
+      <SideMenuItem to="/recents" activeClassName="active">
         <MdFiberNew />
         최신
       </SideMenuItem>
-      <SideMenuItem to="/subscript" activeClassName="active">
+      <SideMenuItem to="/subscripts" activeClassName="active">
         <MdSubscriptions />
         구독
       </SideMenuItem>
-      <SideMenuItem to="/tag" activeClassName="active">
+      <SideMenuItem to="/tags" activeClassName="active">
         <MdStar />
-        인기테그
+        테그
       </SideMenuItem>
     </SideMenuBlock>
   );

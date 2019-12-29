@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { IconLogo } from '../../images/svg';
 import { useHistory } from 'react-router-dom';
-import { MdDehaze, MdSearch, MdNoteAdd, MdClear } from 'react-icons/md';
+import { MdDehaze, MdSearch, MdClear, MdCreate } from 'react-icons/md';
 
 import palette from '../../styles/palette';
 import useBoolean from '../../lib/hooks/useBoolean';
@@ -83,7 +83,7 @@ function Header(props: HeaderProps) {
           {value ? <MdClear onClick={show} /> : <MdSearch onClick={show} />}
         </UserMenuIcon>
         <UserMenuIcon>
-          <MdNoteAdd onClick={() => history.push('write')} />
+          <MdCreate onClick={() => history.push('write')} />
         </UserMenuIcon>
       </UserMenu>
       <HeaderUserIcon />

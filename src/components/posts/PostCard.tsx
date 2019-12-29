@@ -60,7 +60,7 @@ const PostCardBlock = styled.div`
         margin: 0 0 0.5rem 0;
       }
       span {
-        font-size: 0.75rem;
+        font-size: 0.8125rem;
         color: ${palette.gray7};
         line-height: 1.5;
         & + & {
@@ -93,9 +93,6 @@ function PostCard({ post }: PostCardProps) {
         </Link>
         <div className="postInfo">
           <div>
-            {/* <Link to={`/@${post.user.email}/${post.urlPath}`}>
-              <h5>{post.title}</h5>
-            </Link> */}
             <PostLink
               postId={post.id}
               userEmail={post.user.email}
@@ -108,7 +105,7 @@ function PostCard({ post }: PostCardProps) {
             <Link to={`@${post.user.email}`}>{post.user.name}</Link>
           </span>
           <div>
-            <span>조회수 1.5만</span>
+            <span>조회수 {post.viewsCount}회</span>
             <span> • </span>
             <span>{formatDate(post.releasedAt)}</span>
           </div>

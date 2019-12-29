@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback } from 'react';
+import React, { ReactNode, useCallback, useRef } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import client from '../../client';
@@ -24,22 +24,26 @@ function PostLink({
   children
 }: PostLinkProps) {
   const to = `/@${userEmail}/${urlPath}`;
+  const prefetchTimeId = useRef<number | null>(null);
   const onPrefetch = useCallback(() => {
     if (!prefetch) return;
     client.query({
       query: GET_POST,
       variables: {
-        id: postId
+        userEmail,
+        urlPath
       }
     });
-  }, [postId, prefetch]);
+  }, [prefetch, urlPath, userEmail]);
 
   const onMouseEnter = () => {
-    setTimeout(onPrefetch, 2000);
+    prefetchTimeId.current = setTimeout(onPrefetch, 2500);
   };
 
   const onMouseLeave = () => {
-    clearTimeout();
+    if (prefetchTimeId.current) {
+      clearTimeout(prefetchTimeId.current);
+    }
   };
   return (
     <PostLinkBlock

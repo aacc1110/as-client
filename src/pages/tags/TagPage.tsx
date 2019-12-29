@@ -1,15 +1,25 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Tags from '../../components/tag/Tags';
+import { Route, Switch } from 'react-router';
+import TagDetailPage from './TagDetailPage';
+import TagListPage from './TagListPage';
+import LayOut from '../../components/LayOut';
 
-const TagPageBlock = styled.div``;
+const TagPageBlock = styled(LayOut)``;
 
 interface TagPageProps {}
 
 function TagPage(props: TagPageProps) {
   return (
     <TagPageBlock>
-      <Tags />
+      <Switch>
+        <Route path="/tags" exact>
+          <TagListPage />
+        </Route>
+        <Route path="/tags/:tag" exact>
+          <TagDetailPage />
+        </Route>
+      </Switch>
     </TagPageBlock>
   );
 }

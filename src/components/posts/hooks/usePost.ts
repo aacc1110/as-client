@@ -3,8 +3,8 @@ import { Post } from '../../../lib/graphql/post';
 import { safe } from '../../../lib/utils';
 
 export const GET_POST = gql`
-  query Post($id: ID) {
-    post(id: $id) {
+  query Post($id: ID, $userEmail: String, $urlPath: String) {
+    post(id: $id, userEmail: $userEmail, urlPath: $urlPath) {
       id
       title
       body
@@ -42,9 +42,15 @@ export const GET_POST = gql`
   }
 `;
 
-export default function usePost(id: string | null) {
+export default function usePost(
+  userEmail: string | undefined,
+  urlPath: string | undefined
+) {
   const getPost = useQuery<{ post: Post }>(GET_POST, {
-    variables: { id },
+    variables: {
+      userEmail,
+      urlPath
+    },
     fetchPolicy: 'cache-first'
   });
 

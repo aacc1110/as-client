@@ -3,7 +3,11 @@ import styled from '@emotion/styled';
 import { userHomeImage, loginUserThumbnail } from '../../images/img';
 import useUserInfo from './hooks/useUserInfo';
 import { useParams } from 'react-router';
-import { MdNotificationsActive, MdNotificationsNone, MdNotificationsOff } from 'react-icons/md';
+import {
+  MdNotificationsActive,
+  MdNotificationsNone,
+  MdNotificationsOff
+} from 'react-icons/md';
 import palette from '../../styles/palette';
 import UserHomeMenu from './UserHomeMenu';
 import UserHomePost from './UserHomePost';

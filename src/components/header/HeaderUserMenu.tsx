@@ -6,7 +6,12 @@ import useUser from '../../lib/hooks/useUser';
 import { loginUserThumbnail } from '../../images/img';
 import { Link } from 'react-router-dom';
 import useLogin from '../auth/hooks/useLogin';
-import { MdHome, MdSettings, MdPermPhoneMsg, MdExitToApp } from 'react-icons/md';
+import {
+  MdHome,
+  MdSettings,
+  MdPermPhoneMsg,
+  MdExitToApp
+} from 'react-icons/md';
 
 const HeaderUserMenuBlock = styled.div`
   position: fixed;

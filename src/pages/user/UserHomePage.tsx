@@ -14,7 +14,7 @@ function UserHomePage(props: UserHomePageProps) {
   return (
     <UserHomePageBlock>
       <Switch>
-        <Route path="/@:useremail/:urlPath">
+        <Route path="/@:useremail/:urlpath">
           <PostViewPage />
         </Route>
         <Route path={['/@:useremail', '/@:useremail/:tab(series|about)']} exact>

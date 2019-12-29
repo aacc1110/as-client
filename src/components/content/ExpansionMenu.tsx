@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import palette from '../../styles/palette';
-import { MdTrendingUp, MdFiberNew, MdSubscriptions, MdStar } from 'react-icons/md';
+import {
+  MdTrendingUp,
+  MdFiberNew,
+  MdSubscriptions,
+  MdStar
+} from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 
 const ExpansionMenuBlock = styled.div`
@@ -59,67 +64,67 @@ function ExpansionMenu(props: ExpansionMenuProps) {
   return (
     <ExpansionMenuBlock>
       <ExpansionMenuItem
-        to="/trend"
+        to="/trends"
         activeClassName="active"
         isActive={(match, location) => {
           if (!match) return false;
-          return ['/', '/trend'].indexOf(location.pathname) !== -1;
+          return ['/', '/trends'].indexOf(location.pathname) !== -1;
         }}
       >
         <MdTrendingUp />
         인기
       </ExpansionMenuItem>
-      <ExpansionMenuItem to="/recent" activeClassName="active">
+      <ExpansionMenuItem to="/recents" activeClassName="active">
         <MdFiberNew />
         최신
       </ExpansionMenuItem>
       <HorizontalBar />
-      <ExpansionMenuItem to="/subscript" activeClassName="active">
+      <ExpansionMenuItem to="/subscripts" activeClassName="active">
         <MdSubscriptions />
         구독
       </ExpansionMenuItem>
       <HorizontalBar />
-      <ExpansionMenuItem to="/tag" activeClassName="active">
+      <ExpansionMenuItem to="/tags" activeClassName="active">
         <MdStar />
-        인기테그
+        테그
       </ExpansionMenuItem>
-      <ExpansionMenuItem to="/tag">
+      <ExpansionMenuItem to="/tags">
         <MdFiberNew />
         최신
       </ExpansionMenuItem>
-      <ExpansionMenuItem to="/tag">
+      <ExpansionMenuItem to="/tags">
         <MdFiberNew />
         최신
       </ExpansionMenuItem>
-      <ExpansionMenuItem to="/tag">
+      <ExpansionMenuItem to="/tags">
         <MdFiberNew />
         최신
       </ExpansionMenuItem>
-      <ExpansionMenuItem to="/tag">
+      <ExpansionMenuItem to="/tags">
         <MdFiberNew />
         최신
       </ExpansionMenuItem>
-      <ExpansionMenuItem to="/tag">
+      <ExpansionMenuItem to="/tags">
         <MdFiberNew />
         최신
       </ExpansionMenuItem>
-      <ExpansionMenuItem to="/tag">
+      <ExpansionMenuItem to="/tags">
         <MdFiberNew />
         최신
       </ExpansionMenuItem>
-      <ExpansionMenuItem to="/tag">
+      <ExpansionMenuItem to="/tags">
         <MdFiberNew />
         최신
       </ExpansionMenuItem>
-      <ExpansionMenuItem to="/tag">
+      <ExpansionMenuItem to="/tags">
         <MdFiberNew />
         최신
       </ExpansionMenuItem>
-      <ExpansionMenuItem to="/tag">
+      <ExpansionMenuItem to="/tags">
         <MdFiberNew />
         최신
       </ExpansionMenuItem>
-      <ExpansionMenuItem to="/tag">
+      <ExpansionMenuItem to="/tags">
         <MdFiberNew />
         최신
       </ExpansionMenuItem>
