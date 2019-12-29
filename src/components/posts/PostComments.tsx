@@ -5,6 +5,7 @@ import { Comment } from '../../lib/graphql/post';
 import { loginUserThumbnail } from '../../images/img';
 import palette from '../../styles/palette';
 import useComment from './hooks/useComment';
+import PostCommentCard from './PostCommentCard';
 
 const PostCommentsBlock = styled.div`
   margin-top: 24px;
@@ -162,6 +163,9 @@ function PostComments({ postId, comments }: PostCommentsProps) {
           </form>
         </div>
       </div>
+      {comments.map(comment => (
+        <PostCommentCard key={comment.id} comment={comment} />
+      ))}
     </PostCommentsBlock>
   );
 }

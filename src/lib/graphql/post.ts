@@ -33,5 +33,6 @@ export interface Comment {
   id: string;
   comment: string;
   level: number;
+  user: User;
   post: Post;
 }

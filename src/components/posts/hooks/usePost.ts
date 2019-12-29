@@ -27,6 +27,16 @@ export const GET_POST = gql`
         id
         comment
         level
+        user {
+          id
+          email
+          name
+          userProfile {
+            id
+            thumbnail
+            imageUrl
+          }
+        }
       }
       user {
         id
