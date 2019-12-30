@@ -2,6 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { loginUserThumbnail } from '../../images/img';
 import { Comment } from '../../lib/graphql/post';
+import useUser from '../../lib/hooks/useUser';
+import { formatDate } from '../../lib/utils';
 
 const PostCommentCardBlock = styled.div`
   margin-top: 2rem;
@@ -24,9 +26,11 @@ const PostCommentCardBlock = styled.div`
 
 interface PostCommentCardProps {
   comment?: Comment;
+  postId?: string;
 }
 
-function PostCommentCard({ comment }: PostCommentCardProps) {
+function PostCommentCard({ postId, comment }: PostCommentCardProps) {
+  const { user } = useUser();
   if (!comment) return null;
   return (
     <PostCommentCardBlock>
@@ -38,15 +42,17 @@ function PostCommentCard({ comment }: PostCommentCardProps) {
           <form>
             <div>
               <span>{comment.user.name}</span>
-              <span>date</span>
+              <span>{formatDate(comment.createdAt)}</span>
             </div>
             <div>{comment.comment}</div>
-            <div>
-              <div>취소</div>
+            {user && user.id === comment.user.id ? (
               <div>
-                <input type="submit" value="수정" />
+                <div>취소</div>
+                <div>
+                  <input type="submit" value="수정" />
+                </div>
               </div>
-            </div>
+            ) : null}
           </form>
         </div>
       </div>

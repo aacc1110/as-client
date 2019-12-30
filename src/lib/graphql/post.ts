@@ -33,6 +33,6 @@ export interface Comment {
   id: string;
   comment: string;
   level: number;
+  createdAt: string;
   user: User;
-  post: Post;
 }

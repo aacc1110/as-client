@@ -12,7 +12,7 @@ interface PostWriteProps {}
 function PostWrite(props: PostWriteProps) {
   return (
     <PostWriteBlock>
-      <div className="img-wrapper">sdfsd</div>
+      <div className="img-wrapper">PostWrite</div>
     </PostWriteBlock>
   );
 }

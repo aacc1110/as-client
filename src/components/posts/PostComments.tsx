@@ -1,10 +1,12 @@
-import React, { useRef, FormEvent } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { MdSort } from 'react-icons/md';
+import { useQuery } from '@apollo/client';
+
 import { Comment } from '../../lib/graphql/post';
 import { loginUserThumbnail } from '../../images/img';
 import palette from '../../styles/palette';
-import useComment from './hooks/useComment';
+import useComment, { REFETCH_COMMENTS } from './hooks/useComment';
 import PostCommentCard from './PostCommentCard';
 
 const PostCommentsBlock = styled.div`
@@ -89,6 +91,17 @@ interface PostCommentsProps {
 function PostComments({ postId, comments }: PostCommentsProps) {
   const commentInputRef = useRef<HTMLInputElement>(null);
   const { write } = useComment();
+  const [value, setComment] = useState('');
+  const onChange = () => {
+    setComment(commentInputRef.current!.value);
+  };
+  const refetchComments = useQuery(REFETCH_COMMENTS, {
+    skip: true,
+    fetchPolicy: 'network-only',
+    variables: {
+      id: postId
+    }
+  });
 
   if (!comments) return <div>댓글이 없습니다.</div>;
 
@@ -110,7 +123,7 @@ function PostComments({ postId, comments }: PostCommentsProps) {
     commentBox!.style.borderBottom = `1px solid ${palette.gray5}`;
   };
 
-  const onClick = () => {
+  const onCancel = () => {
     let commentFooter = document.getElementsByClassName(
       'commentFooter'
     )[0] as HTMLElement;
@@ -119,11 +132,21 @@ function PostComments({ postId, comments }: PostCommentsProps) {
     commentInputRef.current.value = '';
   };
 
-  const onSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  // const onSubmit = async (e: FormEvent) => {
+  //   e.preventDefault();
+  //   if (!commentInputRef.current) return;
+  //   const comment = commentInputRef.current.value;
+  //   await write({ postId, comment, level: 0 });
+  //   await refetchComments.refetch();
+  // };
+
+  const onWrite = async () => {
     if (!commentInputRef.current) return;
     const comment = commentInputRef.current.value;
-    write({ postId, comment, level: 0 });
+    await write({ postId, comment, level: 0 });
+    setComment('');
+    onCancel();
+    await refetchComments.refetch();
   };
 
   return (
@@ -142,25 +165,27 @@ function PostComments({ postId, comments }: PostCommentsProps) {
           <img src={loginUserThumbnail} alt="thumbnail" />
         </div>
         <div className="writeComment">
-          <form onSubmit={onSubmit}>
-            <div className="commentWriteBox">
-              <input
-                ref={commentInputRef}
-                type="text"
-                placeholder="공개 댓글 쓰기"
-                onFocus={onFocus}
-                onBlur={onBlur}
-              />
+          {/* <form onSubmit={onSubmit}> */}
+          <div className="commentWriteBox">
+            <input
+              ref={commentInputRef}
+              type="text"
+              placeholder="공개 댓글 쓰기"
+              value={value}
+              onChange={onChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
+            />
+          </div>
+          <div className="commentFooter">
+            <div className="cancle" onClick={onCancel}>
+              취소
             </div>
-            <div className="commentFooter">
-              <div className="cancle" onClick={onClick}>
-                취소
-              </div>
-              <div className="submit">
-                <input type="submit" value="등록" />
-              </div>
+            <div className="submit">
+              <button onClick={onWrite}>작성</button>
             </div>
-          </form>
+          </div>
+          {/* </form> */}
         </div>
       </div>
       {comments.map(comment => (

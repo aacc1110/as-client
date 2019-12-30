@@ -83,7 +83,7 @@ function Header(props: HeaderProps) {
           {value ? <MdClear onClick={show} /> : <MdSearch onClick={show} />}
         </UserMenuIcon>
         <UserMenuIcon>
-          <MdCreate onClick={() => history.push('write')} />
+          <MdCreate onClick={() => history.push('/write')} />
         </UserMenuIcon>
       </UserMenu>
       <HeaderUserIcon />

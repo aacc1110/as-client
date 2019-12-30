@@ -7,6 +7,30 @@ export const WRITE_COMMENT = gql`
   }
 `;
 
+export const REFETCH_COMMENTS = gql`
+  query RefetchComments($id: ID) {
+    post(id: $id) {
+      id
+      comments {
+        id
+        comment
+        level
+        createdAt
+        user {
+          id
+          email
+          name
+          userProfile {
+            id
+            thumbnail
+            imageUrl
+          }
+        }
+      }
+    }
+  }
+`;
+
 export default function useComment() {
   const [writeComment] = useMutation(WRITE_COMMENT);
   const write = useCallback(
