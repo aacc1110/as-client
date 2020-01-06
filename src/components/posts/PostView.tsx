@@ -267,7 +267,12 @@ function PostView({ userEmail, urlPath }: PostViewProps) {
             </p>
           </div>
         </div>
-        <PostComments comments={post.comments} postId={post.id} />
+        <PostComments
+          comments={post.comments}
+          postId={post.id}
+          userEmail={userEmail}
+          urlPath={urlPath}
+        />
       </div>
       <div className="list">
         <div>사이드 리스트</div>

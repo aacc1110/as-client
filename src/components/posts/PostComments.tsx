@@ -8,12 +8,14 @@ import { loginUserThumbnail } from '../../images/img';
 import palette from '../../styles/palette';
 import useComment, { REFETCH_COMMENTS } from './hooks/useComment';
 import PostCommentCard from './PostCommentCard';
+import useUser from '../../lib/hooks/useUser';
 
 const PostCommentsBlock = styled.div`
   margin-top: 24px;
   margin-bottom: 32px;
   display: flex;
   flex-direction: column;
+  font-size: 0.875rem;
   .title {
     margin-bottom: 24px;
     display: flex;
@@ -50,13 +52,15 @@ const PostCommentsBlock = styled.div`
     width: 100%;
     color: #000;
     text-decoration: none;
-    input {
+    textarea {
       position: relative;
       outline: none;
       box-shadow: none;
       width: 100%;
       height: 1.3rem;
       border: none;
+      resize: none;
+      overflow-y: hidden;
       background: transparent;
       margin-bottom: 0.2rem;
     }
@@ -86,10 +90,18 @@ const PostCommentsBlock = styled.div`
 interface PostCommentsProps {
   postId?: string;
   comments?: Comment[];
+  userEmail?: string;
+  urlPath?: string;
 }
 
-function PostComments({ postId, comments }: PostCommentsProps) {
-  const commentInputRef = useRef<HTMLInputElement>(null);
+function PostComments({
+  postId,
+  comments,
+  userEmail,
+  urlPath
+}: PostCommentsProps) {
+  const commentInputRef = useRef<HTMLTextAreaElement | null>(null);
+  const { user } = useUser();
   const { write } = useComment();
   const [value, setComment] = useState('');
   const onChange = () => {
@@ -99,7 +111,8 @@ function PostComments({ postId, comments }: PostCommentsProps) {
     skip: true,
     fetchPolicy: 'network-only',
     variables: {
-      id: postId
+      userEmail,
+      urlPath
     }
   });
 
@@ -132,14 +145,6 @@ function PostComments({ postId, comments }: PostCommentsProps) {
     commentInputRef.current.value = '';
   };
 
-  // const onSubmit = async (e: FormEvent) => {
-  //   e.preventDefault();
-  //   if (!commentInputRef.current) return;
-  //   const comment = commentInputRef.current.value;
-  //   await write({ postId, comment, level: 0 });
-  //   await refetchComments.refetch();
-  // };
-
   const onWrite = async () => {
     if (!commentInputRef.current) return;
     const comment = commentInputRef.current.value;
@@ -160,34 +165,44 @@ function PostComments({ postId, comments }: PostCommentsProps) {
           <MdSort /> 정렬기준
         </span>
       </div>
-      <div className="commentHeader">
-        <div>
-          <img src={loginUserThumbnail} alt="thumbnail" />
-        </div>
-        <div className="writeComment">
-          {/* <form onSubmit={onSubmit}> */}
-          <div className="commentWriteBox">
-            <input
-              ref={commentInputRef}
-              type="text"
-              placeholder="공개 댓글 쓰기"
-              value={value}
-              onChange={onChange}
-              onFocus={onFocus}
-              onBlur={onBlur}
-            />
+      {user ? (
+        <div className="commentHeader">
+          <div>
+            <img src={loginUserThumbnail} alt="thumbnail" />
           </div>
-          <div className="commentFooter">
-            <div className="cancle" onClick={onCancel}>
-              취소
+          <div className="writeComment">
+            <div className="commentWriteBox">
+              <textarea
+                ref={commentInputRef}
+                placeholder="공개 댓글 쓰기"
+                value={value}
+                onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
+              />
+              {/* <input
+                ref={commentInputRef}
+                type="textarea"
+                placeholder="공개 댓글 쓰기"
+                value={value}
+                onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
+              /> */}
             </div>
-            <div className="submit">
-              <button onClick={onWrite}>작성</button>
+            <div className="commentFooter">
+              <div className="cancle" onClick={onCancel}>
+                취소
+              </div>
+              <div className="submit">
+                <button onClick={onWrite}>작성</button>
+              </div>
             </div>
           </div>
-          {/* </form> */}
         </div>
-      </div>
+      ) : (
+        <div>로그인후 댓글을 작성 할 수 있습니다.</div>
+      )}
       {comments.map(comment => (
         <PostCommentCard key={comment.id} comment={comment} />
       ))}

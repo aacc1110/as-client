@@ -8,14 +8,16 @@ export const WRITE_COMMENT = gql`
 `;
 
 export const REFETCH_COMMENTS = gql`
-  query RefetchComments($id: ID) {
-    post(id: $id) {
+  query RefetchComments($id: ID, $userEmail: String, $urlPath: String) {
+    post(id: $id, userEmail: $userEmail, urlPath: $urlPath) {
       id
       comments {
         id
         comment
         level
         createdAt
+        deleted
+        level
         user {
           id
           email
