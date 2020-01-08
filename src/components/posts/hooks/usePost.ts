@@ -25,7 +25,7 @@ export const GET_POST = gql`
       }
       comments {
         id
-        comment
+        text
         level
         createdAt
         user {

@@ -26,7 +26,7 @@ export const GET_POST_RECENT = gql`
       }
       comments {
         id
-        comment
+        text
         level
       }
       user {

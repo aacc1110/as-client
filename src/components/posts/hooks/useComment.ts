@@ -2,8 +2,8 @@ import { gql, useMutation } from '@apollo/client';
 import { useCallback } from 'react';
 
 export const WRITE_COMMENT = gql`
-  mutation WriteComment($postId: ID!, $comment: String!, $level: Int) {
-    writeComment(postId: $postId, comment: $comment, level: $level)
+  mutation WriteComment($postId: ID!, $text: String!, $level: Int) {
+    writeComment(postId: $postId, text: $text, level: $level)
   }
 `;
 
@@ -13,7 +13,7 @@ export const REFETCH_COMMENTS = gql`
       id
       comments {
         id
-        comment
+        text
         level
         createdAt
         deleted
@@ -36,15 +36,11 @@ export const REFETCH_COMMENTS = gql`
 export default function useComment() {
   const [writeComment] = useMutation(WRITE_COMMENT);
   const write = useCallback(
-    (params: {
-      postId: string | undefined;
-      comment: string;
-      level: number;
-    }) => {
+    (params: { postId: string | undefined; text: string; level: number }) => {
       return writeComment({
         variables: {
           postId: params.postId,
-          comment: params.comment,
+          text: params.text,
           level: params.level
         }
       });

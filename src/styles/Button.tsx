@@ -71,7 +71,6 @@ const ButtonBlock = styled.button<ButtonProps>`
   }
 `;
 
-
 function Button({ ref, to, color, size, ...rest }: ButtonProps) {
   if (to) {
     return (

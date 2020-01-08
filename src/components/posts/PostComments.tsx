@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { MdSort } from 'react-icons/md';
 import { useQuery } from '@apollo/client';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import { Comment } from '../../lib/graphql/post';
 import { loginUserThumbnail } from '../../images/img';
@@ -30,7 +31,7 @@ const PostCommentsBlock = styled.div`
   }
   .commentHeader {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     img {
       display: block;
       height: 3rem;
@@ -53,16 +54,18 @@ const PostCommentsBlock = styled.div`
     color: #000;
     text-decoration: none;
     textarea {
-      position: relative;
+      /* position: relative; */
+      font-size: 0.875rem;
       outline: none;
       box-shadow: none;
+      height: 1rem;
       width: 100%;
-      height: 1.3rem;
       border: none;
       resize: none;
       overflow-y: hidden;
       background: transparent;
-      margin-bottom: 0.2rem;
+      line-height: 1.5;
+      /* margin-bottom: 0.2rem; */
     }
     border-bottom: 1px solid ${palette.gray5};
   }
@@ -87,6 +90,17 @@ const PostCommentsBlock = styled.div`
   }
 `;
 
+// const StyledTextarea = styled(TextareaAutosize)`
+//   outline: none;
+//   box-shadow: none;
+//   /* height: 1.3rem; */
+//   width: 100%;
+//   border: none;
+//   resize: none;
+//   overflow-y: hidden;
+//   background: transparent;
+// `;
+
 interface PostCommentsProps {
   postId?: string;
   comments?: Comment[];
@@ -100,13 +114,14 @@ function PostComments({
   userEmail,
   urlPath
 }: PostCommentsProps) {
-  const commentInputRef = useRef<HTMLTextAreaElement | null>(null);
+  const commentTextAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const { user } = useUser();
   const { write } = useComment();
-  const [value, setComment] = useState('');
-  const onChange = () => {
-    setComment(commentInputRef.current!.value);
+  const [text, setComment] = useState('');
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(e.target.value);
   };
+
   const refetchComments = useQuery(REFETCH_COMMENTS, {
     skip: true,
     fetchPolicy: 'network-only',
@@ -116,7 +131,16 @@ function PostComments({
     }
   });
 
-  if (!comments) return <div>댓글이 없습니다.</div>;
+  const autosize = () => {
+    console.log('keydown');
+    // var el = document.body;
+    const el = document.querySelector('textarea');
+    setTimeout(() => {
+      if (!el) return null;
+      el.style.cssText = 'height: 1rem; padding:0';
+      el.style.cssText = 'height:' + el.scrollHeight + 'px';
+    }, 0);
+  };
 
   const onFocus = () => {
     let commentBox = document.getElementsByClassName(
@@ -141,26 +165,28 @@ function PostComments({
       'commentFooter'
     )[0] as HTMLElement;
     commentFooter!.style.display = 'none';
-    if (!commentInputRef.current) return;
-    commentInputRef.current.value = '';
+    if (!commentTextAreaRef.current) return;
+    commentTextAreaRef.current.value = '';
+    autosize();
   };
 
   const onWrite = async () => {
-    if (!commentInputRef.current) return;
-    const comment = commentInputRef.current.value;
-    await write({ postId, comment, level: 0 });
+    if (!commentTextAreaRef.current) return;
+    // const comment = commentTextAreaRef.current.value;
+    // const comment = value;
+    await write({ postId, text, level: 0 });
     setComment('');
     onCancel();
+    autosize();
     await refetchComments.refetch();
   };
+
+  if (!comments) return <div>댓글이 없습니다.</div>;
 
   return (
     <PostCommentsBlock>
       <div className="title">
-        <h4>
-          댓글
-          {comments.length} 개
-        </h4>
+        <h4>댓글 {comments.length}개</h4>
         <span>
           <MdSort /> 정렬기준
         </span>
@@ -172,23 +198,23 @@ function PostComments({
           </div>
           <div className="writeComment">
             <div className="commentWriteBox">
-              <textarea
-                ref={commentInputRef}
+              {/* <StyledTextarea
+                ref={commentTextAreaRef}
                 placeholder="공개 댓글 쓰기"
-                value={value}
-                onChange={onChange}
-                onFocus={onFocus}
-                onBlur={onBlur}
-              />
-              {/* <input
-                ref={commentInputRef}
-                type="textarea"
-                placeholder="공개 댓글 쓰기"
-                value={value}
+                value={comment}
                 onChange={onChange}
                 onFocus={onFocus}
                 onBlur={onBlur}
               /> */}
+              <textarea
+                ref={commentTextAreaRef}
+                placeholder="공개 댓글 쓰기"
+                value={text}
+                onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                onKeyDown={autosize}
+              />
             </div>
             <div className="commentFooter">
               <div className="cancle" onClick={onCancel}>
@@ -203,8 +229,8 @@ function PostComments({
       ) : (
         <div>로그인후 댓글을 작성 할 수 있습니다.</div>
       )}
-      {comments.map(comment => (
-        <PostCommentCard key={comment.id} comment={comment} />
+      {comments.map((comment, index) => (
+        <PostCommentCard key={comment.id} comment={comment} index={index} />
       ))}
     </PostCommentsBlock>
   );

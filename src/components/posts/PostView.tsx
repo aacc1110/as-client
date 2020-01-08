@@ -56,7 +56,8 @@ const PostViewBlock = styled.div`
   .info-contents > .title {
     max-height: 4.8rem;
     overflow: hidden;
-    font-weight: 500;
+    font-weight: 600;
+    color: ${palette.gray8};
     line-height: 2.4rem;
   }
 
@@ -138,10 +139,16 @@ const PostViewBlock = styled.div`
     font-weight: 400;
     line-height: 1.5rem;
     span {
-      height: 3.125rem;
+      /* height: 3.125rem; */
+      line-height: 1.5;
+      letter-spacing: -0.02em;
+      white-space: pre-wrap;
+      word-break: normal;
+      word-wrap: break-word;
+
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       margin: 0 0 0.5rem 0;
     }
@@ -217,7 +224,7 @@ function PostView({ userEmail, urlPath }: PostViewProps) {
             <div className="info">
               <div className="infoText">
                 <span>조회수 {post.viewsCount}회</span>
-                <span>•{formatDate(post.releasedAt)}</span>
+                <span> • {formatDate(post.releasedAt)}</span>
                 <div className="flex"></div>
               </div>
               <div className="infoMenu">

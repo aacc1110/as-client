@@ -1,19 +1,22 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { loginUserThumbnail } from '../../images/img';
 import { Comment } from '../../lib/graphql/post';
 import useUser from '../../lib/hooks/useUser';
 import { formatDate } from '../../lib/utils';
-import { MdMoreVert } from 'react-icons/md';
+import { MdMoreVert, MdSubdirectoryArrowRight } from 'react-icons/md';
 import palette from '../../styles/palette';
 import useBoolean from '../../lib/hooks/useBoolean';
+import { number } from 'yup';
 
 const PostCommentCardBlock = styled.div`
   margin-top: 2rem;
+  font-size: 0.875rem;
+  color: ${palette.gray8};
 
   .commentContents {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     img {
       display: block;
       height: 3rem;
@@ -26,9 +29,15 @@ const PostCommentCardBlock = styled.div`
     }
   }
   .content {
+    position: relative;
+    height: auto;
     flex: 1;
   }
-  .editBox {
+  .contentHead {
+    display: flex;
+    justify-content: space-between;
+  }
+  .editButton {
     svg {
       font-size: 1.125rem;
       color: ${palette.gray6};
@@ -38,28 +47,69 @@ const PostCommentCardBlock = styled.div`
       }
     }
   }
-  .hiddenEditBox {
-    display: inherit;
-    width: 100px;
-    height: auto;
-    justify-content: space-around;
-    top: 2rem;
-    border: 1px solid black;
-    position: relative;
-    right: 6rem;
+  .buttonWarp {
+    width: 3.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+const SubComment = styled.div`
+  width: 90%;
+  border: 1px solid black;
+`;
+
+const DisplayText = styled.div`
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  white-space: pre-wrap;
+  word-break: normal;
+  word-wrap: break-word;
+`;
+const Span = styled.span`
+  font-size: 0.75rem;
+  color: ${palette.gray7};
+  cursor: pointer;
+  :hover {
+    color: ${palette.gray6};
+    text-decoration: underline;
   }
 `;
 
 interface PostCommentCardProps {
+  index?: number;
   comment?: Comment;
   postId?: string;
 }
 
-function PostCommentCard({ postId, comment }: PostCommentCardProps) {
+function PostCommentCard({ postId, comment, index }: PostCommentCardProps) {
   const { user } = useUser();
   const { value, show } = useBoolean(false);
+  console.log(index);
+
+  const onEditBox = (mode: string) => {
+    const hiddenEditBox = document.getElementsByClassName(
+      `hiddenEditBox${index}`
+    )[0] as HTMLElement;
+
+    if (mode === ('leave' || 'close')) {
+      hiddenEditBox.style.display = 'none';
+      return;
+    }
+    if (hiddenEditBox.style.display === 'none') {
+      hiddenEditBox!.style.display = 'contents';
+      return;
+    }
+    hiddenEditBox.style.display = 'none';
+    return;
+  };
 
   if (!comment) return null;
+
+  const { createdAt, text } = comment;
+  console.log(text);
+
   return (
     <PostCommentCardBlock>
       <div className="commentContents">
@@ -67,22 +117,47 @@ function PostCommentCard({ postId, comment }: PostCommentCardProps) {
           <img src={loginUserThumbnail} alt="thumbnail" />
         </div>
         <div className="content">
-          <div>
-            <span>{comment.user.name}</span>
-            <span>{formatDate(comment.createdAt)}</span>
+          <div className="contentHead">
+            <div>
+              <span>
+                <b>{comment.user.name}</b>
+              </span>
+              <span> {formatDate(createdAt)}</span>
+            </div>
+            <div
+              className={`hiddenEditBox${index}`}
+              style={{ display: 'none' }}
+              onMouseEnter={() => onEditBox('enter')}
+              onMouseLeave={() => onEditBox('close')}
+            >
+              {user && user.id === comment.user.id ? (
+                <div className="buttonWarp">
+                  <Span>수정</Span>
+                  <Span>삭제</Span>
+                </div>
+              ) : (
+                <Span>신고</Span>
+              )}
+            </div>
           </div>
-          <div>{comment.comment}</div>
-          <div>답글 22</div>
-        </div>
-        <div className="editBox">
-          <MdMoreVert onClick={show} />
-        </div>
-        {value && (
-          <div className="hiddenEditBox">
-            <div>수정</div>
-            <div>삭제</div>
+          <DisplayText>{text || '삭제된 댓글입니다.'}</DisplayText>
+          <div className="subComment">
+            <Span onClick={show}>답글 22</Span>
           </div>
-        )}
+
+          {value && (
+            <SubComment>
+              <MdSubdirectoryArrowRight />
+              subComment
+            </SubComment>
+          )}
+        </div>
+        <div className="editButton">
+          <MdMoreVert
+            onClick={() => onEditBox('show')}
+            onMouseLeave={() => onEditBox('leave')}
+          />
+        </div>
       </div>
     </PostCommentCardBlock>
   );

@@ -31,7 +31,7 @@ export interface Tag {
 
 export interface Comment {
   id: string;
-  comment: string;
+  text: string;
   level: number;
   createdAt: string;
   user: User;
