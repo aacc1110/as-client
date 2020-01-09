@@ -11,20 +11,43 @@ export const REFETCH_COMMENTS = gql`
   query RefetchComments($id: ID, $userEmail: String, $urlPath: String) {
     post(id: $id, userEmail: $userEmail, urlPath: $urlPath) {
       id
+      title
+      commentsCount
       comments {
         id
         text
         level
-        createdAt
+        like
+        hate
+        hasReplies
         deleted
+        createdAt
         user {
           id
-          email
           name
+          email
           userProfile {
             id
             thumbnail
             imageUrl
+          }
+        }
+        repliesCount
+        replies {
+          id
+          text
+          level
+          deleted
+          createdAt
+          user {
+            id
+            name
+            email
+            userProfile {
+              id
+              thumbnail
+              imageUrl
+            }
           }
         }
       }

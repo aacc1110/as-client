@@ -14,6 +14,7 @@ interface HeaderProps {}
 const HeaderBlock = styled.div`
   position: fixed;
   display: inline-flex;
+  z-index: 99999;
   top: 0;
   width: 100%;
   height: 3rem;

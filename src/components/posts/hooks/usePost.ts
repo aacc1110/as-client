@@ -28,15 +28,37 @@ export const GET_POST = gql`
         id
         text
         level
+        like
+        hate
+        hasReplies
+        deleted
         createdAt
         user {
           id
-          email
           name
+          email
           userProfile {
             id
             thumbnail
             imageUrl
+          }
+        }
+        repliesCount
+        replies {
+          id
+          text
+          level
+          deleted
+          createdAt
+          user {
+            id
+            name
+            email
+            userProfile {
+              id
+              thumbnail
+              imageUrl
+            }
           }
         }
       }

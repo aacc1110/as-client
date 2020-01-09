@@ -7,6 +7,7 @@ import { MdMoreVert, MdSubdirectoryArrowRight } from 'react-icons/md';
 import palette from '../../styles/palette';
 import useBoolean from '../../lib/hooks/useBoolean';
 import { Comment } from '../../lib/graphql/comment';
+import PostSubComment from './PostSubComment';
 
 const PostCommentCardBlock = styled.div`
   margin-top: 2rem;
@@ -53,7 +54,7 @@ const PostCommentCardBlock = styled.div`
   }
 `;
 const SubComment = styled.div`
-  width: 90%;
+  width: 100%;
   border: 1px solid black;
 `;
 
@@ -77,12 +78,18 @@ const Span = styled.span`
 `;
 
 interface PostCommentCardProps {
-  index?: number;
+  index?: string;
   comment?: Comment | undefined;
   postId?: string;
+  sub?: boolean;
 }
 
-function PostCommentCard({ postId, comment, index }: PostCommentCardProps) {
+function PostCommentCard({
+  postId,
+  comment,
+  index,
+  sub
+}: PostCommentCardProps) {
   const { user } = useUser();
   const { value, show } = useBoolean(false);
   console.log(index);
@@ -106,12 +113,12 @@ function PostCommentCard({ postId, comment, index }: PostCommentCardProps) {
 
   if (!comment) return null;
 
-  const { createdAt, text } = comment;
-  console.log(text);
-
+  const { createdAt, text, repliesCount, replies } = comment;
+  console.log(sub);
   return (
     <PostCommentCardBlock>
       <div className="commentContents">
+        {sub && <MdSubdirectoryArrowRight />}
         <div>
           <img src={loginUserThumbnail} alt="thumbnail" />
         </div>
@@ -141,13 +148,16 @@ function PostCommentCard({ postId, comment, index }: PostCommentCardProps) {
           </div>
           <DisplayText>{text || '삭제된 댓글입니다.'}</DisplayText>
           <div className="subComment">
-            <Span onClick={show}>답글 22</Span>
+            {repliesCount > 0 ? (
+              <Span onClick={show}>답글 {repliesCount}</Span>
+            ) : (
+              <Span onClick={show}>답글쓰기</Span>
+            )}
           </div>
 
           {value && (
             <SubComment>
-              <MdSubdirectoryArrowRight />
-              subComment
+              <PostSubComment comments={replies} />
             </SubComment>
           )}
         </div>
