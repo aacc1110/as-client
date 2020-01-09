@@ -277,6 +277,7 @@ function PostView({ userEmail, urlPath }: PostViewProps) {
         <PostComments
           comments={post.comments}
           postId={post.id}
+          commentsCount={post.commentsCount}
           userEmail={userEmail}
           urlPath={urlPath}
         />

@@ -2,14 +2,13 @@ import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { MdSort } from 'react-icons/md';
 import { useQuery } from '@apollo/client';
-import TextareaAutosize from 'react-textarea-autosize';
 
-import { Comment } from '../../lib/graphql/post';
 import { loginUserThumbnail } from '../../images/img';
 import palette from '../../styles/palette';
 import useComment, { REFETCH_COMMENTS } from './hooks/useComment';
 import PostCommentCard from './PostCommentCard';
 import useUser from '../../lib/hooks/useUser';
+import { Comment } from '../../lib/graphql/comment';
 
 const PostCommentsBlock = styled.div`
   margin-top: 24px;
@@ -90,20 +89,10 @@ const PostCommentsBlock = styled.div`
   }
 `;
 
-// const StyledTextarea = styled(TextareaAutosize)`
-//   outline: none;
-//   box-shadow: none;
-//   /* height: 1.3rem; */
-//   width: 100%;
-//   border: none;
-//   resize: none;
-//   overflow-y: hidden;
-//   background: transparent;
-// `;
-
 interface PostCommentsProps {
   postId?: string;
   comments?: Comment[];
+  commentsCount?: number;
   userEmail?: string;
   urlPath?: string;
 }
@@ -111,6 +100,7 @@ interface PostCommentsProps {
 function PostComments({
   postId,
   comments,
+  commentsCount,
   userEmail,
   urlPath
 }: PostCommentsProps) {
@@ -172,9 +162,7 @@ function PostComments({
 
   const onWrite = async () => {
     if (!commentTextAreaRef.current) return;
-    // const comment = commentTextAreaRef.current.value;
-    // const comment = value;
-    await write({ postId, text, level: 0 });
+    await write({ postId, text });
     setComment('');
     onCancel();
     autosize();
@@ -186,7 +174,7 @@ function PostComments({
   return (
     <PostCommentsBlock>
       <div className="title">
-        <h4>댓글 {comments.length}개</h4>
+        <h4>댓글 {commentsCount}개</h4>
         <span>
           <MdSort /> 정렬기준
         </span>
@@ -198,14 +186,6 @@ function PostComments({
           </div>
           <div className="writeComment">
             <div className="commentWriteBox">
-              {/* <StyledTextarea
-                ref={commentTextAreaRef}
-                placeholder="공개 댓글 쓰기"
-                value={comment}
-                onChange={onChange}
-                onFocus={onFocus}
-                onBlur={onBlur}
-              /> */}
               <textarea
                 ref={commentTextAreaRef}
                 placeholder="공개 댓글 쓰기"

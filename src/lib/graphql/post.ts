@@ -1,4 +1,5 @@
 import { User } from './user';
+import { Comment } from './comment';
 
 export interface Post {
   id: string;
@@ -16,6 +17,7 @@ export interface Post {
   images: Image[];
   tags: Tag[];
   comments: Comment[];
+  commentsCount: number;
 }
 export interface Image {
   id: string;
@@ -29,10 +31,10 @@ export interface Tag {
   posts: Post[];
 }
 
-export interface Comment {
-  id: string;
-  text: string;
-  level: number;
-  createdAt: string;
-  user: User;
+export interface PostInput {
+  title: string;
+  body: string;
+  urlPath: string;
+  tags: [string];
+  imageUrl: [string];
 }

@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { loginUserThumbnail } from '../../images/img';
-import { Comment } from '../../lib/graphql/post';
 import useUser from '../../lib/hooks/useUser';
 import { formatDate } from '../../lib/utils';
 import { MdMoreVert, MdSubdirectoryArrowRight } from 'react-icons/md';
 import palette from '../../styles/palette';
 import useBoolean from '../../lib/hooks/useBoolean';
-import { number } from 'yup';
+import { Comment } from '../../lib/graphql/comment';
 
 const PostCommentCardBlock = styled.div`
   margin-top: 2rem;
@@ -79,7 +78,7 @@ const Span = styled.span`
 
 interface PostCommentCardProps {
   index?: number;
-  comment?: Comment;
+  comment?: Comment | undefined;
   postId?: string;
 }
 

@@ -23,6 +23,7 @@ export const GET_POST = gql`
         id
         tag
       }
+      commentsCount
       comments {
         id
         text
