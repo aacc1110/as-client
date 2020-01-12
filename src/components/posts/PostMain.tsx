@@ -14,23 +14,25 @@ const PostMainBlock = styled.div`
     width: 100%;
     padding: 1rem 0 1rem 0;
   }
-  article {
+`;
+
+const PostList = styled.div`
+  ul {
     display: flex;
-    flex-wrap: wrap;
-    /* margin: 0 -0.5rem 0 -0.5rem; */
-    justify-content: space-between;
-    section {
+    flex-flow: row wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      margin-right: 1rem;
       ${media.xxlarge} {
-        width: calc(100% / 4);
+        flex: 0 1 20%;
+        padding: 0 0 34px;
       }
-      ${media.medium} {
-        width: calc(100% / 3);
+      ${media.large} {
+        flex: 0 1 25%;
+        padding: 0 0 30px;
       }
-      ${media.small} {
-        width: calc(100% / 2);
-      }
-      margin: 0 -0.5rem 1.5rem -0.5rem;
-      /* margin-left: 0.5rem; */
     }
   }
 `;
@@ -53,13 +55,15 @@ function PostMain(props: PostMainProps) {
   return (
     <PostMainBlock>
       <div className="title-wrapper">맞춤 포스트</div>
-      <article>
-        {posts.map(post => (
-          <section key={post.id}>
-            <PostCard post={post} />
-          </section>
-        ))}
-      </article>
+      <PostList>
+        <ul>
+          {posts.map(post => (
+            <li>
+              <PostCard key={post.id} post={post} />
+            </li>
+          ))}
+        </ul>
+      </PostList>
     </PostMainBlock>
   );
 }

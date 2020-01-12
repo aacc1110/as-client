@@ -2,8 +2,14 @@ import { gql, useMutation } from '@apollo/client';
 import { useCallback } from 'react';
 
 export const WRITE_COMMENT = gql`
-  mutation WriteComment($postId: ID!, $text: String!) {
-    writeComment(postId: $postId, text: $text)
+  mutation WriteComment($id: ID, $postId: ID!, $text: String!) {
+    writeComment(id: $id, postId: $postId, text: $text)
+  }
+`;
+
+export const REMOVE_COMMENT = gql`
+  mutation RemoveComment($id: ID!, $postId: ID) {
+    removeComment(id: $id, postId: $postId)
   }
 `;
 
@@ -58,9 +64,14 @@ export const REFETCH_COMMENTS = gql`
 export default function useComment() {
   const [writeComment] = useMutation(WRITE_COMMENT);
   const write = useCallback(
-    (params: { postId: string | undefined; text: string }) => {
+    (params: {
+      id: string | undefined;
+      postId: string | undefined;
+      text: string;
+    }) => {
       return writeComment({
         variables: {
+          id: params.id,
           postId: params.postId,
           text: params.text
         }

@@ -68,7 +68,7 @@ const SearchInput = styled.input`
 function Header(props: HeaderProps) {
   const history = useHistory();
   const { onVisible } = useUser();
-  const { value, show } = useBoolean(false);
+  const [value, show] = useBoolean(false);
 
   return (
     <HeaderBlock>

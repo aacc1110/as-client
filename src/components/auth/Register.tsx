@@ -5,7 +5,7 @@ import { Link, useLocation, useHistory } from 'react-router-dom';
 import { IconLogo } from '../../images/svg';
 import { loginAdvertise } from '../../images/img';
 
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   CREATE_ME,
   UserEmailConfirmResponse,

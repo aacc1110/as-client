@@ -6,13 +6,31 @@ import { Comment } from '../../lib/graphql/comment';
 const PostSubCommentBlock = styled.div``;
 
 interface PostSubCommentProps {
+  commentId?: string;
+  postId?: string;
   comments?: Comment[];
+  userEmail?: string;
+  urlPath?: string;
 }
 
-function PostSubComment({ comments }: PostSubCommentProps) {
+function PostSubComment({
+  commentId,
+  postId,
+  comments,
+  userEmail,
+  urlPath
+}: PostSubCommentProps) {
+  console.log('PostSubComment-postId', postId);
   return (
     <PostSubCommentBlock>
-      <PostComments comments={comments} sub={true} />
+      <PostComments
+        comments={comments}
+        commentId={commentId}
+        postId={postId}
+        sub={true}
+        userEmail={userEmail}
+        urlPath={urlPath}
+      />
     </PostSubCommentBlock>
   );
 }

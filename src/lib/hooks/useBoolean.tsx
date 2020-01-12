@@ -5,7 +5,10 @@ const useBoolean = (initialState: boolean) => {
   const show = useCallback(() => {
     setValue(!value);
   }, [value]);
-  console.log('useBoolea:', value);
-  return { value, show };
+  return [value, show, setValue] as [
+    typeof value,
+    typeof show,
+    typeof setValue
+  ];
 };
 export default useBoolean;

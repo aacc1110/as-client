@@ -42,12 +42,12 @@ const PostCommentsBlock = styled.div`
       margin-right: 1rem;
     }
   }
-  .commentHeader > .writeComment {
+  .writeComment {
     flex: 1;
     font-size: 0.875rem;
     color: ${palette.gray7};
   }
-  .commentWriteBox {
+  #commentWrap {
     display: inline-block;
     width: 100%;
     color: #000;
@@ -84,6 +84,11 @@ const PostCommentsBlock = styled.div`
     align-items: center;
     justify-content: flex-end;
   }
+  /* .commentFootertrue {
+    display: none;
+    align-items: center;
+    justify-content: flex-end;
+  } */
   .cancle {
     cursor: pointer;
   }
@@ -95,6 +100,8 @@ interface PostCommentsProps {
   commentsCount?: number;
   userEmail?: string;
   urlPath?: string;
+  commentId?: string;
+  sub: boolean;
 }
 
 function PostComments({
@@ -102,16 +109,19 @@ function PostComments({
   comments,
   commentsCount,
   userEmail,
-  urlPath
+  urlPath,
+  commentId,
+  sub
 }: PostCommentsProps) {
   const commentTextAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const { user } = useUser();
   const { write } = useComment();
   const [text, setComment] = useState('');
+
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
-
+  console.log('userEmail', userEmail);
   const refetchComments = useQuery(REFETCH_COMMENTS, {
     skip: true,
     fetchPolicy: 'network-only',
@@ -122,9 +132,7 @@ function PostComments({
   });
 
   const autosize = () => {
-    console.log('keydown');
-    // var el = document.body;
-    const el = document.querySelector('textarea');
+    const el = document.getElementById(`${commentId}`);
     setTimeout(() => {
       if (!el) return null;
       el.style.cssText = 'height: 1rem; padding:0';
@@ -134,10 +142,10 @@ function PostComments({
 
   const onFocus = () => {
     let commentBox = document.getElementsByClassName(
-      'commentWriteBox'
+      `commentWriteBox${commentId}`
     )[0] as HTMLElement;
     let commentFooter = document.getElementsByClassName(
-      'commentFooter'
+      `commentFooter${commentId}`
     )[0] as HTMLElement;
     commentBox!.style.borderBottom = `2px solid #000`;
     commentFooter!.style.display = 'flex';
@@ -145,14 +153,14 @@ function PostComments({
 
   const onBlur = () => {
     let commentBox = document.getElementsByClassName(
-      'commentWriteBox'
+      `commentWriteBox${commentId}`
     )[0] as HTMLElement;
     commentBox!.style.borderBottom = `1px solid ${palette.gray5}`;
   };
 
   const onCancel = () => {
     let commentFooter = document.getElementsByClassName(
-      'commentFooter'
+      `commentFooter${commentId}`
     )[0] as HTMLElement;
     commentFooter!.style.display = 'none';
     if (!commentTextAreaRef.current) return;
@@ -162,41 +170,73 @@ function PostComments({
 
   const onWrite = async () => {
     if (!commentTextAreaRef.current) return;
-    await write({ postId, text });
+    if (commentTextAreaRef.current.value === '') {
+      commentTextAreaRef.current.focus();
+      commentTextAreaRef.current.placeholder = '댓글을 작성해주세요.';
+      return;
+    }
+    await write({
+      id: commentId,
+      postId,
+      text
+    });
+    await refetchComments.refetch();
     setComment('');
     onCancel();
     autosize();
-    await refetchComments.refetch();
   };
+  console.log('PostComments-postId', postId);
+  console.log('sub', sub);
+  if (sub && commentId) {
+    let commentBox = document.getElementById(
+      `${commentId}`
+    ) as HTMLTextAreaElement;
+    if (commentBox) {
+      commentBox!.placeholder = `댓글 쓰기`;
+    }
+  }
 
   if (!comments) return <div>댓글이 없습니다.</div>;
 
   return (
     <PostCommentsBlock>
-      <div className="title">
-        <h4>댓글 {commentsCount}개</h4>
-        <span>
-          <MdSort /> 정렬기준
-        </span>
-      </div>
+      {!sub && (
+        <div className="title">
+          <h4>댓글 {commentsCount}개</h4>
+          <span>
+            <MdSort /> 정렬기준
+          </span>
+        </div>
+      )}
       {user ? (
         <div className="commentHeader">
           <div>
             <img src={loginUserThumbnail} alt="thumbnail" />
           </div>
-          <div className="writeComment">
-            <div className="commentWriteBox">
+
+          <div className={`writeComment`}>
+            <div className={`commentWriteBox${commentId}`} id="commentWrap">
               <textarea
+                id={`${commentId}`}
                 ref={commentTextAreaRef}
                 placeholder="공개 댓글 쓰기"
                 value={text}
+                minLength={2}
+                maxLength={300}
                 onChange={onChange}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onKeyDown={autosize}
               />
             </div>
-            <div className="commentFooter">
+            <div
+              className={`commentFooter${commentId}`}
+              style={{
+                display: 'none',
+                alignItems: 'center',
+                justifyContent: 'flex-end'
+              }}
+            >
               <div className="cancle" onClick={onCancel}>
                 취소
               </div>
@@ -209,8 +249,15 @@ function PostComments({
       ) : (
         <div>로그인후 댓글을 작성 할 수 있습니다.</div>
       )}
-      {comments.map((comment, index) => (
-        <PostCommentCard key={comment.id} comment={comment} index={index} />
+      {comments.map(comment => (
+        <PostCommentCard
+          key={comment.id}
+          comment={comment}
+          commentId={commentId}
+          postId={postId}
+          userEmail={userEmail}
+          urlPath={urlPath}
+        />
       ))}
     </PostCommentsBlock>
   );

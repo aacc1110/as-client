@@ -31,7 +31,7 @@ const HeaderUserIconBlock = styled.div`
 interface HeaderUserIconProps {}
 
 function HeaderUserIcon(props: HeaderUserIconProps) {
-  const { value, show } = useBoolean(false);
+  const [value, show] = useBoolean(false);
   const history = useHistory();
   const { user, notUser } = useUser();
   const xlg: string = document.cookie.replace(

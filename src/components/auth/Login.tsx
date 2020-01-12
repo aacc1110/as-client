@@ -183,7 +183,7 @@ interface LoginProps {}
 // };
 
 function Login(props: LoginProps) {
-  const { value, show } = useBoolean(false);
+  const [value, show] = useBoolean(false);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const registerRef = useRef<HTMLButtonElement>(null);

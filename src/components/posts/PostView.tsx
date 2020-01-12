@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from '@emotion/styled';
 import { postSampleImage, loginUserThumbnail } from '../../images/img';
 import usePost from './hooks/usePost';
@@ -58,7 +58,8 @@ const PostViewBlock = styled.div`
     overflow: hidden;
     font-weight: 600;
     color: ${palette.gray8};
-    line-height: 2.4rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
   }
 
   .info-contents > .info {
@@ -280,6 +281,7 @@ function PostView({ userEmail, urlPath }: PostViewProps) {
           commentsCount={post.commentsCount}
           userEmail={userEmail}
           urlPath={urlPath}
+          sub={false}
         />
       </div>
       <div className="list">
@@ -289,4 +291,4 @@ function PostView({ userEmail, urlPath }: PostViewProps) {
   );
 }
 
-export default PostView;
+export default memo(PostView);
