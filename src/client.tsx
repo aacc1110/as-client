@@ -18,6 +18,6 @@ const client = new ApolloClient({
   // }
 });
 
-// (window as any).client = client;
+(window as any).client = client;
 
 export default client;
