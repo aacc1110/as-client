@@ -8,9 +8,7 @@ export const GET_POST_RECENT = gql`
     posts(cursor: $cursor) {
       id
       title
-      body
       isPublish
-      meta
       viewsCount
       shortSummary
       urlPath
@@ -19,15 +17,6 @@ export const GET_POST_RECENT = gql`
       images {
         id
         imageUrl
-      }
-      tags {
-        id
-        tag
-      }
-      comments {
-        id
-        text
-        level
       }
       user {
         id

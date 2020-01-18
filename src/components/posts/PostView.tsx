@@ -10,7 +10,9 @@ import {
   MdPlaylistAdd,
   MdThumbDown,
   MdReply,
-  MdMoreHoriz
+  MdMoreHoriz,
+  MdFavoriteBorder,
+  MdFavorite
 } from 'react-icons/md';
 import useUser from '../../lib/hooks/useUser';
 import PostComments from './PostComments';
@@ -31,8 +33,8 @@ const PostViewBlock = styled.div`
   .imgBox {
     position: relative;
     img {
-      max-width: 900px;
-      height: 100px;
+      width: auto;
+      height: 200px;
       /* height: auto; */
       border: 1px solid black;
     }
@@ -179,7 +181,7 @@ interface PostViewProps {
 }
 
 function PostView({ userEmail, urlPath }: PostViewProps) {
-  const { post } = usePost(userEmail, urlPath);
+  const { post, onLikePost, onUnlikePost } = usePost(userEmail, urlPath);
   const { user } = useUser();
 
   const onClick = (mode: string) => {
@@ -200,6 +202,15 @@ function PostView({ userEmail, urlPath }: PostViewProps) {
       see!.style.display = 'contents';
       hide!.style.display = 'none';
       return;
+    }
+  };
+
+  const onLike = (postId: string, mode: string) => {
+    console.log(postId, mode);
+    if (mode === 'LIKE') {
+      onLikePost(postId);
+    } else if (mode === 'UNLIKE') {
+      onUnlikePost(postId);
     }
   };
 
@@ -229,14 +240,16 @@ function PostView({ userEmail, urlPath }: PostViewProps) {
                 <div className="flex"></div>
               </div>
               <div className="infoMenu">
-                <MdThumbUp />
-                <span>187</span>
-                <MdThumbDown />
-                <span>12</span>
+                {post.liked ? (
+                  <MdFavorite onClick={() => onLike(post.id, 'UNLIKE')} />
+                ) : (
+                  <MdFavoriteBorder onClick={() => onLike(post.id, 'LIKE')} />
+                )}
+                <span> {post.likes > 0 ? post.likes : 0}</span>
                 <MdPlaylistAdd />
-                <span>저장</span>
+                <span> 저장</span>
                 <MdReply />
-                <span>공유</span>
+                <span> 공유</span>
                 <MdMoreHoriz />
               </div>
             </div>

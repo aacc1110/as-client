@@ -5,6 +5,7 @@ export interface Post {
   id: string;
   title: string;
   body: string;
+  likes: number;
   isPublish: boolean;
   meta: JSON;
   viewsCount: number;
@@ -14,8 +15,9 @@ export interface Post {
   createdAt: string;
   updatedAt: string;
   user: User;
-  images: Image[];
   tags: Tag[];
+  images: Image[];
+  liked: boolean;
   comments: Comment[];
   commentsCount: number;
 }

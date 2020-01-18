@@ -10,6 +10,7 @@ import {
 import { NavLink } from 'react-router-dom';
 
 const ExpansionMenuBlock = styled.div`
+  z-index: 99;
   position: fixed;
   display: flex;
   flex-direction: column;

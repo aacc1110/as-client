@@ -17,23 +17,27 @@ const PostMainBlock = styled.div`
 `;
 
 const PostList = styled.div`
-  ul {
-    display: flex;
-    flex-flow: row wrap;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    li {
-      margin-right: 1rem;
-      ${media.xxlarge} {
-        flex: 0 1 20%;
-        padding: 0 0 34px;
-      }
-      ${media.large} {
-        flex: 0 1 25%;
-        padding: 0 0 30px;
-      }
-    }
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto;
+  grid-gap: 1rem;
+  margin: 0;
+  padding: 0;
+
+  ${media.xlarge} {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  ${media.large} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  ${media.medium} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  ${media.small} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  ${media.xsmall} {
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -42,7 +46,7 @@ interface PostMainProps {}
 function PostMain(props: PostMainProps) {
   const { posts, cursor, onLoadMore } = usePosts();
 
-  console.log(cursor);
+  console.log('cursor', cursor);
 
   useScrollPagenation({
     cursor,
@@ -56,13 +60,11 @@ function PostMain(props: PostMainProps) {
     <PostMainBlock>
       <div className="title-wrapper">맞춤 포스트</div>
       <PostList>
-        <ul>
-          {posts.map(post => (
-            <li>
-              <PostCard key={post.id} post={post} />
-            </li>
-          ))}
-        </ul>
+        {posts.map(post => (
+          <section key={post.id}>
+            <PostCard post={post} />
+          </section>
+        ))}
       </PostList>
     </PostMainBlock>
   );

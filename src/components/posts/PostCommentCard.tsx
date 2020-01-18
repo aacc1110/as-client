@@ -11,6 +11,7 @@ import PostSubComment from './PostSubComment';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { REMOVE_COMMENT, REFETCH_COMMENTS } from './hooks/useComment';
+import PostCommentWrite from './PostCommentWrite';
 
 const PostCommentCardBlock = styled.div`
   margin-top: 2rem;
@@ -58,7 +59,7 @@ const PostCommentCardBlock = styled.div`
 `;
 const SubComment = styled.div`
   width: 100%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 `;
 
 const DisplayText = styled.div`
@@ -95,7 +96,6 @@ function PostCommentCard({
   userEmail,
   urlPath,
   postId,
-
   sub
 }: PostCommentCardProps) {
   const { user } = useUser();
@@ -126,27 +126,36 @@ function PostCommentCard({
     return;
   };
 
-  const conformRemove = useCallback(
-    async (id: string) => {
-      // confirm('댓글을 삭제하시면 복구할 수 없습니다. 삭제하시겠습니까?');
-      // alert('댓글을 삭제하시면 복구할 수 없습니다. 삭제하시겠습니까?');
-      let del = window.confirm(
-        '댓글을 삭제하시면 복구할 수 없습니다. 삭제하시겠습니까?'
-      );
-      if (del) {
-        await removeComment({
-          variables: {
-            id,
-            postId
-          }
-        });
-        refetchComments.refetch();
-      } else {
-        console.log('cancle');
-        return;
+  const commentEditAndRemove = useCallback(
+    async (id: string, mode: string) => {
+      if (mode === 'REMOVE') {
+        let del = window.confirm(
+          '댓글을 삭제하시면 복구할 수 없습니다. 삭제하시겠습니까?'
+        );
+        if (del) {
+          await removeComment({
+            variables: {
+              id,
+              postId
+            }
+          });
+          refetchComments.refetch();
+        } else {
+          console.log('cancle');
+          return;
+        }
+      } else if (mode === 'EDIT') {
+        const text = document.getElementsByClassName(
+          `text${comment!.id}`
+        )[0] as HTMLDivElement;
+        const textedit = document.getElementsByClassName(
+          `textedit${comment!.id}`
+        )[0] as HTMLDivElement;
+        text!.style.display = 'none';
+        textedit!.style.display = 'block';
       }
     },
-    [postId, refetchComments, removeComment]
+    [comment, postId, refetchComments, removeComment]
   );
 
   if (!comment) return null;
@@ -182,15 +191,39 @@ function PostCommentCard({
             >
               {user && user.id === comment.user.id ? (
                 <div className="buttonWarp">
-                  <Span>수정</Span>
-                  <Span onClick={() => conformRemove(comment.id)}>삭제</Span>
+                  <Span
+                    onClick={() => commentEditAndRemove(comment.id, 'EDIT')}
+                  >
+                    수정
+                  </Span>
+                  <Span
+                    onClick={() => commentEditAndRemove(comment.id, 'REMOVE')}
+                  >
+                    삭제
+                  </Span>
                 </div>
               ) : (
                 <Span>신고</Span>
               )}
             </div>
           </div>
-          <DisplayText>{text || '삭제된 댓글입니다.'}</DisplayText>
+          <div className={`text${comment.id}`}>
+            <DisplayText>{text || '삭제된 댓글입니다.'}</DisplayText>
+          </div>
+          <div
+            className={`textedit${comment.id}`}
+            style={{ display: 'none', width: '100%' }}
+          >
+            <PostCommentWrite
+              postId={postId}
+              edit={'EDIT'}
+              textValue={text}
+              commentId={comment.id}
+              userEmail={userEmail}
+              urlPath={urlPath}
+              sub={sub}
+            />
+          </div>
           {!commentId && (
             <div className="subComment">
               {repliesCount > 0 ? (

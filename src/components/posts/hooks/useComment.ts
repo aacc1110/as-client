@@ -67,7 +67,7 @@ export default function useComment() {
     (params: {
       id: string | undefined;
       postId: string | undefined;
-      text: string;
+      text: string | undefined;
     }) => {
       return writeComment({
         variables: {

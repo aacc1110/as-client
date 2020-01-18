@@ -27,9 +27,9 @@ function PostSubComment({
         comments={comments}
         commentId={commentId}
         postId={postId}
-        sub={true}
         userEmail={userEmail}
         urlPath={urlPath}
+        sub={true}
       />
     </PostSubCommentBlock>
   );
