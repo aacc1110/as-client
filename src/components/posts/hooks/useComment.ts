@@ -7,6 +7,12 @@ export const WRITE_COMMENT = gql`
   }
 `;
 
+export const EDIT_COMMENT = gql`
+  mutation EditComment($id: ID!, $text: String!) {
+    editComment(id: $id, text: $text)
+  }
+`;
+
 export const REMOVE_COMMENT = gql`
   mutation RemoveComment($id: ID!, $postId: ID) {
     removeComment(id: $id, postId: $postId)

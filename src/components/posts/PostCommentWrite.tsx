@@ -1,8 +1,12 @@
 import React, { useState, useRef } from 'react';
 import styled from '@emotion/styled';
 import { loginUserThumbnail } from '../../images/img';
-import useComment, { REFETCH_COMMENTS } from './hooks/useComment';
-import { useQuery } from '@apollo/client';
+import useComment, {
+  REFETCH_COMMENTS,
+  EDIT_COMMENT,
+  REMOVE_COMMENT
+} from './hooks/useComment';
+import { useQuery, useMutation } from '@apollo/client';
 import palette from '../../styles/palette';
 
 const PostCommentWriteBlock = styled.div`
@@ -72,8 +76,8 @@ interface PostCommentWriteProps {
   urlPath?: string;
   commentId?: string;
   sub?: boolean;
-  edit?: string;
-  textValue?: string;
+  edit?: boolean;
+  value?: string;
 }
 
 function PostCommentWrite({
@@ -83,14 +87,16 @@ function PostCommentWrite({
   commentId,
   sub,
   edit,
-  textValue
+  value
 }: PostCommentWriteProps) {
   const commentTextAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const { write } = useComment();
-  const [text, setComment] = useState(textValue);
-
+  const [editComment] = useMutation(EDIT_COMMENT);
+  const [text, setComment] = useState(value);
+  const autoSizeTimeId = useRef<number | null>(null);
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
+    autoSizeTimeId.current = setTimeout(autosize, 10);
   };
 
   const refetchComments = useQuery(REFETCH_COMMENTS, {
@@ -103,19 +109,23 @@ function PostCommentWrite({
   });
 
   const autosize = () => {
-    const el = document.getElementById(`${commentId}`);
-    setTimeout(() => {
-      if (!el) return null;
-      el.style.cssText = 'height: 1rem; padding:0';
-      el.style.cssText = 'height:' + el.scrollHeight + 'px';
-    }, 0);
+    const el = document.getElementById(
+      `${commentId}${sub}${edit}`
+    ) as HTMLTextAreaElement;
+    // if (autoSizeTimeId.current) {
+    //   autoSizeTimeId.current(
+    if (!el) return null;
+    el.style.cssText = 'height: 1rem; padding:0';
+    el.style.cssText = 'height:' + el.scrollHeight + 'px';
+    //   );
+    // }
   };
   const onFocus = () => {
     let commentBox = document.getElementsByClassName(
-      `commentWriteBox${commentId}`
+      `commentWriteBox${commentId}${sub}`
     )[0] as HTMLElement;
     let commentFooter = document.getElementsByClassName(
-      `commentFooter${commentId}`
+      `commentFooter${commentId}${sub}`
     )[0] as HTMLElement;
     console.log(commentBox.className);
     console.log(commentFooter.className);
@@ -124,17 +134,43 @@ function PostCommentWrite({
   };
 
   const onBlur = () => {
+    if (autoSizeTimeId.current) {
+      clearTimeout(autoSizeTimeId.current);
+    }
     let commentBox = document.getElementsByClassName(
-      `commentWriteBox${commentId}`
+      `commentWriteBox${commentId}${sub}`
     )[0] as HTMLElement;
     commentBox!.style.borderBottom = `1px solid ${palette.gray5}`;
   };
 
   const onCancel = () => {
+    if (autoSizeTimeId.current) {
+      clearTimeout(autoSizeTimeId.current);
+    }
     let commentFooter = document.getElementsByClassName(
-      `commentFooter${commentId}`
+      `commentFooter${commentId}${sub}`
     )[0] as HTMLElement;
     commentFooter!.style.display = 'none';
+    if (edit) {
+      const text = document.getElementsByClassName(
+        `text${commentId}`
+      )[0] as HTMLDivElement;
+      text!.style.display = 'block';
+      // if (value) {
+      //   text.firstChild!.textContent = value;
+      // }
+      const textedit = document.getElementsByClassName(
+        `textedit${commentId}`
+      )[0] as HTMLDivElement;
+      textedit!.style.display = 'none';
+      const subComment = document.getElementsByClassName(
+        `subComment${commentId}`
+      )[0] as HTMLDivElement;
+      if (subComment) {
+        subComment.style.display = 'block';
+      }
+      return;
+    }
     if (!commentTextAreaRef.current) return;
     commentTextAreaRef.current.value = '';
     autosize();
@@ -147,25 +183,37 @@ function PostCommentWrite({
       commentTextAreaRef.current.placeholder = '댓글을 작성해주세요.';
       return;
     }
-    await write({
-      id: commentId,
-      postId,
-      text
-    });
+    if (edit) {
+      await editComment({
+        variables: {
+          id: commentId,
+          text
+        }
+      });
+    } else {
+      await write({
+        id: commentId,
+        postId,
+        text
+      });
+    }
     await refetchComments.refetch();
     setComment('');
     onCancel();
     autosize();
   };
 
-  if (sub && commentId !== undefined) {
-    let textarea = document.getElementById(
-      `${commentId}`
+  if (sub && commentId && !edit) {
+    console.log(sub, commentId, edit);
+    let textArea = document.getElementById(
+      `${commentId}${sub}${edit}`
     ) as HTMLTextAreaElement;
-    textarea!.placeholder = `댓글 쓰기`;
+    if (textArea) {
+      textArea.placeholder = '댓글쓰기';
+    }
   }
 
-  console.log('sub:', sub, 'commentId:', commentId);
+  console.log('sub:', sub, 'commentId:', commentId, 'edit:', edit);
 
   return (
     <PostCommentWriteBlock>
@@ -177,12 +225,12 @@ function PostCommentWrite({
         )}
 
         <div className={`writeComment`}>
-          <div className={`commentWriteBox${commentId}`} id="commentWrap">
+          <div className={`commentWriteBox${commentId}${sub}`} id="commentWrap">
             <textarea
-              id={`${commentId}`}
+              id={`${commentId}${sub}${edit}`}
               ref={commentTextAreaRef}
               placeholder="공개 댓글 쓰기"
-              value={text}
+              value={text || value}
               minLength={2}
               maxLength={300}
               onChange={onChange}
@@ -192,7 +240,7 @@ function PostCommentWrite({
             />
           </div>
           <div
-            className={`commentFooter${commentId}`}
+            className={`commentFooter${commentId}${sub}`}
             style={{
               display: 'none',
               alignItems: 'center',
@@ -203,7 +251,7 @@ function PostCommentWrite({
               취소
             </div>
             <div className="submit">
-              <button onClick={onWrite}>작성</button>
+              <button onClick={onWrite}>{edit ? '수정' : '작성'}</button>
             </div>
           </div>
         </div>

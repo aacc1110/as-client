@@ -15,7 +15,7 @@ const ExpansionMenuBlock = styled.div`
   display: flex;
   flex-direction: column;
   top: 3rem;
-  width: 10rem;
+  width: 12rem;
   height: 100%;
   background-color: ${palette.gray0};
   overflow: auto;

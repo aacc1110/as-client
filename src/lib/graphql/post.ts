@@ -17,6 +17,7 @@ export interface Post {
   user: User;
   tags: Tag[];
   images: Image[];
+  readIt: boolean;
   liked: boolean;
   comments: Comment[];
   commentsCount: number;

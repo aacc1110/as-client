@@ -2,6 +2,7 @@ import { useQuery, gql, useMutation } from '@apollo/client';
 import { Post } from '../../../lib/graphql/post';
 import { safe } from '../../../lib/utils';
 import { useCallback } from 'react';
+import client from '../../../client';
 
 export const GET_POST = gql`
   query Post($id: ID, $userEmail: String, $urlPath: String) {
@@ -9,6 +10,7 @@ export const GET_POST = gql`
       id
       title
       body
+      readIt
       likes
       liked
       isPublish
@@ -79,9 +81,15 @@ export const GET_POST = gql`
   }
 `;
 
+export const POST_READ = gql`
+  mutation PostRead($id: ID!) {
+    postRead(id: $id)
+  }
+`;
+
 export const LIKE_POST = gql`
-  mutation LikePost($postId: ID!) {
-    likePost(postId: $postId) {
+  mutation LikePost($id: ID!) {
+    likePost(id: $id) {
       id
       likes
       liked
@@ -90,8 +98,8 @@ export const LIKE_POST = gql`
 `;
 
 export const UNLIKE_POST = gql`
-  mutation UnlikePost($postId: ID!) {
-    unlikePost(postId: $postId) {
+  mutation UnlikePost($id: ID!) {
+    unlikePost(id: $id) {
       id
       likes
       liked
@@ -114,34 +122,113 @@ export default function usePost(
   const { data } = getPost;
   const post = safe(() => data!.post);
 
-  const [likePost] = useMutation<{ post: Post }>(LIKE_POST);
-  const onLikePost = useCallback(
-    (postId: string) => {
-      console.log(postId);
-      return likePost({
-        variables: {
-          postId
-        }
-      });
-    },
-    [likePost]
-  );
+  const [postRead] = useMutation(POST_READ);
+  const onPostRead = useCallback(async () => {
+    if (!post) return;
+    if (!post.readIt) {
+      try {
+        const readFragment = gql`
+          fragment post on Post {
+            readIt
+            viewsCount
+          }
+        `;
+        client.writeFragment({
+          id: `Post:${post.id}`,
+          fragment: readFragment,
+          data: {
+            readIt: true,
+            viewsCount: post.viewsCount + 1,
+            __typename: 'Post'
+          }
+        });
+        await postRead({
+          variables: {
+            id: post.id
+          }
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, [post, postRead]);
 
-  const [unlikePost] = useMutation<{ post: Post }>(UNLIKE_POST);
-  const onUnlikePost = useCallback(
-    (postId: string) => {
-      console.log(postId);
-      return unlikePost({
-        variables: {
-          postId
-        }
-      });
-    },
-    [unlikePost]
-  );
+  const [likePost, { loading: loadingLike }] = useMutation(LIKE_POST);
+  const [unlikePost, { loading: loadingUnlike }] = useMutation(UNLIKE_POST);
+
+  const onLikeToggle = useCallback(async () => {
+    if (!post || loadingLike || loadingUnlike) return;
+    const variables = {
+      id: post.id
+    };
+    const likeFragment = gql`
+      fragment post on Post {
+        liked
+        likes
+      }
+    `;
+    try {
+      if (post.liked) {
+        client.writeFragment({
+          id: `Post:${post.id}`,
+          fragment: likeFragment,
+          data: {
+            liked: false,
+            likes: post.likes - 1,
+            __typename: 'Post'
+          }
+        });
+        await unlikePost({
+          variables
+        });
+      } else {
+        client.writeFragment({
+          id: `Post:${post.id}`,
+          fragment: likeFragment,
+          data: {
+            liked: true,
+            likes: post.likes + 1,
+            __typename: 'Post'
+          }
+        });
+        await likePost({
+          variables
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [likePost, loadingLike, loadingUnlike, post, unlikePost]);
+  // const [likePost] = useMutation<{ post: Post }>(LIKE_POST);
+  // const onLikePost = useCallback(
+  //   (postId: string) => {
+  //     console.log(postId);
+  //     return likePost({
+  //       variables: {
+  //         postId
+  //       }
+  //     });
+  //   },
+  //   [likePost]
+  // );
+
+  // const [unlikePost] = useMutation<{ post: Post }>(UNLIKE_POST);
+  // const onUnlikePost = useCallback(
+  //   (postId: string) => {
+  //     console.log(postId);
+  //     return unlikePost({
+  //       variables: {
+  //         postId
+  //       }
+  //     });
+  //   },
+  //   [unlikePost]
+  // );
   return {
     post,
-    onLikePost,
-    onUnlikePost
+    onPostRead,
+    onLikeToggle
+    // onLikePost,
+    // onUnlikePost
   };
 }

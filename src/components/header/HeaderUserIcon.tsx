@@ -49,7 +49,7 @@ function HeaderUserIcon(props: HeaderUserIconProps) {
 
   const onClick = useCallback(() => {
     if (!user) {
-      history.push('login');
+      history.push('/login');
       return;
     }
     show();

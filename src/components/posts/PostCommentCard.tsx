@@ -62,7 +62,7 @@ const SubComment = styled.div`
   /* border: 1px solid black; */
 `;
 
-const DisplayText = styled.div`
+export const DisplayText = styled.div`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   line-height: 1.3;
@@ -88,6 +88,7 @@ interface PostCommentCardProps {
   userEmail?: string;
   urlPath?: string;
   sub?: boolean;
+  edit?: boolean;
 }
 
 function PostCommentCard({
@@ -96,7 +97,8 @@ function PostCommentCard({
   userEmail,
   urlPath,
   postId,
-  sub
+  sub,
+  edit
 }: PostCommentCardProps) {
   const { user } = useUser();
   const [value, show] = useBoolean(false);
@@ -153,6 +155,12 @@ function PostCommentCard({
         )[0] as HTMLDivElement;
         text!.style.display = 'none';
         textedit!.style.display = 'block';
+        const subComment = document.getElementsByClassName(
+          `subComment${comment!.id}`
+        )[0] as HTMLDivElement;
+        if (subComment) {
+          subComment.style.display = 'none';
+        }
       }
     },
     [comment, postId, refetchComments, removeComment]
@@ -216,16 +224,16 @@ function PostCommentCard({
           >
             <PostCommentWrite
               postId={postId}
-              edit={'EDIT'}
-              textValue={text}
               commentId={comment.id}
               userEmail={userEmail}
               urlPath={urlPath}
+              value={text}
+              edit={true}
               sub={sub}
             />
           </div>
           {!commentId && (
-            <div className="subComment">
+            <div className={`subComment${comment.id}`}>
               {repliesCount > 0 ? (
                 <Span onClick={show}>댓글 {repliesCount}</Span>
               ) : (

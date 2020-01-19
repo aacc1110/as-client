@@ -1,9 +1,9 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useMemo, useLayoutEffect } from 'react';
 import styled from '@emotion/styled';
 import { postSampleImage, loginUserThumbnail } from '../../images/img';
 import usePost from './hooks/usePost';
 import { formatDate } from '../../lib/utils';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import palette from '../../styles/palette';
 import {
   MdThumbUp,
@@ -21,14 +21,14 @@ const PostViewBlock = styled.div`
   display: flex;
   margin: 0 auto;
   justify-content: center;
+  padding: 0 1rem 0 1rem;
 
-  border: 1px solid black;
+  margin-bottom: 3rem;
   .main {
     flex: 1;
     flex-basis: 0.000000001px;
     display: block;
     padding: 1.25rem 1.25rem 0 0;
-    border: 1px solid black;
   }
   .imgBox {
     position: relative;
@@ -86,7 +86,7 @@ const PostViewBlock = styled.div`
     display: flex;
     align-items: center;
     svg {
-      font-size: 1rem;
+      font-size: 1.5rem;
       color: ${palette.gray7};
       cursor: pointer;
       &:hover {
@@ -181,8 +181,15 @@ interface PostViewProps {
 }
 
 function PostView({ userEmail, urlPath }: PostViewProps) {
-  const { post, onLikePost, onUnlikePost } = usePost(userEmail, urlPath);
+  // const { post, onLikePost, onUnlikePost } = usePost(userEmail, urlPath);
+  const { post, onLikeToggle, onPostRead } = usePost(userEmail, urlPath);
   const { user } = useUser();
+  const history = useHistory();
+
+  useLayoutEffect(() => {
+    if (!post) return;
+    onPostRead();
+  }, [onPostRead, post]);
 
   const onClick = (mode: string) => {
     const hide: HTMLElement | null = document.getElementById('hide');
@@ -205,16 +212,26 @@ function PostView({ userEmail, urlPath }: PostViewProps) {
     }
   };
 
-  const onLike = (postId: string, mode: string) => {
-    console.log(postId, mode);
-    if (mode === 'LIKE') {
-      onLikePost(postId);
-    } else if (mode === 'UNLIKE') {
-      onUnlikePost(postId);
+  const onLikeClick = () => {
+    if (!user) {
+      alert('로그인이 필요합니다.');
+      history.push('/login');
+      return;
     }
+    onLikeToggle();
   };
 
+  // const onLike = (postId: string, mode: string) => {
+  //   console.log(postId, mode);
+  //   if (mode === 'LIKE') {
+  //     onLikePost(postId);
+  //   } else if (mode === 'UNLIKE') {
+  //     onUnlikePost(postId);
+  //   }
+  // };
+
   if (!post) return null;
+  console.log('post_readIt', post.readIt);
   return (
     <PostViewBlock>
       <div className="main">
@@ -241,10 +258,15 @@ function PostView({ userEmail, urlPath }: PostViewProps) {
               </div>
               <div className="infoMenu">
                 {post.liked ? (
+                  <MdFavorite onClick={onLikeClick} />
+                ) : (
+                  <MdFavoriteBorder onClick={onLikeClick} />
+                )}
+                {/* {post.liked ? (
                   <MdFavorite onClick={() => onLike(post.id, 'UNLIKE')} />
                 ) : (
                   <MdFavoriteBorder onClick={() => onLike(post.id, 'LIKE')} />
-                )}
+                )} */}
                 <span> {post.likes > 0 ? post.likes : 0}</span>
                 <MdPlaylistAdd />
                 <span> 저장</span>
@@ -266,7 +288,7 @@ function PostView({ userEmail, urlPath }: PostViewProps) {
                   <b>{post.user.name}</b>
                 </div>
                 <div>
-                  <span>구독자 : {post.viewsCount}</span>
+                  <span>구독자 : 0</span>
                 </div>
               </div>
             </div>
@@ -290,8 +312,8 @@ function PostView({ userEmail, urlPath }: PostViewProps) {
         </div>
         <PostComments
           comments={post.comments}
-          postId={post.id}
           commentsCount={post.commentsCount}
+          postId={post.id}
           userEmail={userEmail}
           urlPath={urlPath}
           sub={false}

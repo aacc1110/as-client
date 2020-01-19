@@ -9,8 +9,8 @@ import { Comment } from '../../lib/graphql/comment';
 import PostCommentWrite from './PostCommentWrite';
 
 const PostCommentsBlock = styled.div`
-  margin-top: 24px;
-  margin-bottom: 32px;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   font-size: 0.875rem;
@@ -115,9 +115,9 @@ function PostComments({
       {!sub && (
         <div className="title">
           <h4>댓글 {commentsCount}개</h4>
-          <span>
+          {/* <span>
             <MdSort /> 정렬기준
-          </span>
+          </span> */}
         </div>
       )}
       {user ? (
@@ -126,6 +126,7 @@ function PostComments({
           userEmail={userEmail}
           urlPath={urlPath}
           commentId={commentId}
+          sub={sub}
         />
       ) : (
         <div>로그인후 댓글을 작성 할 수 있습니다.</div>
