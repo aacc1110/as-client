@@ -8,12 +8,9 @@ export const GET_POST_RECENT = gql`
     posts(cursor: $cursor) {
       id
       title
-      isPublish
       viewsCount
-      shortSummary
       urlPath
       releasedAt
-      createdAt
       images {
         id
         imageUrl
@@ -25,7 +22,6 @@ export const GET_POST_RECENT = gql`
         userProfile {
           id
           thumbnail
-          imageUrl
         }
       }
     }

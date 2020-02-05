@@ -1,11 +1,7 @@
 import React, { useState, useRef } from 'react';
 import styled from '@emotion/styled';
 import { loginUserThumbnail } from '../../images/img';
-import useComment, {
-  REFETCH_COMMENTS,
-  EDIT_COMMENT,
-  REMOVE_COMMENT
-} from './hooks/useComment';
+import useComment, { REFETCH_COMMENTS, EDIT_COMMENT } from './hooks/useComment';
 import { useQuery, useMutation } from '@apollo/client';
 import palette from '../../styles/palette';
 

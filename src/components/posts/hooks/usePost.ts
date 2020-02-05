@@ -13,6 +13,7 @@ export const GET_POST = gql`
       readIt
       likes
       liked
+      saved
       isPublish
       meta
       viewsCount
@@ -87,6 +88,12 @@ export const POST_READ = gql`
   }
 `;
 
+export const POST_SAVE = gql`
+  mutation PostSave($id: ID!) {
+    postSave(id: $id)
+  }
+`;
+
 export const LIKE_POST = gql`
   mutation LikePost($id: ID!) {
     likePost(id: $id) {
@@ -153,6 +160,38 @@ export default function usePost(
     }
   }, [post, postRead]);
 
+  const [postSave] = useMutation(POST_SAVE);
+  const onPostSave = useCallback(async () => {
+    if (!post) return;
+    if (!post.saved) {
+      try {
+        const saveFragment = gql`
+          fragment post on Post {
+            saved
+          }
+        `;
+        client.writeFragment({
+          id: `Post:${post.id}`,
+          fragment: saveFragment,
+          data: {
+            saved: true,
+            __typename: 'Post'
+          }
+        });
+        await postSave({
+          variables: {
+            id: post.id
+          }
+        });
+      } catch (e) {
+        console.log(e);
+      }
+      alert('저장했습니다.');
+    } else {
+      alert('이미 저장목록에 있습니다.');
+    }
+  }, [post, postSave]);
+
   const [likePost, { loading: loadingLike }] = useMutation(LIKE_POST);
   const [unlikePost, { loading: loadingUnlike }] = useMutation(UNLIKE_POST);
 
@@ -199,34 +238,10 @@ export default function usePost(
       console.log(e);
     }
   }, [likePost, loadingLike, loadingUnlike, post, unlikePost]);
-  // const [likePost] = useMutation<{ post: Post }>(LIKE_POST);
-  // const onLikePost = useCallback(
-  //   (postId: string) => {
-  //     console.log(postId);
-  //     return likePost({
-  //       variables: {
-  //         postId
-  //       }
-  //     });
-  //   },
-  //   [likePost]
-  // );
-
-  // const [unlikePost] = useMutation<{ post: Post }>(UNLIKE_POST);
-  // const onUnlikePost = useCallback(
-  //   (postId: string) => {
-  //     console.log(postId);
-  //     return unlikePost({
-  //       variables: {
-  //         postId
-  //       }
-  //     });
-  //   },
-  //   [unlikePost]
-  // );
   return {
     post,
     onPostRead,
+    onPostSave,
     onLikeToggle
     // onLikePost,
     // onUnlikePost

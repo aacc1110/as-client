@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { MdSort } from 'react-icons/md';
 
 import palette from '../../styles/palette';
 import PostCommentCard from './PostCommentCard';

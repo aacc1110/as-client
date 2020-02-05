@@ -17,11 +17,17 @@ export default function useScrollPagenation({ cursor, onLoadMore }: Params) {
 
   const onScroll = useCallback(() => {
     console.log('window.scrollY:', window.scrollY);
-    console.log('document.documentElement.clientHeight:', document.documentElement.clientHeight);
-    console.log('document.documentElement.scrollHeight:', document.documentElement.scrollHeight);
+    console.log(
+      'document.documentElement.clientHeight:',
+      document.documentElement.clientHeight
+    );
+    console.log(
+      'document.documentElement.scrollHeight:',
+      document.documentElement.scrollHeight
+    );
     if (
       window.scrollY + document.documentElement.clientHeight >
-      document.documentElement.scrollHeight - 300
+      document.documentElement.scrollHeight - 500
     ) {
       loadMore();
     }

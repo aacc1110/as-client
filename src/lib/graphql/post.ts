@@ -19,6 +19,7 @@ export interface Post {
   images: Image[];
   readIt: boolean;
   liked: boolean;
+  saved: boolean;
   comments: Comment[];
   commentsCount: number;
 }

@@ -17,10 +17,16 @@ const GET_USER = gql`
       posts {
         id
         title
+        likes
+        liked
         body
         meta
         viewsCount
         urlPath
+        user {
+          id
+          name
+        }
       }
     }
   }
