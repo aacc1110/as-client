@@ -14,7 +14,6 @@ import {
 } from 'react-icons/md';
 import useUser from '../../lib/hooks/useUser';
 import PostComments from './PostComments';
-import PostSideCard from './PostSideCard';
 import PostSideList from './PostSideList';
 
 const PostViewBlock = styled.div`
