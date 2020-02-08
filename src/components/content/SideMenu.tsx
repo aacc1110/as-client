@@ -8,7 +8,6 @@ import {
   MdStar
 } from 'react-icons/md';
 import palette from '../../styles/palette';
-import media from '../../lib/media';
 
 const SideMenuBlock = styled.div`
   position: fixed;

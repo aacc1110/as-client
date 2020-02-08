@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { postSampleImage, userThumbnail } from '../../images/img';
+import { postSampleImage } from '../../images/img';
 import { Post } from '../../lib/graphql/post';
 import palette from '../../styles/palette';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
