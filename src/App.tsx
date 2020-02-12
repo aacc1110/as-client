@@ -6,8 +6,8 @@ import LoginPage from './pages/auth/LoginPage';
 import Sample from './samples/Sample';
 import PostWritePage from './pages/post/PostWritePage';
 import RegisterPage from './pages/auth/RegisterPage';
-import UserHomePage from './pages/user/UserHomePage';
 import TagPage from './pages/tags/TagPage';
+import UserPage from './pages/user/UserPage';
 
 interface AppProps {}
 
@@ -24,7 +24,7 @@ function App(props: AppProps) {
         <RegisterPage />
       </Route>
       <Route path="/@:useremail">
-        <UserHomePage />
+        <UserPage />
       </Route>
       <Route path="/tags">
         <TagPage />

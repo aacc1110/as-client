@@ -1,16 +1,12 @@
 import React, { memo } from 'react';
 import styled from '@emotion/styled';
 import { userHomeImage, loginUserThumbnail } from '../../images/img';
-import useUserInfo from './hooks/useUserInfo';
-import { useParams } from 'react-router';
 import {
   MdNotificationsActive,
   MdNotificationsNone,
   MdNotificationsOff
 } from 'react-icons/md';
 import palette from '../../styles/palette';
-import UserHomeMenu from './UserHomeMenu';
-import UserHomePost from './UserHomePost';
 
 const UserHomeBlock = styled.div`
   display: flex;
@@ -28,13 +24,12 @@ const UserHomeInfo = styled.div`
   align-items: center;
   width: 100%;
   margin-top: 1rem;
-  border: 1px solid black;
 
   .userInfo-wrapper {
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
-    width: 900px;
+    width: 1000px;
 
     .userInfo {
       display: inline-flex;
@@ -68,14 +63,12 @@ const UserHomeInfo = styled.div`
   }
 `;
 
-interface UserHomeProps {}
+interface UserHomeProps {
+  username?: string;
+  about: string;
+}
 
-function UserHome(props: UserHomeProps) {
-  const { useremail } = useParams();
-  const { user, loading } = useUserInfo(useremail);
-
-  if (!user || loading) return null;
-
+function UserHome({ username, about }: UserHomeProps) {
   return (
     <UserHomeBlock>
       <div className="title-img-wrapper">
@@ -87,13 +80,13 @@ function UserHome(props: UserHomeProps) {
             <img src={loginUserThumbnail} alt="thumbnail" />
             <div className="userTitle">
               <div>
-                <h2>{user.name}</h2>
+                <h2>{username}</h2>
               </div>
               <span>구독자 8.98만명</span>
             </div>
           </div>
           <div>
-            <b>{user.userProfile.about}</b>
+            <b>{about}</b>
           </div>
           <div className="subScription">
             <button>구독</button>
@@ -103,10 +96,6 @@ function UserHome(props: UserHomeProps) {
           </div>
         </div>
       </UserHomeInfo>
-      <UserHomeMenu />
-      <UserHomePost />
-
-      {/* <div>{스트</.posts.map(post => post.id)}</div> */}
     </UserHomeBlock>
   );
 }

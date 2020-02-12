@@ -68,7 +68,7 @@ const PostCommentWriteBlock = styled.div`
 
 interface PostCommentWriteProps {
   postId?: string;
-  userEmail?: string;
+  useremail?: string;
   urlPath?: string;
   commentId?: string;
   sub?: boolean;
@@ -78,7 +78,7 @@ interface PostCommentWriteProps {
 
 function PostCommentWrite({
   postId,
-  userEmail,
+  useremail,
   urlPath,
   commentId,
   sub,
@@ -99,7 +99,7 @@ function PostCommentWrite({
     skip: true,
     fetchPolicy: 'network-only',
     variables: {
-      userEmail,
+      useremail,
       urlPath
     }
   });

@@ -8,12 +8,6 @@ import { formatDate } from '../../lib/utils';
 import PostLink from './PostLink';
 
 const PostCardBlock = styled.article`
-  /* padding: -0.5rem 0 -0.5rem 0;
-  flex: 1; */
-  /* background: #fff;
-  text-decoration: none;
-  color: #444;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
   padding-bottom: 1rem;
 
   a {
@@ -23,11 +17,6 @@ const PostCardBlock = styled.article`
     width: 100%;
     height: auto;
   }
-  /* .img {
-    padding-bottom: 60%;
-    background-size: cover;
-    background-position: center center;
-  } */
   .info {
     display: flex;
     margin: 0.75rem 0 0.75rem 0;
@@ -85,7 +74,7 @@ function PostCard({ post }: PostCardProps) {
       <div className="img">
         <PostLink
           postId={post.id}
-          userEmail={post.user.email}
+          useremail={post.user.email}
           urlPath={post.urlPath}
         >
           <img src={postSampleImage} alt="thumbnail" />
@@ -101,7 +90,7 @@ function PostCard({ post }: PostCardProps) {
         <div className="postInfo">
           <PostLink
             postId={post.id}
-            userEmail={post.user.email}
+            useremail={post.user.email}
             urlPath={post.urlPath}
           >
             <strong>{post.title}</strong>

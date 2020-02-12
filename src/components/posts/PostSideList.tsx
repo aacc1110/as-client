@@ -27,12 +27,12 @@ const PostSideListBlock = styled.div`
 `;
 
 interface PostSideListProps {
-  userEmail?: string;
+  useremail?: string;
 }
 
-function PostSideList({ userEmail }: PostSideListProps) {
+function PostSideList({ useremail }: PostSideListProps) {
   // const { posts } = usePosts();
-  const { user } = useUserInfo(userEmail);
+  const { user } = useUserInfo(useremail);
 
   // if (!posts) return <div>포스트가 존재하지 않습니다.</div>;
   if (!user) return <div>포스트가 존재하지 않습니다.</div>;

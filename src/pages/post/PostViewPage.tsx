@@ -8,11 +8,11 @@ const PostViewPageBlock = styled.div``;
 interface PostViewPageProps {}
 
 function PostViewPage(props: PostViewPageProps) {
-  const { useremail, urlpath } = useParams();
-  console.log('urlsdfsdfsdf', useremail, urlpath);
+  const { useremail, urlPath } = useParams();
+  console.log('useremail/urlPath', useremail, urlPath);
   return (
     <PostViewPageBlock>
-      <PostView userEmail={useremail} urlPath={urlpath} />
+      <PostView useremail={useremail} urlPath={urlPath} />
     </PostViewPageBlock>
   );
 }

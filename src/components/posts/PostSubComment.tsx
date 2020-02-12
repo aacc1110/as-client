@@ -9,7 +9,7 @@ interface PostSubCommentProps {
   commentId?: string;
   postId?: string;
   comments?: Comment[];
-  userEmail?: string;
+  useremail?: string;
   urlPath?: string;
 }
 
@@ -17,7 +17,7 @@ function PostSubComment({
   commentId,
   postId,
   comments,
-  userEmail,
+  useremail,
   urlPath
 }: PostSubCommentProps) {
   console.log('PostSubComment-postId', postId);
@@ -27,7 +27,7 @@ function PostSubComment({
         comments={comments}
         commentId={commentId}
         postId={postId}
-        userEmail={userEmail}
+        useremail={useremail}
         urlPath={urlPath}
         sub={true}
       />

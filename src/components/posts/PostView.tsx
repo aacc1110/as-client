@@ -171,14 +171,14 @@ const PostViewBlock = styled.div`
 `;
 
 interface PostViewProps {
-  userEmail?: string;
+  useremail?: string;
   urlPath?: string;
 }
 
-function PostView({ userEmail, urlPath }: PostViewProps) {
-  // const { post, onLikePost, onUnlikePost } = usePost(userEmail, urlPath);
+function PostView({ useremail, urlPath }: PostViewProps) {
+  // const { post, onLikePost, onUnlikePost } = usePost(useremail, urlPath);
   const { post, onLikeToggle, onPostRead, onPostSave } = usePost(
-    userEmail,
+    useremail,
     urlPath
   );
   const { user } = useUser();
@@ -307,13 +307,13 @@ function PostView({ userEmail, urlPath }: PostViewProps) {
           comments={post.comments}
           commentsCount={post.commentsCount}
           postId={post.id}
-          userEmail={userEmail}
+          useremail={useremail}
           urlPath={urlPath}
           sub={false}
         />
       </div>
       <div>
-        <PostSideList userEmail={userEmail} />
+        <PostSideList useremail={useremail} />
       </div>
     </PostViewBlock>
   );

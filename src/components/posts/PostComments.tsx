@@ -88,7 +88,7 @@ interface PostCommentsProps {
   postId?: string;
   comments?: Comment[];
   commentsCount?: number;
-  userEmail?: string;
+  useremail?: string;
   urlPath?: string;
   commentId?: string;
   sub?: boolean;
@@ -98,7 +98,7 @@ function PostComments({
   postId,
   comments,
   commentsCount,
-  userEmail,
+  useremail,
   urlPath,
   commentId,
   sub
@@ -122,7 +122,7 @@ function PostComments({
       {user ? (
         <PostCommentWrite
           postId={postId}
-          userEmail={userEmail}
+          useremail={useremail}
           urlPath={urlPath}
           commentId={commentId}
           sub={sub}
@@ -136,7 +136,7 @@ function PostComments({
           comment={comment}
           commentId={commentId}
           postId={postId}
-          userEmail={userEmail}
+          useremail={useremail}
           urlPath={urlPath}
         />
       ))}

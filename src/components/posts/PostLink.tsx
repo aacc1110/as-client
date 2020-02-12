@@ -9,7 +9,7 @@ const PostLinkBlock = styled(Link)``;
 interface PostLinkProps {
   postId?: string;
   className?: string;
-  userEmail: string;
+  useremail: string;
   urlPath: string;
   prefetch?: boolean;
   children?: ReactNode;
@@ -18,23 +18,23 @@ interface PostLinkProps {
 function PostLink({
   postId,
   className,
-  userEmail,
+  useremail,
   urlPath,
   prefetch = true,
   children
 }: PostLinkProps) {
-  const to = `/@${userEmail}/${urlPath}`;
+  const to = `/@${useremail}/${urlPath}`;
   const prefetchTimeId = useRef<number | null>(null);
   const onPrefetch = useCallback(() => {
     if (!prefetch) return;
     client.query({
       query: GET_POST,
       variables: {
-        userEmail,
+        useremail,
         urlPath
       }
     });
-  }, [prefetch, urlPath, userEmail]);
+  }, [prefetch, urlPath, useremail]);
 
   const onMouseEnter = () => {
     prefetchTimeId.current = setTimeout(onPrefetch, 2500);

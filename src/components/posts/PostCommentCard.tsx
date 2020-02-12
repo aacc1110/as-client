@@ -85,7 +85,7 @@ interface PostCommentCardProps {
   comment?: Comment | undefined;
   commentId?: string;
   postId?: string;
-  userEmail?: string;
+  useremail?: string;
   urlPath?: string;
   sub?: boolean;
   edit?: boolean;
@@ -94,7 +94,7 @@ interface PostCommentCardProps {
 function PostCommentCard({
   comment,
   commentId,
-  userEmail,
+  useremail,
   urlPath,
   postId,
   sub,
@@ -107,7 +107,7 @@ function PostCommentCard({
     skip: true,
     fetchPolicy: 'network-only',
     variables: {
-      userEmail,
+      useremail,
       urlPath
     }
   });
@@ -225,7 +225,7 @@ function PostCommentCard({
             <PostCommentWrite
               postId={postId}
               commentId={comment.id}
-              userEmail={userEmail}
+              useremail={useremail}
               urlPath={urlPath}
               value={text}
               edit={true}
@@ -248,7 +248,7 @@ function PostCommentCard({
                 comments={replies}
                 postId={postId}
                 commentId={comment.id}
-                userEmail={userEmail}
+                useremail={useremail}
                 urlPath={urlPath}
               />
             </SubComment>

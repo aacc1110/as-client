@@ -32,12 +32,12 @@ const GET_USER = gql`
   }
 `;
 
-export default function useUserInfo(pathname: string | undefined) {
+export default function useUserInfo(useremail: string | undefined) {
   const { data, loading, error } = useQuery<{ user: User }>(GET_USER, {
     variables: {
-      email: pathname
+      email: useremail
     },
-    fetchPolicy: 'cache-first'
+    fetchPolicy: 'cache-and-network'
   });
 
   return {
