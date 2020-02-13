@@ -18,7 +18,6 @@ interface UserHomePageProps {}
 function UserHomePage(props: UserHomePageProps) {
   const { useremail, tab } = useParams();
   const { user, loading } = useUserInfo(useremail);
-  console.log(useremail, tab);
 
   if (!user || loading) return null;
   return (
@@ -29,7 +28,7 @@ function UserHomePage(props: UserHomePageProps) {
         <UserMainTab user={user} />
       </Route>
       <Route path="/@:useremail/posts">
-        <UserPostTab />
+        <UserPostTab posts={user.posts} />
       </Route>
       <Route path="/@:useremail/series">
         <UserSeriesTab />
