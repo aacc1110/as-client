@@ -1,4 +1,5 @@
 import { Post } from './post';
+import { Series } from './series';
 
 export interface User {
   id: string;
@@ -6,6 +7,8 @@ export interface User {
   name: string;
   userProfile: UserProfile;
   posts: Post[];
+  postSave: PostSave[];
+  seriesList: Series[];
 }
 export type CurrentUser = {
   id: string;
@@ -17,6 +20,12 @@ export type CurrentUser = {
     thumbnail: string;
   };
 };
+
+export interface PostSave {
+  id: string;
+  user: User;
+  post: Post;
+}
 
 export interface UserProfile {
   id: string;

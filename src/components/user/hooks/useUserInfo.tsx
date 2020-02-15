@@ -14,6 +14,9 @@ const GET_USER = gql`
         thumbnail
         mobile
       }
+      seriesList {
+        id
+      }
       posts {
         id
         title
@@ -44,6 +47,7 @@ export default function useUserInfo(useremail: string | undefined) {
     user: data && data.user,
     userProfile: data && data.user.userProfile,
     posts: data && data.user.posts,
+    seriesList: data && data.user.seriesList,
     loading,
     error
   };
