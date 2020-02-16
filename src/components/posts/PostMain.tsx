@@ -46,8 +46,6 @@ interface PostMainProps {}
 function PostMain(props: PostMainProps) {
   const { posts, cursor, onLoadMore } = usePosts();
 
-  console.log('cursor', cursor);
-
   useScrollPagenation({
     cursor,
     onLoadMore

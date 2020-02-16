@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Switch, Route } from 'react-router';
 import UserHomePage from './UserHomePage';
 import PostSeriesPage from './PostSeriesPage';
-import PostViewPage from '../post/PostViewPage';
+import PostViewPage from './PostViewPage';
 
 const UserPageBlock = styled.div``;
 

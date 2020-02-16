@@ -1,5 +1,6 @@
 import { User } from './user';
 import { Comment } from './comment';
+import { Series } from './series';
 
 export interface Post {
   id: string;
@@ -22,19 +23,18 @@ export interface Post {
   saved: boolean;
   comments: Comment[];
   commentsCount: number;
+  series: Series;
+}
+export interface Tag {
+  id: string;
+  tag: string;
+  posts: Post[];
 }
 export interface Image {
   id: string;
   imageUrl: string;
   post: Post;
 }
-
-export interface Tag {
-  id: string;
-  tag: string;
-  posts: Post[];
-}
-
 export interface PostInput {
   title: string;
   body: string;

@@ -31,6 +31,7 @@ export interface UserProfile {
   id: string;
   about: string;
   thumbnail: string;
+  imageUrl: string;
   mobile: string;
 }
 

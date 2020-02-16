@@ -6,8 +6,7 @@ const UserMainTabBlock = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  border: 1px solid black;
-  .main-wrapper {
+  .main_wrapper {
     display: inline-flex;
     align-items: center;
     width: 1000px;
@@ -21,7 +20,7 @@ interface UserMainTabProps {
 function UserMainTab({ user }: UserMainTabProps) {
   return (
     <UserMainTabBlock>
-      <div className="main-wrapper">{JSON.stringify(user)}</div>
+      <div className="main_wrapper">{JSON.stringify(user)}</div>
     </UserMainTabBlock>
   );
 }

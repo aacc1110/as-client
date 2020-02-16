@@ -80,7 +80,6 @@ function PostCard({ post }: PostCardProps) {
           <img src={postSampleImage} alt="thumbnail" />
         </PostLink>
       </div>
-      {/* <em>마감</em> */}
       <div className="info">
         <div className="userthumbnail">
           <Link to={`@${post.user.email}`}>

@@ -7,8 +7,7 @@ const UserHomeMenuBlock = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  border: 1px solid black;
-  .userMenu-wrapper {
+  .userMenu_wrapper {
     display: inline-flex;
     align-items: center;
     width: 1000px;
@@ -37,7 +36,7 @@ function UserHomeMenu({ useremail, tab }: UserHomeMenuProps) {
   const withPrefix = (tabPath: string) => `/@${useremail}/${tabPath}`;
   return (
     <UserHomeMenuBlock>
-      <div className="userMenu-wrapper">
+      <div className="userMenu_wrapper">
         <UserHomeMenuItem to={`/@${useremail}`}>홈</UserHomeMenuItem>
         <UserHomeMenuItem to={withPrefix('posts')}>포스트</UserHomeMenuItem>
         <UserHomeMenuItem to={withPrefix('series')}>시리즈</UserHomeMenuItem>

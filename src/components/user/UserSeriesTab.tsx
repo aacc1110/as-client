@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Post } from '../../lib/graphql/post';
+import { Series } from '../../lib/graphql/series';
 
 const UserSeriesTabBlock = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  border: 1px solid black;
-  .series-wrapper {
+  .series_wrapper {
     display: inline-flex;
     align-items: center;
     width: 1000px;
@@ -15,13 +14,13 @@ const UserSeriesTabBlock = styled.div`
 `;
 
 interface UserSeriesTabProps {
-  series: Post[];
+  seriesList?: Series[];
 }
 
-function UserSeriesTab({ series }: UserSeriesTabProps) {
+function UserSeriesTab({ seriesList }: UserSeriesTabProps) {
   return (
     <UserSeriesTabBlock>
-      <div className="series-wrapper">{JSON.stringify(series)}</div>
+      <div className="series_wrapper">{JSON.stringify(seriesList)}</div>
     </UserSeriesTabBlock>
   );
 }

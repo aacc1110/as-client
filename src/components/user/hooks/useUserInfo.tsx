@@ -26,9 +26,14 @@ const GET_USER = gql`
         meta
         viewsCount
         urlPath
+        releasedAt
+        series {
+          id
+        }
         user {
           id
           name
+          email
         }
       }
     }
