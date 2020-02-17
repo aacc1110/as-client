@@ -1,4 +1,4 @@
-import { Post } from './post';
+import { Post, PostSave } from './post';
 import { Series } from './series';
 
 export interface User {
@@ -20,12 +20,6 @@ export type CurrentUser = {
     thumbnail: string;
   };
 };
-
-export interface PostSave {
-  id: string;
-  user: User;
-  post: Post;
-}
 
 export interface UserProfile {
   id: string;

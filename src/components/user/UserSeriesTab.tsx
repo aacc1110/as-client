@@ -20,7 +20,13 @@ interface UserSeriesTabProps {
 function UserSeriesTab({ seriesList }: UserSeriesTabProps) {
   return (
     <UserSeriesTabBlock>
-      <div className="series_wrapper">{JSON.stringify(seriesList)}</div>
+      <div className="series_wrapper">
+        {seriesList!.length === 0 ? (
+          <div>시리즈가 없습니다.</div>
+        ) : (
+          <div>{seriesList!.map(series => series.id)}</div>
+        )}
+      </div>
     </UserSeriesTabBlock>
   );
 }

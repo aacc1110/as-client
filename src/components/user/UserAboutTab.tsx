@@ -19,7 +19,9 @@ interface UserAboutTabProps {
 function UserAboutTab({ about }: UserAboutTabProps) {
   return (
     <UserAboutTabBlock>
-      <div className="about_wrapper">{JSON.stringify(about)}</div>
+      <div className="about_wrapper">
+        {!about ? <div>소개가 작성되지 않았습니다.</div> : <div>{about}</div>}
+      </div>
     </UserAboutTabBlock>
   );
 }

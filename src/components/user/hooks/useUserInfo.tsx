@@ -29,6 +29,9 @@ const GET_USER = gql`
         releasedAt
         series {
           id
+          name
+          urlPath
+          thumbnail
         }
         user {
           id

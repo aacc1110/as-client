@@ -42,3 +42,9 @@ export interface PostInput {
   tags: [string];
   imageUrl: [string];
 }
+
+export interface PostSave {
+  id: string;
+  user: User;
+  post: Post;
+}
