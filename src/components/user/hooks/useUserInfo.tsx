@@ -16,6 +16,15 @@ const GET_USER = gql`
       }
       seriesList {
         id
+        name
+        urlPath
+        thumbnail
+        updatedAt
+        postsCount
+        seriesPosts {
+          id
+          index
+        }
       }
       posts {
         id
@@ -29,9 +38,6 @@ const GET_USER = gql`
         releasedAt
         series {
           id
-          name
-          urlPath
-          thumbnail
         }
         user {
           id

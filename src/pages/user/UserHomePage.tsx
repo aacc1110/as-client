@@ -31,7 +31,7 @@ function UserHomePage(props: UserHomePageProps) {
         <UserPostTab posts={user.posts} />
       </Route>
       <Route path="/@:useremail/series">
-        <UserSeriesTab seriesList={user.seriesList} />
+        <UserSeriesTab seriesList={user.seriesList} useremail={useremail} />
       </Route>
       <Route path="/@:useremail/about">
         <UserAboutTab about={user.userProfile.about} />
