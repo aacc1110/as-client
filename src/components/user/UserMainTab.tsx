@@ -20,7 +20,7 @@ interface UserMainTabProps {
 function UserMainTab({ user }: UserMainTabProps) {
   return (
     <UserMainTabBlock>
-      <div className="main_wrapper">{JSON.stringify(user)}</div>
+      <div className="main_wrapper">{user.id}</div>
     </UserMainTabBlock>
   );
 }

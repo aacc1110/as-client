@@ -7,9 +7,9 @@ export interface Series {
   name: string;
   description: string;
   urlPath: string;
-  createdAt: Date;
-  updatedAt: Date;
-  seriesPosts: [SeriesPost];
+  createdAt: string;
+  updatedAt: string;
+  seriesPosts: SeriesPost[];
   thumbnail: string;
   postsCount: number;
 }

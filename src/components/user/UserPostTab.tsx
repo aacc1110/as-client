@@ -44,17 +44,20 @@ interface UserPostTabProps {
 }
 
 function UserPostTab({ posts }: UserPostTabProps) {
-  if (!posts) return <div>포스트가 존재하지 않습니다.</div>;
   return (
     <UserPostTabBlock>
       <div className="posts_wrapper">
-        <PostList>
-          {posts.map(post => (
-            <section key={post.id}>
-              <PostCard post={post} />
-            </section>
-          ))}
-        </PostList>
+        {!posts ? (
+          <div>포스트가 존재하지 않습니다.</div>
+        ) : (
+          <PostList>
+            {posts.map(post => (
+              <section key={post.id}>
+                <PostCard post={post} />
+              </section>
+            ))}
+          </PostList>
+        )}
       </div>
     </UserPostTabBlock>
   );
