@@ -2,79 +2,110 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Series } from '../../lib/graphql/series';
 import palette from '../../styles/palette';
-import media from '../../lib/media';
-import { Link } from 'react-router-dom';
 import { formatDate } from '../../lib/utils';
+import { postSampleImage } from '../../images/img';
+import PostLink from '../posts/PostLink';
+import { MdFormatListBulleted } from 'react-icons/md';
 
 const SeriesCardBlock = styled.div`
-  width: 50%;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 3rem;
-  ${media.small} {
-    padding: 0;
-    width: 100%;
-    & + & {
-      margin-top: 3rem;
-    }
+  padding-bottom: 1rem;
+
+  a {
+    text-decoration: none;
   }
-
-  /* font-family: 'Spoqa Han Sans', -apple-system, BlinkMacSystemFont,
-    -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Apple SD Gothic Neo',
-    arial, 나눔고딕, 'Nanum Gothic', 돋움; */
-
-  h4 {
-    font-size: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    line-height: 1.5;
-    ${media.small} {
-      line-height: 1;
+  .img_wrap {
+    display: block;
+    position: relative;
+    img {
+      width: 100%;
+      height: auto;
     }
-    color: ${palette.gray8};
-    a {
-      text-decoration: none;
+    .img_series {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 33%;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 400;
+      line-height: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.6;
     }
   }
   .info {
-    ${media.small} {
-      line-height: 1;
-    }
-    font-size: 0.875rem;
-    color: ${palette.gray6};
-    .count {
-      color: ${palette.gray8};
-    }
-    .dot {
-      margin-left: 0.25rem;
-      margin-right: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    margin: 0.75rem 0 0.75rem 0;
+    .seriesInfo {
+      strong {
+        font-size: 0.875rem;
+        color: ${palette.gray7};
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        line-height: 1.5;
+      }
+      .user {
+        margin-top: 0.5rem;
+        b {
+          font-size: 0.875rem;
+          color: ${palette.gray7};
+        }
+        span {
+          font-size: 0.75rem;
+          color: ${palette.gray6};
+        }
+      }
     }
   }
 `;
-
-const StyledLink = styled(Link)`
-  display: block;
-  text-decoration: none;
-  color: initial;
-`;
-
 interface SeriesCardProps {
   series?: Series;
   useremail?: string;
 }
 
 function SeriesCard({ series, useremail }: SeriesCardProps) {
-  if (!series) return null;
-  const url = `/@${useremail}/series/${series.urlPath}`;
+  if (!series || !useremail) return null;
+  // const url = `/@${useremail}/series/${series.urlPath}`;
   return (
     <SeriesCardBlock>
-      <h4>
-        <StyledLink to={url}>{series.name}</StyledLink>
-      </h4>
+      <div className="img_wrap">
+        <PostLink
+          seriesId={series.id}
+          useremail={useremail}
+          urlPath={series.urlPath}
+        >
+          <img src={postSampleImage} alt="thumbnail" />
+          <div className="img_series">
+            {series.postsCount}
+            <MdFormatListBulleted />
+          </div>
+        </PostLink>
+      </div>
       <div className="info">
-        <span className="count">{series.postsCount}개의 포스트</span>
-        <span className="dot">·</span>
-        마지막 업데이트 {formatDate(series.updatedAt)}
+        <div className="seriesInfo">
+          {/* <PostLink
+            postId={post.id}
+            useremail={post.user.email}
+            urlPath={post.urlPath}
+          > */}
+
+          <strong>{series.name}</strong>
+          {/* </PostLink> */}
+          <div className="user">
+            <span>업데이트: {formatDate(series.updatedAt)}</span>
+            <br />
+            <span>시리즈목록보기</span>
+          </div>
+        </div>
       </div>
     </SeriesCardBlock>
   );

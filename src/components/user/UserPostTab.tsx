@@ -53,7 +53,7 @@ function UserPostTab({ posts }: UserPostTabProps) {
           <PostList>
             {posts.map(post => (
               <section key={post.id}>
-                <PostCard post={post} />
+                <PostCard post={post} userPostTab={true} />
               </section>
             ))}
           </PostList>

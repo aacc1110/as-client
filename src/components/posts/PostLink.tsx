@@ -8,6 +8,7 @@ const PostLinkBlock = styled(Link)``;
 
 interface PostLinkProps {
   postId?: string;
+  seriesId?: string;
   className?: string;
   useremail: string;
   urlPath: string;
@@ -17,6 +18,7 @@ interface PostLinkProps {
 
 function PostLink({
   postId,
+  seriesId,
   className,
   useremail,
   urlPath,

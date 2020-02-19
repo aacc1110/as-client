@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import LayOut from '../../components/LayOut';
 
-const PostSeriesPageBlock = styled.div``;
+const PostSeriesPageBlock = styled(LayOut)``;
 
 interface PostSeriesPageProps {}
 

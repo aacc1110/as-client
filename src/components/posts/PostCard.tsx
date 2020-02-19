@@ -50,7 +50,7 @@ const PostCardBlock = styled.article`
         line-height: 1.5;
       }
       .user {
-        margin-top: 1rem;
+        margin-top: 0.5rem;
         b {
           font-size: 0.875rem;
           color: ${palette.gray7};
@@ -66,9 +66,10 @@ const PostCardBlock = styled.article`
 
 interface PostCardProps {
   post: Post;
+  userPostTab?: boolean;
 }
 
-function PostCard({ post }: PostCardProps) {
+function PostCard({ post, userPostTab }: PostCardProps) {
   return (
     <PostCardBlock>
       <div className="img">
@@ -81,11 +82,13 @@ function PostCard({ post }: PostCardProps) {
         </PostLink>
       </div>
       <div className="info">
-        <div className="userthumbnail">
-          <Link to={`@${post.user.email}`}>
-            <img src={userThumbnail} alt="userthumbnail" />
-          </Link>
-        </div>
+        {!userPostTab && (
+          <div className="userthumbnail">
+            <Link to={`@${post.user.email}`}>
+              <img src={userThumbnail} alt="userthumbnail" />
+            </Link>
+          </div>
+        )}
         <div className="postInfo">
           <PostLink
             postId={post.id}
@@ -95,11 +98,13 @@ function PostCard({ post }: PostCardProps) {
             <strong>{post.title}</strong>
           </PostLink>
           <div className="user">
-            <div>
-              <Link to={`@${post.user.email}`}>
-                <b>{post.user.name}</b>
-              </Link>
-            </div>
+            {!userPostTab && (
+              <div>
+                <Link to={`@${post.user.email}`}>
+                  <b>{post.user.name}</b>
+                </Link>
+              </div>
+            )}
             <div>
               <span>조회수 {post.viewsCount}회</span>
               <span> • </span>
