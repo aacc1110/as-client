@@ -29,14 +29,30 @@ const SeriesCardBlock = styled.div`
       background-color: rgba(0, 0, 0, 0.8);
       color: #fff;
       text-align: center;
-      font-size: 1.6rem;
+      font-size: 1.2rem;
       font-weight: 400;
       line-height: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      opacity: 0.6;
+      opacity: 0.8;
+      .tabContent {
+        /* input[type='radio'] {
+          display: none;
+        } */
+        input[type='radio'] + label {
+          cursor: pointer;
+          :hover {
+            color: red;
+          }
+        }
+        input[type='radio']:checked + label {
+          font-size: 2rem;
+          font-weight: 600;
+          color: red;
+        }
+      }
     }
   }
   .info {
@@ -63,6 +79,13 @@ const SeriesCardBlock = styled.div`
           font-size: 0.75rem;
           color: ${palette.gray6};
         }
+        .conbox {
+          display: none;
+          width: 500px;
+          height: 300px;
+          background-color: black;
+          margin: 0;
+        }
       }
     }
   }
@@ -75,6 +98,18 @@ interface SeriesCardProps {
 function SeriesCard({ series, useremail }: SeriesCardProps) {
   if (!series || !useremail) return null;
   // const url = `/@${useremail}/series/${series.urlPath}`;
+  const seeSeries = () => {
+    const hiddenSeriesBox = document.getElementsByClassName(
+      `${series.urlPath}`
+    )[0] as HTMLElement;
+    const checkedId = document.getElementById(
+      `${series.id}`
+    ) as HTMLInputElement;
+    checkedId.checked = true;
+    if (checkedId.checked) {
+      hiddenSeriesBox.style.display = 'block';
+    }
+  };
   return (
     <SeriesCardBlock>
       <div className="img_wrap">
@@ -84,11 +119,17 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
           urlPath={series.urlPath}
         >
           <img src={postSampleImage} alt="thumbnail" />
-          <div className="img_series">
-            {series.postsCount}
-            <MdFormatListBulleted />
-          </div>
         </PostLink>
+        <div className="img_series">
+          <div className="tabContent">
+            <input type="radio" name="series" id={series.id} />
+            <label htmlFor={series.id} onClick={seeSeries}>
+              {series.postsCount}
+              <br />
+              <MdFormatListBulleted />
+            </label>
+          </div>
+        </div>
       </div>
       <div className="info">
         <div className="seriesInfo">
@@ -103,7 +144,7 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
           <div className="user">
             <span>업데이트: {formatDate(series.updatedAt)}</span>
             <br />
-            <span>시리즈목록보기</span>
+            <span className={`conbox ${series.urlPath}`}>시리즈목록보기</span>
           </div>
         </div>
       </div>
