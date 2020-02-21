@@ -7,9 +7,12 @@ import { postSampleImage } from '../../images/img';
 import PostLink from '../posts/PostLink';
 import { MdFormatListBulleted } from 'react-icons/md';
 
-const SeriesCardBlock = styled.div`
-  padding-bottom: 1rem;
+interface SeriesCardProps {
+  series?: Series;
+  useremail?: string;
+}
 
+const SeriesCardBlock = styled.div`
   a {
     text-decoration: none;
   }
@@ -55,6 +58,7 @@ const SeriesCardBlock = styled.div`
       }
     }
   }
+
   .info {
     display: flex;
     flex-direction: column;
@@ -90,10 +94,6 @@ const SeriesCardBlock = styled.div`
     }
   }
 `;
-interface SeriesCardProps {
-  series?: Series;
-  useremail?: string;
-}
 
 function SeriesCard({ series, useremail }: SeriesCardProps) {
   if (!series || !useremail) return null;
@@ -102,13 +102,19 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
     const hiddenSeriesBox = document.getElementsByClassName(
       `${series.urlPath}`
     )[0] as HTMLElement;
-    const checkedId = document.getElementById(
-      `${series.id}`
-    ) as HTMLInputElement;
-    checkedId.checked = true;
-    if (checkedId.checked) {
+    if (
+      document.querySelector(
+        `input[id="${series.id}"]:checked`
+      ) as HTMLInputElement
+    ) {
       hiddenSeriesBox.style.display = 'block';
     }
+    // const checked = checkedId.getAttribute('checked');
+    // console.log('checked:', checkedId);
+    // checkedId.checked = true;
+    // if (checked) {
+    //   hiddenSeriesBox.style.display = 'block';
+    // }
   };
   return (
     <SeriesCardBlock>
@@ -123,7 +129,7 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
         <div className="img_series">
           <div className="tabContent">
             <input type="radio" name="series" id={series.id} />
-            <label htmlFor={series.id} onClick={seeSeries}>
+            <label htmlFor={series.id}>
               {series.postsCount}
               <br />
               <MdFormatListBulleted />
@@ -144,7 +150,12 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
           <div className="user">
             <span>업데이트: {formatDate(series.updatedAt)}</span>
             <br />
-            <span className={`conbox ${series.urlPath}`}>시리즈목록보기</span>
+            <div
+              className={`conbox ${series.urlPath}`}
+              style={{ display: 'none' }}
+            >
+              시리즈목록보기
+            </div>
           </div>
         </div>
       </div>
