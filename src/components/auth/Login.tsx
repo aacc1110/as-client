@@ -224,7 +224,6 @@ function Login(props: LoginProps) {
       }
     }).then(response => {
       const data: any = response.data;
-      console.log(data);
       if (value && data.checkUser) {
         if (!emailRef.current) return;
         emailRef.current.value = '';
@@ -238,7 +237,6 @@ function Login(props: LoginProps) {
           }
         }).then(response => {
           const data: any = response.data;
-          console.log(data);
           if (data) {
             if (!emailRef.current) return;
             emailRef.current.value = '';
@@ -257,17 +255,6 @@ function Login(props: LoginProps) {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // const test = {
-    //   id: '7fc3e2c5-cd2b-44b2-af99-a7ca4e1b2196',
-    //   email: 'tadrow@daum.net',
-    //   name: '테드로',
-    //   userProfile: {
-    //     about: '솔로 풀스택 개발자?,
-    //     id: '8d8c13ed-a9dd-45c0-9cc0-cc35e21af22d',
-    //     thumbnail: 'image'
-    //   }
-    // };
-
     await login({
       variables: {
         email: input.email,
@@ -277,13 +264,6 @@ function Login(props: LoginProps) {
       .then(response => {
         if (response.data) {
           const user = response.data ? response.data.login.user : null;
-          // localStorage.setItem('CurrentUser', JSON.stringify(response.data.login.user));
-          // const xlg: string = document.cookie.replace(
-          //   /(?:(?:^|.*;\s*)xlg\s*=\s*([^;]*).*$)|^.*$/,
-          //   '$1'
-          // );
-          // document.cookie = `xlg=${xlg}; max-age=0`;
-
           localStorage.setItem('CurrentUser', JSON.stringify(user));
           document.location.href = '/';
         }

@@ -3,11 +3,11 @@ import { Switch, Route } from 'react-router';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/auth/LoginPage';
-import Sample from './samples/Sample';
 import PostWritePage from './pages/post/PostWritePage';
 import RegisterPage from './pages/auth/RegisterPage';
 import TagPage from './pages/tags/TagPage';
 import UserPage from './pages/user/UserPage';
+import ModalPage from './samples/ModalPage';
 
 interface AppProps {}
 
@@ -33,7 +33,7 @@ function App(props: AppProps) {
         <PostWritePage />
       </Route>
       <Route path="/samples">
-        <Sample />
+        <ModalPage series="series" />
       </Route>
     </Switch>
   );
