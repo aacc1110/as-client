@@ -20,7 +20,9 @@ const v = makeArr(5, 6);
 const v2 = makeArr('a', 'b');
 const v3 = makeArr(null, 6);
 
-const makeFullName = <T extends { firstName: string; lastName: string }>(obj: T) => {
+const makeFullName = <T extends { firstName: string; lastName: string }>(
+  obj: T
+) => {
   return {
     ...obj,
     fullName: obj.firstName + ' ' + obj.lastName
