@@ -12,7 +12,7 @@ interface SeriesCardProps {
   useremail?: string;
 }
 
-const SeriesCardBlock = styled.div`
+const SeriesCardBlock = styled.div<{ seriesId: string }>`
   a {
     text-decoration: none;
   }
@@ -41,6 +41,16 @@ const SeriesCardBlock = styled.div`
       justify-content: center;
       opacity: 0.8;
       .tabContent {
+        .conbox {
+          display: none;
+          /* position: absolute;
+          top: 50%;
+          left: 50%; */
+          width: 500px;
+          height: 300px;
+          background-color: black;
+          margin: 0;
+        }
         /* input[type='radio'] {
           display: none;
         } */
@@ -51,14 +61,17 @@ const SeriesCardBlock = styled.div`
           }
         }
         input[type='radio']:checked + label {
-          font-size: 2rem;
           font-weight: 600;
           color: red;
         }
+        input[id='${props => props.seriesId}']:checked ~ 
+        .${props => props.seriesId} {
+          display: block;
+        }
       }
+      
     }
   }
-
   .info {
     display: flex;
     flex-direction: column;
@@ -83,13 +96,7 @@ const SeriesCardBlock = styled.div`
           font-size: 0.75rem;
           color: ${palette.gray6};
         }
-        .conbox {
-          display: none;
-          width: 500px;
-          height: 300px;
-          background-color: black;
-          margin: 0;
-        }
+ 
       }
     }
   }
@@ -98,26 +105,20 @@ const SeriesCardBlock = styled.div`
 function SeriesCard({ series, useremail }: SeriesCardProps) {
   if (!series || !useremail) return null;
   // const url = `/@${useremail}/series/${series.urlPath}`;
-  const seeSeries = () => {
-    const hiddenSeriesBox = document.getElementsByClassName(
-      `${series.urlPath}`
-    )[0] as HTMLElement;
-    if (
-      document.querySelector(
-        `input[id="${series.id}"]:checked`
-      ) as HTMLInputElement
-    ) {
-      hiddenSeriesBox.style.display = 'block';
-    }
-    // const checked = checkedId.getAttribute('checked');
-    // console.log('checked:', checkedId);
-    // checkedId.checked = true;
-    // if (checked) {
-    //   hiddenSeriesBox.style.display = 'block';
-    // }
-  };
+  // const seeSeries = () => {
+  //   const hiddenSeriesBox = document.getElementsByClassName(
+  //     `${series.urlPath}`
+  //   )[0] as HTMLElement;
+  //   if (
+  //     document.querySelector(
+  //       `input[id="${series.id}"]:checked`
+  //     ) as HTMLInputElement
+  //   ) {
+  //     hiddenSeriesBox.style.display = 'block';
+  //   }
+  // };
   return (
-    <SeriesCardBlock>
+    <SeriesCardBlock seriesId={series.id}>
       <div className="img_wrap">
         <PostLink
           seriesId={series.id}
@@ -128,6 +129,7 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
         </PostLink>
         <div className="img_series">
           <div className="tabContent">
+            <div className={`conbox ${series.id}`}>시리즈목록보기</div>
             <input type="radio" name="series" id={series.id} />
             <label htmlFor={series.id}>
               {series.postsCount}
@@ -137,6 +139,7 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
           </div>
         </div>
       </div>
+
       <div className="info">
         <div className="seriesInfo">
           {/* <PostLink
@@ -149,13 +152,6 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
           {/* </PostLink> */}
           <div className="user">
             <span>업데이트: {formatDate(series.updatedAt)}</span>
-            <br />
-            <div
-              className={`conbox ${series.urlPath}`}
-              style={{ display: 'none' }}
-            >
-              시리즈목록보기
-            </div>
           </div>
         </div>
       </div>

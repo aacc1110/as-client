@@ -3,9 +3,10 @@ import styled from '@emotion/styled';
 
 interface ModalPageProps {
   series: string;
+  useremail: string;
 }
 
-const ModalPageBlock = styled.div`
+const ModalPageBlock = styled.div<{ useremail: string }>`
   .tabContent {
     /* input[type='radio'] {
           display: none;
@@ -28,7 +29,8 @@ const ModalPageBlock = styled.div`
       background-color: coral;
       margin: 0;
     }
-    input[id='series1']:checked ~ .con1 {
+    input[id='${props => props.useremail}']:checked ~ .${props =>
+  props.useremail} {
       display: block;
     }
     input[id='series2']:checked ~ .con2 {
@@ -40,17 +42,17 @@ const ModalPageBlock = styled.div`
   }
 `;
 
-function ModalPage({ series }: ModalPageProps) {
+function ModalPage({ series, useremail }: ModalPageProps) {
   return (
-    <ModalPageBlock>
+    <ModalPageBlock useremail={useremail}>
       <div className="tabContent">
-        <input type="radio" name="series" id="series1" />
-        <label htmlFor="series1">{series}</label>
+        <input type="radio" name="series" id={useremail} />
+        <label htmlFor={useremail}>{series}</label>
         <input type="radio" name="series" id="series2" />
         <label htmlFor="series2">{series}</label>
         <input type="radio" name="series" id="series3" />
         <label htmlFor="series3">{series}</label>
-        <div className="conbox con1">시리즈목록보기1</div>
+        <div className={`conbox ${useremail}`}>시리즈목록보기1</div>
         <div className="conbox con2">시리즈목록보기2</div>
         <div className="conbox con3">시리즈목록보기3</div>
       </div>

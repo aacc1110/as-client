@@ -33,7 +33,7 @@ function App(props: AppProps) {
         <PostWritePage />
       </Route>
       <Route path="/samples">
-        <ModalPage series="series" />
+        <ModalPage series="series" useremail="series1" />
       </Route>
     </Switch>
   );
