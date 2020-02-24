@@ -41,32 +41,59 @@ const SeriesCardBlock = styled.div<{ seriesId: string }>`
       justify-content: center;
       opacity: 0.8;
       .tabContent {
-        .conbox {
+        input[id*='${props => props.seriesId}'] {
           display: none;
-          /* position: absolute;
-          top: 50%;
-          left: 50%; */
-          width: 500px;
-          height: 300px;
-          background-color: black;
-          margin: 0;
         }
-        /* input[type='radio'] {
-          display: none;
-        } */
-        input[type='radio'] + label {
+        input[id*='${props => props.seriesId}'] + label {
+          display: inline-block;
           cursor: pointer;
           :hover {
             color: red;
           }
         }
-        input[type='radio']:checked + label {
-          font-weight: 600;
-          color: red;
+        input[id*='${props => props.seriesId}'] + label + div {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 100;
         }
-        input[id='${props => props.seriesId}']:checked ~ 
-        .${props => props.seriesId} {
-          display: block;
+        input[id*='${props => props.seriesId}'] + label + div > div {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 500px;
+          height: 500px;
+          background: #fff;
+          z-index: 99;
+        }
+        input[id*='${props => props.seriesId}'] + label + div > div > label {
+          position: absolute;
+          top: 0;
+          left: 0;
+          transform: translate(-40%, -40%);
+          padding: 20px;
+          background: black;
+          border-radius: 100%;
+          z-index: 1;
+        }
+        input[id*='${props => props.seriesId}'] + label + div > label {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: white;
+          opacity: 0.5;
+          z-index: 1;
+        }
+        input[id*='${props => props.seriesId}'] + label + div {
+         display: none;
+        }
+        input[id*='${props => props.seriesId}']:checked + label + div {
+         display: block;
         }
       }
       
@@ -104,19 +131,7 @@ const SeriesCardBlock = styled.div<{ seriesId: string }>`
 
 function SeriesCard({ series, useremail }: SeriesCardProps) {
   if (!series || !useremail) return null;
-  // const url = `/@${useremail}/series/${series.urlPath}`;
-  // const seeSeries = () => {
-  //   const hiddenSeriesBox = document.getElementsByClassName(
-  //     `${series.urlPath}`
-  //   )[0] as HTMLElement;
-  //   if (
-  //     document.querySelector(
-  //       `input[id="${series.id}"]:checked`
-  //     ) as HTMLInputElement
-  //   ) {
-  //     hiddenSeriesBox.style.display = 'block';
-  //   }
-  // };
+
   return (
     <SeriesCardBlock seriesId={series.id}>
       <div className="img_wrap">
@@ -129,13 +144,18 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
         </PostLink>
         <div className="img_series">
           <div className="tabContent">
-            <div className={`conbox ${series.id}`}>시리즈목록보기</div>
-            <input type="radio" name="series" id={series.id} />
+            <input type="checkbox" name="series" id={series.id} />
             <label htmlFor={series.id}>
               {series.postsCount}
               <br />
               <MdFormatListBulleted />
             </label>
+            <div>
+              <div>
+                <label htmlFor={series.id}></label>
+              </div>
+              <label htmlFor={series.id}></label>
+            </div>
           </div>
         </div>
       </div>
