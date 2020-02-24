@@ -6,6 +6,7 @@ import { formatDate } from '../../lib/utils';
 import { postSampleImage } from '../../images/img';
 import PostLink from '../posts/PostLink';
 import { MdFormatListBulleted } from 'react-icons/md';
+import SeriesPostList from './SeriesPostList';
 
 interface SeriesCardProps {
   series?: Series;
@@ -153,6 +154,7 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
             <div>
               <div>
                 <label htmlFor={series.id}></label>
+                <SeriesPostList />
               </div>
               <label htmlFor={series.id}></label>
             </div>
