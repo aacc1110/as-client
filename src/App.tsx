@@ -7,7 +7,7 @@ import PostWritePage from './pages/post/PostWritePage';
 import RegisterPage from './pages/auth/RegisterPage';
 import TagPage from './pages/tags/TagPage';
 import UserPage from './pages/user/UserPage';
-import ModalPage from './samples/ModalPage';
+import Popup2 from './samples/Popup2';
 
 interface AppProps {}
 
@@ -33,7 +33,7 @@ function App(props: AppProps) {
         <PostWritePage />
       </Route>
       <Route path="/samples">
-        <ModalPage series="series" useremail="series1" />
+        <Popup2 />
       </Route>
     </Switch>
   );

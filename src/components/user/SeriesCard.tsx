@@ -13,7 +13,7 @@ interface SeriesCardProps {
   useremail?: string;
 }
 
-const SeriesCardBlock = styled.div<{ seriesId: string }>`
+const SeriesCardBlock = styled.div`
   a {
     text-decoration: none;
   }
@@ -24,81 +24,79 @@ const SeriesCardBlock = styled.div<{ seriesId: string }>`
       width: 100%;
       height: auto;
     }
-    .img_series {
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      width: 33%;
-      background-color: rgba(0, 0, 0, 0.8);
-      color: #fff;
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: 400;
-      line-height: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.8;
-      .tabContent {
-        input[id*='${props => props.seriesId}'] {
-          display: none;
-        }
-        input[id*='${props => props.seriesId}'] + label {
-          display: inline-block;
-          cursor: pointer;
-          :hover {
-            color: red;
-          }
-        }
-        input[id*='${props => props.seriesId}'] + label + div {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 100;
-        }
-        input[id*='${props => props.seriesId}'] + label + div > div {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 500px;
-          height: 500px;
-          background: #fff;
-          z-index: 99;
-        }
-        input[id*='${props => props.seriesId}'] + label + div > div > label {
-          position: absolute;
-          top: 0;
-          left: 0;
-          transform: translate(-40%, -40%);
-          padding: 20px;
-          background: black;
-          border-radius: 100%;
-          z-index: 1;
-        }
-        input[id*='${props => props.seriesId}'] + label + div > label {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: white;
-          opacity: 0.5;
-          z-index: 1;
-        }
-        input[id*='${props => props.seriesId}'] + label + div {
-         display: none;
-        }
-        input[id*='${props => props.seriesId}']:checked + label + div {
-         display: block;
-        }
-      }
-      
+  }
+  .img_series {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 33%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    z-index: 1;
+  }
+  .img_series input {
+    /* display: none; */
+  }
+  .img_series input + label {
+    cursor: pointer;
+    :hover {
+      color: red;
     }
+  }
+  .wrap {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0.5;
+    z-index: 100;
+  }
+  .wrap > div {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    /* transform: translate(-50%, -50%); */
+    width: 300px;
+    height: 100%;
+    background: coral;
+    z-index: 3;
+  }
+  .wrap > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2;
+  }
+  .wrap > div > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-40%, -40%);
+    padding: 20px;
+    background: #dd5347;
+    border-radius: 100%;
+    z-index: 2;
+  }
+  input:checked + label .wrap {
+    /* opacity: 1;
+    visibility: visible; */
+    display: block;
   }
   .info {
     display: flex;
@@ -124,9 +122,11 @@ const SeriesCardBlock = styled.div<{ seriesId: string }>`
           font-size: 0.75rem;
           color: ${palette.gray6};
         }
- 
       }
     }
+  }
+  &::after {
+    clear: both;
   }
 `;
 
@@ -134,7 +134,7 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
   if (!series || !useremail) return null;
 
   return (
-    <SeriesCardBlock seriesId={series.id}>
+    <SeriesCardBlock>
       <div className="img_wrap">
         <PostLink
           seriesId={series.id}
@@ -144,24 +144,21 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
           <img src={postSampleImage} alt="thumbnail" />
         </PostLink>
         <div className="img_series">
-          <div className="tabContent">
-            <input type="checkbox" name="series" id={series.id} />
-            <label htmlFor={series.id}>
-              {series.postsCount}
-              <br />
-              <MdFormatListBulleted />
-            </label>
-            <div>
-              <div>
-                <label htmlFor={series.id}></label>
-                <SeriesPostList />
-              </div>
-              <label htmlFor={series.id}></label>
-            </div>
-          </div>
+          <input type="checkbox" id="popup" />
+          <label htmlFor="popup">
+            {series.postsCount}
+            <br />
+            <MdFormatListBulleted />
+          </label>
         </div>
       </div>
-
+      <div className="wrap">
+        <div>
+          <SeriesPostList />
+          <label htmlFor="popup"></label>
+        </div>
+        <label htmlFor="popup"></label>
+      </div>
       <div className="info">
         <div className="seriesInfo">
           {/* <PostLink
