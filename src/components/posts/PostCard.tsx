@@ -16,6 +16,9 @@ const PostCardBlock = styled.article`
   img {
     width: 100%;
     height: auto;
+    :hover {
+      opacity: 0.8;
+    }
   }
   .info {
     display: flex;
@@ -97,6 +100,7 @@ function PostCard({ post, userPostTab }: PostCardProps) {
           >
             <strong>{post.title}</strong>
           </PostLink>
+
           <div className="user">
             {!userPostTab && (
               <div>

@@ -15,6 +15,7 @@ import {
 import useUser from '../../lib/hooks/useUser';
 import PostComments from './PostComments';
 import PostSideList from './PostSideList';
+import { SeriesPost } from '../../lib/graphql/series';
 
 const PostViewBlock = styled.div`
   display: flex;
@@ -173,10 +174,18 @@ const PostViewBlock = styled.div`
 interface PostViewProps {
   useremail?: string;
   urlPath?: string;
+  seriesId?: string;
+  seriesPosts?: SeriesPost[];
 }
 
-function PostView({ useremail, urlPath }: PostViewProps) {
+function PostView({
+  useremail,
+  urlPath,
+  seriesId,
+  seriesPosts
+}: PostViewProps) {
   // const { post, onLikePost, onUnlikePost } = usePost(useremail, urlPath);
+  console.log(seriesPosts);
   const { post, onLikeToggle, onPostRead, onPostSave } = usePost(
     useremail,
     urlPath

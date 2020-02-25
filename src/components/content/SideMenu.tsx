@@ -18,6 +18,7 @@ const SideMenuBlock = styled.div`
   width: 3.5rem;
   height: 100%;
   background-color: ${palette.gray0};
+  z-index: 9999;
 `;
 const SideMenuItem = styled(NavLink)`
   display: flex;

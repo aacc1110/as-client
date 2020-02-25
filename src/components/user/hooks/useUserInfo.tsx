@@ -24,6 +24,21 @@ const GET_USER = gql`
         seriesPosts {
           id
           index
+          post {
+            id
+            title
+            likes
+            liked
+            body
+            meta
+            viewsCount
+            urlPath
+            user {
+              id
+              name
+              email
+            }
+          }
         }
       }
       posts {

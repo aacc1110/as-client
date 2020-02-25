@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from '@emotion/styled';
 import { Series } from '../../lib/graphql/series';
 import palette from '../../styles/palette';
@@ -6,12 +6,7 @@ import { formatDate } from '../../lib/utils';
 import { postSampleImage } from '../../images/img';
 import PostLink from '../posts/PostLink';
 import { MdFormatListBulleted } from 'react-icons/md';
-import SeriesPostList from './SeriesPostList';
-
-interface SeriesCardProps {
-  series?: Series;
-  useremail?: string;
-}
+import SeriesPostCard from './SeriesPostCard';
 
 const SeriesCardBlock = styled.div`
   a {
@@ -23,6 +18,9 @@ const SeriesCardBlock = styled.div`
     img {
       width: 100%;
       height: auto;
+      :hover {
+        opacity: 0.8;
+      }
     }
   }
   .img_series {
@@ -44,10 +42,10 @@ const SeriesCardBlock = styled.div`
     opacity: 0.8;
     z-index: 1;
   }
-  .img_series input {
-    /* display: none; */
+  input {
+    display: none;
   }
-  .img_series input + label {
+  input + label {
     cursor: pointer;
     :hover {
       color: red;
@@ -60,19 +58,23 @@ const SeriesCardBlock = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: white;
-    opacity: 0.5;
-    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
   }
   .wrap > div {
     position: absolute;
     top: 70px;
     right: 0;
     /* transform: translate(-50%, -50%); */
-    width: 300px;
+    width: 30%;
     height: 100%;
-    background: coral;
-    z-index: 3;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* background: ${palette.gray5}; */
+    overflow: auto;
+    ::-webkit-scrollbar {
+      width: 0px;
+    }
+    z-index: 30;
   }
   .wrap > label {
     position: absolute;
@@ -80,24 +82,25 @@ const SeriesCardBlock = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 2;
+    /* opacity: 0.8; */
+    z-index: 20;
   }
   .wrap > div > label {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 0;
-    transform: translate(-40%, -40%);
+    transform: translate(-50%, 0);
     padding: 20px;
-    background: #dd5347;
-    border-radius: 100%;
-    z-index: 2;
+    background: black;
+    border-radius: 50%;
+    z-index: 5;
   }
-  input:checked + label .wrap {
-    /* opacity: 1;
-    visibility: visible; */
+  /* input[id*='']:checked ~ .wrap {
+    opacity: 1;
+    visibility: visible;
     display: block;
-  }
+  } */
+
   .info {
     display: flex;
     flex-direction: column;
@@ -125,40 +128,62 @@ const SeriesCardBlock = styled.div`
       }
     }
   }
-  &::after {
-    clear: both;
-  }
 `;
 
+interface SeriesCardProps {
+  series?: Series;
+  useremail?: string;
+}
+
 function SeriesCard({ series, useremail }: SeriesCardProps) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+
   if (!series || !useremail) return null;
+
+  const seePopup = () => {
+    const checkBox = document.getElementById(
+      `${series.id}`
+    ) as HTMLInputElement;
+    const posts = wrapRef.current;
+    if (checkBox.checked === false) {
+      posts!.style.display = 'block';
+    } else {
+      posts!.style.display = 'none';
+    }
+  };
 
   return (
     <SeriesCardBlock>
       <div className="img_wrap">
         <PostLink
-          seriesId={series.id}
           useremail={useremail}
           urlPath={series.urlPath}
+          seriesId={series.id}
+          seriesPosts={series.seriesPosts}
         >
           <img src={postSampleImage} alt="thumbnail" />
         </PostLink>
         <div className="img_series">
-          <input type="checkbox" id="popup" />
-          <label htmlFor="popup">
+          <input type="checkbox" id={series.id} />
+          <label htmlFor={series.id} onClick={seePopup}>
             {series.postsCount}
             <br />
             <MdFormatListBulleted />
           </label>
         </div>
       </div>
-      <div className="wrap">
+      <div className="wrap" ref={wrapRef}>
+        <label htmlFor={series.id} onClick={seePopup} />
         <div>
-          <SeriesPostList />
-          <label htmlFor="popup"></label>
+          {series.seriesPosts.map(seriesPost => (
+            <section key={seriesPost.id}>
+              <SeriesPostCard post={seriesPost.post} />
+            </section>
+          ))}
+          <label htmlFor={series.id} onClick={seePopup} />
         </div>
-        <label htmlFor="popup"></label>
       </div>
+
       <div className="info">
         <div className="seriesInfo">
           {/* <PostLink

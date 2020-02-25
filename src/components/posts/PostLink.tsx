@@ -3,27 +3,30 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import client from '../../client';
 import { GET_POST } from './hooks/usePost';
+import { SeriesPost } from '../../lib/graphql/series';
 
 const PostLinkBlock = styled(Link)``;
 
 interface PostLinkProps {
   postId?: string;
-  seriesId?: string;
   className?: string;
   useremail: string;
   urlPath: string;
   prefetch?: boolean;
   children?: ReactNode;
+  seriesId?: string;
+  seriesPosts?: SeriesPost[];
 }
 
 function PostLink({
   postId,
-  seriesId,
   className,
   useremail,
   urlPath,
   prefetch = true,
-  children
+  children,
+  seriesId,
+  seriesPosts
 }: PostLinkProps) {
   const to = `/@${useremail}/${urlPath}`;
   const prefetchTimeId = useRef<number | null>(null);
