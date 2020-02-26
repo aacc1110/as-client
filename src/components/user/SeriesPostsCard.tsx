@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Post } from '../../lib/graphql/post';
 import { postSampleImage } from '../../images/img';
 import PostLink from '../posts/PostLink';
 import palette from '../../styles/palette';
+import { Post } from '../../lib/graphql/post';
+import { SeriesPosts } from '../../lib/graphql/series';
 
-const SeriesPostCardBlock = styled.div`
+const SeriesPostsCardBlock = styled.div`
   background: white;
   display: flex;
-  flex-wrap: wrap;
+  width: 380px;
   margin: 0 0 0.25rem 0;
   .seriesImg {
     width: 40%;
@@ -35,27 +36,36 @@ const SeriesPostCardBlock = styled.div`
   }
 `;
 
-interface SeriesPostCardProps {
+interface SeriesPostsCardProps {
   post: Post;
+  seriesPosts?: SeriesPosts[];
+  useremail?: string;
 }
 
-function SeriesPostCard({ post }: SeriesPostCardProps) {
+function SeriesPostsCard({
+  post,
+  seriesPosts,
+  useremail
+}: SeriesPostsCardProps) {
+  if (!post) return null;
   return (
-    <SeriesPostCardBlock>
+    <SeriesPostsCardBlock>
       <div className="seriesImg">
         <PostLink
           postId={post.id}
-          useremail={post.user.email}
+          useremail={useremail}
           urlPath={post.urlPath}
+          seriesPosts={seriesPosts}
         >
           <img src={postSampleImage} alt="thumbnail" />
         </PostLink>
       </div>
       <div className="seriesInfo">
+        <div>시리즈</div>
         <strong>{post.title}</strong>
       </div>
-    </SeriesPostCardBlock>
+    </SeriesPostsCardBlock>
   );
 }
 
-export default SeriesPostCard;
+export default SeriesPostsCard;

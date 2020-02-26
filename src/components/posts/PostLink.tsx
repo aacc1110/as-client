@@ -3,29 +3,27 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import client from '../../client';
 import { GET_POST } from './hooks/usePost';
-import { SeriesPost } from '../../lib/graphql/series';
+import { SeriesPosts } from '../../lib/graphql/series';
 
 const PostLinkBlock = styled(Link)``;
 
 interface PostLinkProps {
   postId?: string;
   className?: string;
-  useremail: string;
+  useremail?: string;
   urlPath: string;
   prefetch?: boolean;
   children?: ReactNode;
   seriesId?: string;
-  seriesPosts?: SeriesPost[];
+  seriesPosts?: SeriesPosts[];
 }
 
 function PostLink({
-  postId,
   className,
   useremail,
   urlPath,
   prefetch = true,
   children,
-  seriesId,
   seriesPosts
 }: PostLinkProps) {
   const to = `/@${useremail}/${urlPath}`;
@@ -52,7 +50,10 @@ function PostLink({
   };
   return (
     <PostLinkBlock
-      to={to}
+      to={{
+        pathname: to,
+        state: { seriesPosts: seriesPosts }
+      }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       className={className}

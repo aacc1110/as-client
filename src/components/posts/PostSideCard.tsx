@@ -4,6 +4,7 @@ import { postSampleImage } from '../../images/img';
 import { Post } from '../../lib/graphql/post';
 import palette from '../../styles/palette';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
+import PostLink from './PostLink';
 
 const PostSideCardBlock = styled.article`
   width: 100%;
@@ -14,6 +15,9 @@ const PostSideCardBlock = styled.article`
   img {
     width: 160px;
     height: auto;
+    :hover {
+      opacity: 0.8;
+    }
   }
   .sideInfo {
     width: 100%;
@@ -43,11 +47,16 @@ interface PostSideCardProps {
 }
 
 function PostSideCard({ post }: PostSideCardProps) {
-  console.log(post.liked);
   return (
     <PostSideCardBlock>
       <div>
-        <img src={postSampleImage} alt="thumbnail" />
+        <PostLink
+          postId={post.id}
+          useremail={post.user.email}
+          urlPath={post.urlPath}
+        >
+          <img src={postSampleImage} alt="thumbnail" />
+        </PostLink>
       </div>
       <div className="sideInfo">
         <div className="sideTitle">{post.title}</div>

@@ -6,7 +6,7 @@ import { formatDate } from '../../lib/utils';
 import { postSampleImage } from '../../images/img';
 import PostLink from '../posts/PostLink';
 import { MdFormatListBulleted } from 'react-icons/md';
-import SeriesPostCard from './SeriesPostCard';
+import SeriesPostCard from './SeriesPostsCard';
 
 const SeriesCardBlock = styled.div`
   a {
@@ -95,12 +95,6 @@ const SeriesCardBlock = styled.div`
     border-radius: 50%;
     z-index: 5;
   }
-  /* input[id*='']:checked ~ .wrap {
-    opacity: 1;
-    visibility: visible;
-    display: block;
-  } */
-
   .info {
     display: flex;
     flex-direction: column;
@@ -175,9 +169,13 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
       <div className="wrap" ref={wrapRef}>
         <label htmlFor={series.id} onClick={seePopup} />
         <div>
-          {series.seriesPosts.map(seriesPost => (
-            <section key={seriesPost.id}>
-              <SeriesPostCard post={seriesPost.post} />
+          {series.seriesPosts.map(seriesPosts => (
+            <section key={seriesPosts.id}>
+              <SeriesPostCard
+                post={seriesPosts.post}
+                seriesPosts={series.seriesPosts}
+                useremail={useremail}
+              />
             </section>
           ))}
           <label htmlFor={series.id} onClick={seePopup} />

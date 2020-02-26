@@ -56,11 +56,9 @@ function UserSeriesTab({ seriesList, useremail }: UserSeriesTabProps) {
         ) : (
           <SeriesList>
             {seriesList.map(series => (
-              <SeriesCard
-                key={series.id}
-                series={series}
-                useremail={useremail}
-              />
+              <section key={series.id}>
+                <SeriesCard series={series} useremail={useremail} />
+              </section>
             ))}
           </SeriesList>
         )}

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { postSampleImage, loginUserThumbnail } from '../../images/img';
 import usePost from './hooks/usePost';
 import { formatDate } from '../../lib/utils';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import palette from '../../styles/palette';
 import {
   MdPlaylistAdd,
@@ -15,7 +15,9 @@ import {
 import useUser from '../../lib/hooks/useUser';
 import PostComments from './PostComments';
 import PostSideList from './PostSideList';
-import { SeriesPost } from '../../lib/graphql/series';
+import { Post } from '../../lib/graphql/post';
+import SeriesPostsCard from '../user/SeriesPostsCard';
+import { SeriesPosts } from '../../lib/graphql/series';
 
 const PostViewBlock = styled.div`
   display: flex;
@@ -175,17 +177,12 @@ interface PostViewProps {
   useremail?: string;
   urlPath?: string;
   seriesId?: string;
-  seriesPosts?: SeriesPost[];
 }
 
-function PostView({
-  useremail,
-  urlPath,
-  seriesId,
-  seriesPosts
-}: PostViewProps) {
-  // const { post, onLikePost, onUnlikePost } = usePost(useremail, urlPath);
-  console.log(seriesPosts);
+function PostView({ useremail, urlPath }: PostViewProps) {
+  const { state } = useLocation();
+  console.log('postview:', state.seriesPosts);
+
   const { post, onLikeToggle, onPostRead, onPostSave } = usePost(
     useremail,
     urlPath
@@ -238,7 +235,7 @@ function PostView({
   };
 
   if (!post) return null;
-  console.log('post_readIt', post.readIt);
+
   return (
     <PostViewBlock>
       <div className="main">
@@ -322,6 +319,16 @@ function PostView({
         />
       </div>
       <div>
+        {state.seriesPosts &&
+          state.seriesPosts.map((seriesPosts: SeriesPosts) => (
+            <section key={seriesPosts.id}>
+              <SeriesPostsCard
+                post={seriesPosts.post}
+                seriesPosts={state.seriesPosts}
+                useremail={useremail}
+              />
+            </section>
+          ))}
         <PostSideList useremail={useremail} />
       </div>
     </PostViewBlock>

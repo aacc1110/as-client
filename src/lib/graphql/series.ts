@@ -9,11 +9,11 @@ export interface Series {
   urlPath: string;
   createdAt: string;
   updatedAt: string;
-  seriesPosts: SeriesPost[];
+  seriesPosts: SeriesPosts[];
   thumbnail: string;
   postsCount: number;
 }
-export interface SeriesPost {
+export interface SeriesPosts {
   id: string;
   index: number;
   post: Post;
