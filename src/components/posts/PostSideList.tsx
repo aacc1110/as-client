@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import PostSideCard from './PostSideCard';
 import media from '../../lib/media';
-import useUserInfo from '../user/hooks/useUserInfo';
+import useTrendPosts from './hooks/useTrendPosts';
 
 const PostSideListBlock = styled.div`
   width: 430px;
@@ -26,19 +26,17 @@ const PostSideListBlock = styled.div`
   }
 `;
 
-interface PostSideListProps {
-  useremail?: string;
-}
+interface PostSideListProps {}
 
-function PostSideList({ useremail }: PostSideListProps) {
+function PostSideList(props: PostSideListProps) {
   // const { posts } = usePosts();
-  const { user } = useUserInfo(useremail);
+  const { trendPosts } = useTrendPosts();
 
   // if (!posts) return <div>포스트가 존재하지 않습니다.</div>;
-  if (!user) return <div>포스트가 존재하지 않습니다.</div>;
+  if (!trendPosts) return <div>포스트가 존재하지 않습니다.</div>;
   return (
     <PostSideListBlock>
-      {user.posts.map(post => (
+      {trendPosts.map(post => (
         <section key={post.id}>
           <PostSideCard post={post} />
         </section>

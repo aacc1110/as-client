@@ -15,7 +15,6 @@ import {
 import useUser from '../../lib/hooks/useUser';
 import PostComments from './PostComments';
 import PostSideList from './PostSideList';
-import { Post } from '../../lib/graphql/post';
 import SeriesPostsCard from '../user/SeriesPostsCard';
 import { SeriesPosts } from '../../lib/graphql/series';
 
@@ -159,8 +158,11 @@ const PostViewBlock = styled.div`
       margin: 0 0 0.5rem 0;
     }
     p {
-      a {
-        text-decoration: none;
+      span {
+        :hover {
+          cursor: pointer;
+          color: ${palette.gray5};
+        }
       }
       color: ${palette.gray7};
     }
@@ -181,7 +183,6 @@ interface PostViewProps {
 
 function PostView({ useremail, urlPath }: PostViewProps) {
   const { state } = useLocation();
-  console.log('postview:', state.seriesPosts);
 
   const { post, onLikeToggle, onPostRead, onPostSave } = usePost(
     useremail,
@@ -200,7 +201,6 @@ function PostView({ useremail, urlPath }: PostViewProps) {
     const see: HTMLElement | null = document.getElementById('see');
     const content = document.getElementsByClassName('content')[0]
       .firstChild as HTMLElement;
-
     if (mode === 'see') {
       content.style.overflow = 'visible';
       content.style.display = 'contents';
@@ -300,12 +300,12 @@ function PostView({ useremail, urlPath }: PostViewProps) {
           <div className="content" id="content">
             <span>{post.body}</span>
             <p>
-              <a href="#none" id="see" onClick={() => onClick('see')}>
+              <span id="see" onClick={() => onClick('see')}>
                 더보기
-              </a>
-              <a href="#none" id="hide" onClick={() => onClick('hide')}>
+              </span>
+              <span id="hide" onClick={() => onClick('hide')}>
                 간략히
-              </a>
+              </span>
             </p>
           </div>
         </div>
@@ -329,7 +329,7 @@ function PostView({ useremail, urlPath }: PostViewProps) {
               />
             </section>
           ))}
-        <PostSideList useremail={useremail} />
+        <PostSideList />
       </div>
     </PostViewBlock>
   );
