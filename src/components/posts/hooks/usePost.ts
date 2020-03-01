@@ -5,8 +5,8 @@ import { useCallback } from 'react';
 import client from '../../../client';
 
 export const GET_POST = gql`
-  query Post($id: ID, $userEmail: String, $urlPath: String) {
-    post(id: $id, userEmail: $userEmail, urlPath: $urlPath) {
+  query Post($id: ID, $useremail: String, $urlPath: String) {
+    post(id: $id, useremail: $useremail, urlPath: $urlPath) {
       id
       title
       body
@@ -115,12 +115,12 @@ export const UNLIKE_POST = gql`
 `;
 
 export default function usePost(
-  userEmail: string | undefined,
+  useremail: string | undefined,
   urlPath: string | undefined
 ) {
   const getPost = useQuery<{ post: Post }>(GET_POST, {
     variables: {
-      userEmail,
+      useremail,
       urlPath
     },
     fetchPolicy: 'cache-first'

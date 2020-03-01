@@ -46,7 +46,7 @@ const UserHomeInfo = styled.div`
         flex-direction: column;
         justify-content: center;
         padding-left: 1.5rem;
-        h2 {
+        h3 {
           margin: 0;
         }
         span {
@@ -54,6 +54,14 @@ const UserHomeInfo = styled.div`
           color: ${palette.gray6};
         }
       }
+    }
+    b {
+      font-size: 0.875rem;
+      color: ${palette.gray8};
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
     .subScription {
       button {
@@ -80,7 +88,7 @@ function UserHome({ username, about }: UserHomeProps) {
             <img src={loginUserThumbnail} alt="thumbnail" />
             <div className="userTitle">
               <div>
-                <h2>{username}</h2>
+                <h3>{username}</h3>
               </div>
               <span>구독자 8.98만명</span>
             </div>

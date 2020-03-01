@@ -182,14 +182,15 @@ interface PostViewProps {
 }
 
 function PostView({ useremail, urlPath }: PostViewProps) {
+  console.log('useremailPostview:', useremail);
   const { state } = useLocation();
+  const history = useHistory();
+  const { user } = useUser();
 
   const { post, onLikeToggle, onPostRead, onPostSave } = usePost(
     useremail,
     urlPath
   );
-  const { user } = useUser();
-  const history = useHistory();
 
   useLayoutEffect(() => {
     if (!post) return;
@@ -319,7 +320,7 @@ function PostView({ useremail, urlPath }: PostViewProps) {
         />
       </div>
       <div>
-        {state.seriesPosts &&
+        {/* {state.seriesPosts &&
           state.seriesPosts.map((seriesPosts: SeriesPosts) => (
             <section key={seriesPosts.id}>
               <SeriesPostsCard
@@ -328,8 +329,8 @@ function PostView({ useremail, urlPath }: PostViewProps) {
                 useremail={useremail}
               />
             </section>
-          ))}
-        <PostSideList />
+          ))} */}
+        {/* <PostSideList /> */}
       </div>
     </PostViewBlock>
   );

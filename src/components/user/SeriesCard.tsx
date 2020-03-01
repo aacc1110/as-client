@@ -42,15 +42,17 @@ const SeriesCardBlock = styled.div`
     opacity: 0.8;
     z-index: 1;
   }
+
   input {
     display: none;
   }
   input + label {
     cursor: pointer;
     :hover {
-      color: red;
+      color: ${palette.blue9};
     }
   }
+  
   .wrap {
     position: fixed;
     display: none;
@@ -111,13 +113,10 @@ const SeriesCardBlock = styled.div`
       }
       .user {
         margin-top: 0.5rem;
-        b {
-          font-size: 0.875rem;
-          color: ${palette.gray7};
-        }
-        span {
-          font-size: 0.75rem;
-          color: ${palette.gray6};
+        font-size: 0.75rem;
+        color: ${palette.gray6};
+        label:hover {
+          color: ${palette.blue9};
         }
       }
     }
@@ -178,22 +177,27 @@ function SeriesCard({ series, useremail }: SeriesCardProps) {
               />
             </section>
           ))}
-          <label htmlFor={series.id} onClick={seePopup} />
+          <label
+            htmlFor={series.id}
+            style={{ cursor: 'pointer' }}
+            onClick={seePopup}
+          />
         </div>
       </div>
 
       <div className="info">
         <div className="seriesInfo">
-          {/* <PostLink
-            postId={post.id}
-            useremail={post.user.email}
-            urlPath={post.urlPath}
-          > */}
-
           <strong>{series.name}</strong>
-          {/* </PostLink> */}
           <div className="user">
             <span>업데이트: {formatDate(series.updatedAt)}</span>
+            <br />
+            <label
+              htmlFor={series.id}
+              style={{ cursor: 'pointer' }}
+              onClick={seePopup}
+            >
+              시리즈리스트 보기
+            </label>
           </div>
         </div>
       </div>

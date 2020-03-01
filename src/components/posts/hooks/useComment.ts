@@ -20,8 +20,8 @@ export const REMOVE_COMMENT = gql`
 `;
 
 export const REFETCH_COMMENTS = gql`
-  query RefetchComments($id: ID, $userEmail: String, $urlPath: String) {
-    post(id: $id, userEmail: $userEmail, urlPath: $urlPath) {
+  query RefetchComments($id: ID, $useremail: String, $urlPath: String) {
+    post(id: $id, useremail: $useremail, urlPath: $urlPath) {
       id
       title
       commentsCount

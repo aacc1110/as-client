@@ -100,6 +100,7 @@ function PostCommentCard({
   sub,
   edit
 }: PostCommentCardProps) {
+  console.log('PostCommentCard-useremail:', useremail);
   const { user } = useUser();
   const [value, show] = useBoolean(false);
   const [removeComment] = useMutation(REMOVE_COMMENT);

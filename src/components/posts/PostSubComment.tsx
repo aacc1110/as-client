@@ -21,6 +21,7 @@ function PostSubComment({
   urlPath
 }: PostSubCommentProps) {
   console.log('PostSubComment-postId', postId);
+  console.log('PostSubComment-useremail', useremail);
   return (
     <PostSubCommentBlock>
       <PostComments

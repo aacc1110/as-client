@@ -108,6 +108,7 @@ function PostComments({
   if (!comments) return <div>댓글이 없습니다.</div>;
 
   console.log('postcomments', sub);
+  console.log('postcomments-useremail', useremail);
 
   return (
     <PostCommentsBlock>
