@@ -7,7 +7,7 @@ const AccordionBlock = styled.div`
     display: none;
   }
   input[id*='answer'] + label {
-    display: block;
+    display: red;
     padding: 20px;
     border: 1px solid #232188;
     color: #fff;
