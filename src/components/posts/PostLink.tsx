@@ -52,7 +52,7 @@ function PostLink({
     <PostLinkBlock
       to={{
         pathname: to,
-        state: { seriesPosts: seriesPosts }
+        state: { series: seriesPosts }
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

@@ -144,7 +144,7 @@ const PostViewBlock = styled.div`
     line-height: 1.5rem;
     span {
       /* height: 3.125rem; */
-      line-height: 1.5;
+      /* line-height: 1.5; */
       letter-spacing: -0.02em;
       white-space: pre-wrap;
       word-break: normal;
@@ -183,7 +183,7 @@ interface PostViewProps {
 
 function PostView({ useremail, urlPath }: PostViewProps) {
   console.log('useremailPostview:', useremail);
-  const { state } = useLocation();
+  let { state } = useLocation();
   const history = useHistory();
   const { user } = useUser();
 
@@ -320,7 +320,8 @@ function PostView({ useremail, urlPath }: PostViewProps) {
         />
       </div>
       <div>
-        {/* {state.seriesPosts &&
+        {console.log('state', state)}
+        {/* {state.serisePosts !== (null || undefined) &&
           state.seriesPosts.map((seriesPosts: SeriesPosts) => (
             <section key={seriesPosts.id}>
               <SeriesPostsCard
@@ -330,7 +331,7 @@ function PostView({ useremail, urlPath }: PostViewProps) {
               />
             </section>
           ))} */}
-        {/* <PostSideList /> */}
+        <PostSideList />
       </div>
     </PostViewBlock>
   );

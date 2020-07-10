@@ -25,7 +25,9 @@ class FallbackStorage {
   }
 
   getItem(key: string) {
-    let value = this.valid ? localStorage.getItem(key) : this.fallbackStorage[key];
+    let value = this.valid
+      ? localStorage.getItem(key)
+      : this.fallbackStorage[key];
     try {
       const parsed = JSON.parse(value || '');
       return parsed;
